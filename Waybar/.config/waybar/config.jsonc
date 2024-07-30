@@ -57,7 +57,8 @@
   //     }
   // },
   "custom/os-button": {
-    "format": "",
+    // "format": "",
+    "format": "",
     "on-click": "wofi -i -l bottom_left -W 25% -H 75% -p Applications... --show drun",
     "tooltip": false,
   },
