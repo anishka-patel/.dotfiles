@@ -73,7 +73,7 @@ set $fileManager yazi
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * bg ./arch.png fill
+output * bg ~/.config/sway/wallpapers/arch.png fill
 #
 # Example configuration:
 #
@@ -238,13 +238,8 @@ exec swayidle -w \
     # bindsym $mod+v splitv
 
     # Switch the current container between different layout styles
-<<<<<<< HEAD
-    bindsym $mod+s layout stacking
-    bindsym $mod+w layout tabbed
-=======
     # bindsym $mod+s layout stacking
     # bindsym $mod+w layout tabbed
->>>>>>> master
     # bindsym $mod+e layout toggle split
 
     # Make the current focus fullscreen
