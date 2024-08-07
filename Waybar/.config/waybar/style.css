@@ -1,6 +1,5 @@
 @import url("./colors.css");
 
-
 #custom-os-button {
   font-size: 16pt;
   padding: 0pt 12pt 0pt 6pt;
@@ -31,7 +30,7 @@ window#waybar {
   margin: 8pt -4pt 8pt -4pt;
   min-width: 0px;
   min-height: 0px;
-  border-radius: 50%
+  border-radius: 50%;
 }
 
 #workspaces button:hover {
@@ -40,11 +39,11 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color: @purple;
+  color: @purple;
 }
 
 #workspaces button.urgent {
-    color: @red;
+  color: @red;
 }
 
 #taskbar button.active {

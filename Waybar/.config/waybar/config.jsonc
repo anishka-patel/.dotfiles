@@ -60,7 +60,7 @@
     "format-icons": {
       "urgent": "",
       "focused": "",
-      "default": "",
+      "default": "",
     },
   },
   "custom/os-button": {
@@ -79,7 +79,7 @@
       "urgent": "",
       "default": "",
       "active": "",
-      "empty": "",
+      "empty": "",
       "special": "",
     },
     "persistent-workspaces": {
