@@ -11,13 +11,15 @@ alias vi=nvim
 alias nv=nvim
 alias lv=lvim
 alias zv=zvim
+alias ec="emacsclient -ta ''"
 
-if [ -z "$WAYLAND_DISPLAY" ]; then
+if [ "$WAYLAND_DISPLAY" = "" ]; then
 	alias neovide="neovide"
 else
 	alias neovide="env -u WAYLAND_DISPLAY neovide"
 fi
 alias gvi=gvim
+alias gec="emacsclient -cnqua ''"
 alias gnv=neovide
 alias code=codium
 # Dotfiles
@@ -44,3 +46,6 @@ alias less=moar
 alias act=appimage-cli-tool
 alias db=distrobox
 alias cat=bat
+alias ff=fastfetch
+alias datef="date -u +%a,\ %Y-%b-%d"
+alias datetimef="date -u +%a,\ %Y-%b-%d%n%H:%M\ \(%Z\)"

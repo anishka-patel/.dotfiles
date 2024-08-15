@@ -157,3 +157,6 @@ eval "$(zoxide init bash)"
 fastfetch
 
 [ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
+
+bind -x '"\es":"sesh-sessions"'
+bind -x '"\et":"sesh-connect"'

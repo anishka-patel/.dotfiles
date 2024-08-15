@@ -47,3 +47,13 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # opam configuration
 [[ ! -r /home/ani/.opam/opam-init/init.zsh ]] || source /home/ani/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
+zle     -N             sesh-sessions
+bindkey -M emacs '\es' sesh-sessions
+bindkey -M vicmd '\es' sesh-sessions
+bindkey -M viins '\es' sesh-sessions
+
+zle -N             sesh-connect
+bindkey -M emacs '\et' sesh-connect
+bindkey -M vicmd '\et' sesh-connect
+bindkey -M viins '\et' sesh-connect
