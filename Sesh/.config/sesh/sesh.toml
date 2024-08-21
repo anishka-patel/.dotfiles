@@ -1,4 +1,6 @@
 [[session]]
 name = "Ani 🏠"
 path = "~"
-startup_command = "l"
+[[session]]
+name = "Root 🖥️"
+path = "/"

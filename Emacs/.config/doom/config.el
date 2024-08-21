@@ -84,13 +84,13 @@
                                 %a" :prepend t)))
   ) ;; Setup custom TODO keywords
 (setq +zen-text-scale 0) ;; Does not scale up text in zen modes
-(beacon-mode 1) ;; Activates beacon-mode
-(use-package! tree-sitter
-  :config
-  (require 'tree-sitter-langs)
-  (global-tree-sitter-mode)
-  (add-hook! 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-  (add-hook! 'vue-mode-hook #'tree-sitter-hl-mode)) ;; Activates tree-sitter
+;; (beacon-mode 1) ;; Activates beacon-mode
+;; (use-package! tree-sitter
+;;   :config
+;;   (require 'tree-sitter-langs)
+;;   (global-tree-sitter-mode)
+;;   (add-hook! 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+;;   (add-hook! 'vue-mode-hook #'tree-sitter-hl-mode)) ;; Activates tree-sitter
 
 
 (use-package! command-log-mode
@@ -105,44 +105,61 @@
   :init
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-  (setq dashboard-startup-banner "~/.doom.d/doom-emacs-dash.png")
+  (setq dashboard-startup-banner "~/.config/doom/doom-emacs-dash.png")
   (setq dashboard-center-content t)
   :config
   (dashboard-setup-startup-hook))
 (setq doom-fallback-buffer-name "*dashboard*")
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
-;; (add-hook! ('prog-mode-hook 'text-mode-hook) 'display-fill-column-indicator-mode)
-;; (add-hook! ('writeroom-mode-hook) 'disable-display-fill-column-indicator-mode)
+(add-hook! ('prog-mode-hook 'text-mode-hook) 'display-fill-column-indicator-mode)
+(add-hook! ('writeroom-mode-hook) 'disable-display-fill-column-indicator-mode)
 
-;; (defun disable-display-fill-column-indicator-mode ()
-;;   (setq display-fill-column-indicator nil))
-;;
-;; (defun evil-scroll-up-and-center ()
-;;   (interactive)
-;;   (evil-scroll-up 0)
-;;   (evil-scroll-line-to-center ()))
-;; (defun evil-scroll-down-and-center ()
-;;   (interactive)
-;;   (evil-scroll-down 0)
-;;   (evil-scroll-line-to-center ()))
-;; (defun evil-scroll-page-up-and-center ()
-;;   (interactive)
-;;   (evil-scroll-page-up 1)
-;;   (evil-scroll-line-to-center ()))
-;; (defun evil-scroll-page-down-and-center ()
-;;   (interactive)
-;;   (evil-scroll-page-down 1)
-;;   (evil-scroll-line-to-center ()))
-;;
-;; (map! :n "C-u" #'evil-scroll-up-and-center)
-;; (map! :n "C-d" #'evil-scroll-down-and-center)
-;; (map! :n "C-f" #'evil-scroll-page-down-and-center)
-;; (map! :n "C-b" #'evil-scroll-page-up-and-center)
+(defun disable-display-fill-column-indicator-mode ()
+  (setq display-fill-column-indicator nil))
+
+(defun evil-scroll-up-and-center ()
+  (interactive)
+  (evil-scroll-up 0)
+  (evil-scroll-line-to-center ()))
+(defun evil-scroll-down-and-center ()
+  (interactive)
+  (evil-scroll-down 0)
+  (evil-scroll-line-to-center ()))
+(defun evil-scroll-page-up-and-center ()
+  (interactive)
+  (evil-scroll-page-up 1)
+  (evil-scroll-line-to-center ()))
+(defun evil-scroll-page-down-and-center ()
+  (interactive)
+  (evil-scroll-page-down 1)
+  (evil-scroll-line-to-center ()))
+
+(map! :n "C-u" #'evil-scroll-up-and-center)
+(map! :n "C-d" #'evil-scroll-down-and-center)
+(map! :n "C-f" #'evil-scroll-page-down-and-center)
+(map! :n "C-b" #'evil-scroll-page-up-and-center)
 
 (setq evil-snipe-scope 'buffer)
 
+(setq visual-fill-column-width 80
+      visual-fill-column-center-text t)
 
+(defun my/org-present-start ()
+  (setq header-line-format " ")
+  ;; Center the presentation and wrap lines
+  (visual-fill-column-mode 1)
+  (visual-line-mode 1))
+
+(defun my/org-present-end ()
+  (setq header-line-format nil)
+  ;; Stop centering the document
+  (visual-fill-column-mode 0)
+  (visual-line-mode 0))
+
+;; Register hooks with org-present
+(add-hook! 'org-present-mode-hook 'my/org-present-start)
+(add-hook! 'org-present-mode-quit-hook 'my/org-present-end)
 
 
                                         ; LocalWords:  el GPG xlfd
