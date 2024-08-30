@@ -49,3 +49,8 @@ sesh-connect() {
 		sesh connect "$(sesh list | fzf)"
 	}
 }
+
+launch() {
+	"$@" >/dev/null 2>&1 &
+	disown
+}

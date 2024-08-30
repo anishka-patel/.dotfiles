@@ -9,9 +9,8 @@ alias _="sudo "
 
 alias vi=nvim
 alias nv=nvim
-alias lv=lvim
-alias zv=zvim
-alias ec="emacsclient -ta ''"
+alias es="emacs -nw"
+alias ec="emacsclient -tqua ''"
 
 if [ "$WAYLAND_DISPLAY" = "" ]; then
 	alias neovide="neovide"
@@ -19,7 +18,8 @@ else
 	alias neovide="env -u WAYLAND_DISPLAY neovide"
 fi
 alias gvi=gvim
-alias gec="emacsclient -cnqua ''"
+alias ges="launch emacs"
+alias gec="launch emacsclient -caua ''"
 alias gnv=neovide
 alias code=codium
 # Dotfiles
@@ -33,7 +33,7 @@ alias lsa='ls -lah'
 alias l='ls -lah'
 alias ll='ls -lh'
 alias la='ls -lAh'
-alias ls="exa -h --color=auto --group-directories-first"
+alias ls="lsd -h --color=auto --group-directories-first"
 
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
