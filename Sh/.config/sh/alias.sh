@@ -34,6 +34,8 @@ alias l='ls -lah'
 alias ll='ls -lh'
 alias la='ls -lAh'
 alias ls="lsd -h --color=auto --group-directories-first"
+alias lg=lazygit
+alias lgit=lazygit
 
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'

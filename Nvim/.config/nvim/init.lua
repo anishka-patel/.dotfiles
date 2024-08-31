@@ -213,7 +213,18 @@ else
     vim.opt.cmdheight = 1
 
     packer.startup(function(use)
-        use("tpope/vim-fugitive")
+        use({
+            "NeogitOrg/neogit",
+            requires = {
+                { "nvim-lua/plenary.nvim" },
+                { "sindrets/diffview.nvim" },
+                { "nvim-telescope/telescope.nvim" },
+            },
+            config = function()
+                local neogit = require("neogit")
+                neogit.setup({})
+            end,
+        })
         use("wbthomason/packer.nvim")
         use("habamax/vim-asciidoctor")
         use("Mofiqul/dracula.nvim")
@@ -877,6 +888,13 @@ else
             -- Only if you are calling the server from ltex_extra
             server_opts = nil,
         })
+    end
+
+    local has_neogit, neogit = pcall(require, "neogit")
+
+    if has_neogit then
+        keymap("n", "<leader>gg", "<cmd>Neogit<cr>", opts)
+        keymap("n", "<leader>gl", "<cmd>Neogit log<cr>", opts)
     end
 
     local has_wk, wk = pcall(require, "which-key")
