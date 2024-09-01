@@ -31,7 +31,7 @@ alias lsa='ls -lah'
 alias l='ls -lah'
 alias ll='ls -lh'
 alias la='ls -lAh'
-alias ls="exa -h --color=auto --group-directories-first"
+alias ls="eza -h --color=auto --group-directories-first"
 
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
