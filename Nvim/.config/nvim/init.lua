@@ -11,15 +11,6 @@ local ensure_packer = function()
 end
 local packer_bootstrap = ensure_packer()
 
--- Autocommand to source the file and run PackerSync on write to file
-
--- vim.cmd([[
---   augroup packer_user_config
---     autocmd!
---     autocmd BufWritePost init.lua source <afile> | PackerSync
---   augroup end
--- ]])
-
 local has_packer, packer = pcall(require, "packer")
 if not has_packer then
     print("Packer not found!")
@@ -77,34 +68,34 @@ if vim.g.vscode then
     vim.opt.termguicolors = true
 
     packer.startup(function(use)
-        use("kylechui/nvim-surround")
-        use("windwp/nvim-autopairs")
-        use("ggandor/leap.nvim")
-        use("numToStr/Comment.nvim")
+        use({
+            "kylechui/nvim-surround",
+            config = function()
+                require("nvim-surround").setup()
+            end
+        })
+        use({
+            "windwp/nvim-autopairs",
+            config = function()
+                require("nvim-autopairs").setup()
+            end
+        })
+        use({
+            "ggandor/leap.nvim",
+            config = function()
+                require("leap").add_default_mappings()
+            end
+        })
+        use({
+            "numToStr/Comment.nvim",
+            config = function()
+                require("Comment").setup()
+            end
+        })
         if packer_bootstrap then
             require("packer").sync()
         end
     end)
-
-    local has_surround, surround = pcall(require, "nvim-surround")
-    if has_surround then
-        surround.setup()
-    end
-
-    local has_autopairs, autopairs = pcall(require, "nvim-autopairs")
-    if has_autopairs then
-        autopairs.setup()
-    end
-
-    local has_leap, leap = pcall(require, "leap")
-    if has_leap then
-        leap.add_default_mappings()
-    end
-
-    local has_comment, comment = pcall(require, "Comment")
-    if has_comment then
-        comment.setup()
-    end
 
     vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
         callback = function(_)
@@ -163,12 +154,16 @@ else
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
 
+    vim.g.table_mode_disable_mappings = 1
+    vim.g.table_mode_disable_tableize_mappings = 1
+
     -- Neovide
     vim.g.neovide_scale_factor = 1.0
     vim.g.neovide_transparency = 1.0
     vim.g.neovide_remember_window_size = true
     vim.g.neovide_refresh_rate = 60
 
+    -- Tabline
     vim.o.completeopt = "menuone,noselect,preview"
 
     -- Setup GUI Fonts
@@ -213,6 +208,13 @@ else
     vim.opt.foldcolumn = "auto"
     vim.opt.cmdheight = 1
 
+    local sel_theme = "tokyonight"
+    local has_theme, _ = pcall(vim.cmd, "colorscheme " .. sel_theme)
+    -- Setup Colorscheme
+    if not has_theme then
+        print("Colorscheme " .. sel_theme .. " not found!")
+    end
+
     packer.startup(function(use)
         use({
             "NeogitOrg/neogit",
@@ -222,17 +224,51 @@ else
                 { "nvim-telescope/telescope.nvim" },
             },
             config = function()
-                local neogit = require("neogit")
-                neogit.setup({})
+                require("neogit").setup({})
             end,
         })
-        use("wbthomason/packer.nvim")
-        use("habamax/vim-asciidoctor")
+        use({
+            "wbthomason/packer.nvim",
+        })
         -- Themes
         use("Mofiqul/dracula.nvim")
         use("folke/tokyonight.nvim")
         -- Lualine
-        use("nvim-lualine/lualine.nvim")
+        use({
+            "nvim-lualine/lualine.nvim",
+            config = function()
+                require("lualine").setup({
+                    options = {
+                        theme = sel_theme,
+                        component_separators = { left = "", right = "" },
+                        section_separators = { left = "", right = "" },
+                    },
+                    sections = {
+                        lualine_x = {
+                            -- {
+                            -- 	require("noice").api.status.message.get_hl,
+                            -- 	cond = require("noice").api.status.message.has,
+                            -- },
+                            {
+                                require("noice").api.status.command.get,
+                                cond = require("noice").api.status.command.has,
+                                color = { fg = "#ff9e64" },
+                            },
+                            {
+                                require("noice").api.status.mode.get,
+                                cond = require("noice").api.status.mode.has,
+                                color = { fg = "#ff9e64" },
+                            },
+                            {
+                                require("noice").api.status.search.get,
+                                cond = require("noice").api.status.search.has,
+                                color = { fg = "#ff9e64" },
+                            },
+                        },
+                    },
+                })
+            end
+        })
         use("kyazdani42/nvim-web-devicons")
         -- Telescope
         use({
@@ -246,22 +282,66 @@ else
             requires = { { "nvim-lua/plenary.nvim" } },
         })
         -- Ease of life stuff
-        use("kylechui/nvim-surround")
-        use("windwp/nvim-autopairs")
+        use({
+            "kylechui/nvim-surround",
+            config = function()
+                require("nvim-surround").setup()
+            end
+        })
+        use({
+            "windwp/nvim-autopairs",
+            config = function()
+                require("nvim-autopairs").setup()
+            end
+        })
         use("windwp/nvim-ts-autotag")
-        use("numToStr/Comment.nvim")
+        use({
+            "numToStr/Comment.nvim",
+            config = function()
+                require("Comment").setup()
+            end
+        })
         -- Leap
-        use("ggandor/leap.nvim")
+        use({
+            "ggandor/leap.nvim",
+            config = function()
+                require("leap").add_default_mappings()
+            end
+        })
         -- Display hexcodes as colors
-        use("norcalli/nvim-colorizer.lua")
+        use({
+            "norcalli/nvim-colorizer.lua",
+            config = function()
+                require("colorizer").setup()
+            end
+        })
         -- Treesitter
         use({ "nvim-treesitter/nvim-treesitter", run = "<cmd>TSUpdate" })
-        use("nvim-treesitter/playground")
         use("HiPhish/rainbow-delimiters.nvim")
+        use({
+            'echasnovski/mini.ai',
+            config = function()
+                require("mini.ai").setup()
+            end
+        })
         -- Undo Tree
-        use("mbbill/undotree")
+        use({
+            "mbbill/undotree",
+        })
         -- Terminal
-        use("akinsho/toggleterm.nvim")
+        use({
+            "akinsho/toggleterm.nvim",
+            config = function()
+                require("toggleterm").setup({
+                    size = 24,
+                    open_mapping = [[<c-`>]],
+                    direction = "float",
+                    float_opts = {
+                        border = "curved",
+                    },
+                })
+            end
+        })
         -- LSP
         use({
             "VonHeikemen/lsp-zero.nvim",
@@ -270,7 +350,7 @@ else
                 -- LSP Support
                 { "neovim/nvim-lspconfig" },
                 { "williamboman/mason.nvim" },
-                { "williamboman/mason-lspconfig.nvim" },
+                { "WILLIAMBOMAN/MASON-LSPCONFIG.NVIM" },
 
                 -- Autocompletion
                 { "hrsh7th/nvim-cmp" },
@@ -287,17 +367,34 @@ else
         })
         use({ "L3MON4D3/LuaSnip", run = "make install_jsregexp" })
         -- Zen mode
-        use("folke/zen-mode.nvim")
+        use({
+            "folke/zen-mode.nvim",
+        })
         -- Orgmode
-        use("nvim-orgmode/orgmode")
+        use({
+            "nvim-orgmode/orgmode",
+            config = function()
+                require("orgmode").setup()
+            end
+        })
+        use({
+            "dhruvasagar/vim-table-mode",
+        })
         -- Todo Comment
-        use("folke/todo-comments.nvim")
-        -- Syntax Highlights
-        use("baskerville/vim-sxhkdrc")
+        use({
+            "folke/todo-comments.nvim",
+            config = function()
+                require("todo-comments").setup()
+            end
+        })
         -- Indent
-        use("lukas-reineke/indent-blankline.nvim")
+        use({
+            "lukas-reineke/indent-blankline.nvim",
+            config = function()
+                require("ibl").setup()
+            end
+        })
         -- SwHKD highlights
-        use("waycrate/swhkd-vim")
         use({
             "nvim-focus/focus.nvim",
             config = function()
@@ -311,8 +408,129 @@ else
             end,
         })
         -- Which key
-        use("folke/which-key.nvim")
-        use("barreiroleo/ltex-extra.nvim")
+        use({
+            "folke/which-key.nvim",
+            config = function()
+                vim.o.timeout = true
+                vim.o.timeoutlen = 300
+                local wk = require("which-key")
+                wk.setup()
+                wk.add({
+
+                    { "<leader>.",       "<cmd>Telescope find_files<cr>", desc = "Find File",     remap = false },
+                    { "<leader>,",       "<cmd>Oil<cr>",                  desc = "Oil",           remap = false },
+                    { "<leader>/",       "<cmd>Telescope live_grep<cr>",  desc = "Live Grep",     remap = false },
+                    { "<leader>;",       "<cmd>Telescope<cr>",            desc = "Telescope",     remap = false },
+                    { "<leader>'",       "<cmd>Neogit<cr>",               desc = "Neogit",        remap = false },
+                    { "<leader>\\",      "<cmd>PackerSync<cr>",           desc = "Packer Sync",   remap = false },
+                    { "<leader>[",       "<cmd>PackerClean<cr>",          desc = "Packer Clean",  remap = false },
+                    { "<leader>]",       "<cmd>PackerUpdate<cr>",         desc = "Packer Update", remap = false },
+                    { "<leader>`",       "<cmd>ToggleTerm<cr>",           desc = "Toggle Term",   remap = false },
+                    { "<leader><space>", "<cmd>Neotree toggle<cr>",       desc = "Neotree",       remap = false },
+
+                    { "<leader>e",       group = "Edit",                  remap = false },
+                    { "<leader>f",       group = "File",                  remap = false },
+                    { "<leader>n",       group = "Neotree",               remap = false },
+                    { "<leader>p",       group = "Packer",                remap = false },
+                    { "<leader>g",       group = "Git",                   remap = false },
+                    { "<leader>i",       group = "Insert",                remap = false },
+                    { "<leader>l",       group = "Lsp",                   remap = false },
+                    { "<leader>w",       group = "Window",                remap = false },
+                    { "<leader>sl",      group = "LSP",                   remap = false },
+
+                })
+                wk.add({
+                    { "<leader>en", "<cmd>edit ~/.config/nvim/init.lua<cr>",      desc = "Edit Neovim",   remap = false },
+                    { "<leader>eh", "<cmd>edit ~/.config/hypr/hyprland.conf<cr>", desc = "Edit Hyprland", remap = false },
+                    { "<leader>ew", "<cmd>edit ~/.config/hypr/waybar/<cr>",       desc = "Edit Waybar",   remap = false },
+                    { "<leader>ek", "<cmd>edit ~/.config/kitty/<cr>",             desc = "Edit Kitty",    remap = false },
+                    { "<leader>ee", "<cmd>edit ~/.emacs.d/init.el<cr>",           desc = "Edit Emacs",    remap = false },
+                    { "<leader>eb", "<cmd>edit ~/.bashrc<cr>",                    desc = "Edit Bash",     remap = false },
+                    { "<leader>et", "<cmd>edit ~/.tmux.conf<cr>",                 desc = "Edit Tmux",     remap = false },
+                })
+                wk.add({
+                    { "<leader>t",  group = "Toggle",          remap = false },
+                    { "<leader>te", "<cmd>Neotree toggle<cr>", desc = "Neo Tree",   remap = false },
+                    { "<leader>tt", "<cmd>ToggleTerm<cr>",     desc = "Terminal",   remap = false },
+                    { "<leader>tp", "<cmd>Presenting<cr>",     desc = "Presenting", remap = false },
+
+                }, opts)
+
+                wk.add({
+                    { "<leader>E",  group = "Error",  remap = false },
+                    { "<leader>En", "<cmd>cnext<cr>", desc = "Next", remap = false },
+                    { "<leader>Ep", "<cmd>cprev<cr>", desc = "Prev", remap = false },
+                }, opts)
+
+                wk.add({
+                    { "<leader>b",  group = "Buffer",           remap = false },
+                    { "<leader>bd", "<cmd>bd<cr>",              desc = "Buffer Delete",   remap = false },
+                    { "<leader>bn", "<cmd>bn<cr>",              desc = "Buffer Next",     remap = false },
+                    { "<leader>bp", "<cmd>bp<cr>",              desc = "Buffer Previous", remap = false },
+                    { "<leader>bb", "<cmd>Neotree buffers<cr>", desc = "Buffer List",     remap = false },
+                }, opts)
+
+                wk.add({
+                    { "<leader>o", group = "Org",    remap = false },
+                    { "<leader>s", group = "Search", remap = false },
+                }, opts)
+
+                wk.add({
+                    { "<leader>d", group = "Debug", remap = false },
+                })
+
+                wk.add(
+                    {
+                        { "<leader>w",    group = "Window",    remap = false },
+
+                        { "<leader>wr",   group = "Resize",    remap = false },
+                        { "<leader>wrr",  "<cmd>wincmd =<cr>", desc = "Reset",    remap = false },
+                        { "<leader>wrh",  group = "Height",    remap = false },
+                        { "<leader>wrhi", "<cmd>wincmd +<cr>", desc = "Inc",      remap = false },
+                        { "<leader>wrhd", "<cmd>wincmd -<cr>", desc = "Dec",      remap = false },
+                        { "<leader>wrhm", "<cmd>wincmd _<cr>", desc = "Max",      remap = false },
+                        { "<leader>wrw",  group = "Width",     remap = false },
+                        { "<leader>wrwi", "<cmd>wincmd ><cr>", desc = "Inc",      remap = false },
+                        { "<leader>wrwd", "<cmd>wincmd <<cr>", desc = "Dec",      remap = false },
+                        { "<leader>wrwm", "<cmd>wincmd |<cr>", desc = "Max",      remap = false },
+
+                        { "<leader>wf",   group = "Focus",     remap = false },
+                        { "<leader>wfh",  "<cmd>wincmd h<cr>", desc = "Lf",       remap = false },
+                        { "<leader>wfj",  "<cmd>wincmd j<cr>", desc = "Dn",       remap = false },
+                        { "<leader>wfk",  "<cmd>wincmd k<cr>", desc = "Up",       remap = false },
+                        { "<leader>wfl",  "<cmd>wincmd l<cr>", desc = "Ri",       remap = false },
+                        { "<leader>wfn",  "<cmd>wincmd w<cr>", desc = "Next",     remap = false },
+                        { "<leader>wfp",  "<cmd>wincmd W<cr>", desc = "Prev",     remap = false },
+
+                        { "<leader>wm",   group = "Move",      remap = false },
+                        { "<leader>wmh",  "<cmd>wincmd H<cr>", desc = "Lf",       remap = false },
+                        { "<leader>wmj",  "<cmd>wincmd J<cr>", desc = "Dn",       remap = false },
+                        { "<leader>wmk",  "<cmd>wincmd K<cr>", desc = "Up",       remap = false },
+                        { "<leader>wml",  "<cmd>wincmd L<cr>", desc = "Ri",       remap = false },
+                        { "<leader>wmt",  "<cmd>wincmd T<cr>", desc = "Tab",      remap = false },
+                        { "<leader>wmx",  "<cmd>wincmd x<cr>", desc = "Exch",     remap = false },
+                        { "<leader>wmd",  "<cmd>wincmd r<cr>", desc = "Dn",       remap = false },
+                        { "<leader>wmu",  "<cmd>wincmd R<cr>", desc = "Up",       remap = false },
+
+                        { "<leader>wo",   "<cmd>wincmd o<cr>", desc = "Only",     remap = false },
+                        { "<leader>wc",   "<cmd>wincmd c<cr>", desc = "Close",    remap = false },
+                        { "<leader>wq",   "<cmd>wincmd q<cr>", desc = "Quit",     remap = false },
+                        { "<leader>wx",   "<cmd>wincmd x<cr>", desc = "Exchange", remap = false },
+
+                        { "<leader>ws",   group = "Split",     remap = false },
+                        { "<leader>wsj",  "<cmd>split<cr>",    desc = "Down",     remap = false },
+                        { "<leader>wsl",  "<cmd>vsplit<cr>",   desc = "Right",    remap = false },
+
+                    }
+                )
+            end
+        })
+        use({
+            "barreiroleo/ltex-extra.nvim",
+            config = function()
+
+            end
+        })
         use("echasnovski/mini.icons")
         use({
             "nvim-neo-tree/neo-tree.nvim",
@@ -637,8 +855,6 @@ else
                         },
                     },
                 })
-
-                vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
             end,
         })
         use({
@@ -648,13 +864,43 @@ else
                 { "nvim-tree/nvim-web-devicons" },
                 { "nvim-treesitter/nvim-treesitter" },
             },
+            config = function()
+                require("lspsaga").setup()
+            end
         })
         use("onsails/lspkind.nvim")
-        use("simrat39/symbols-outline.nvim")
-        use("delphinus/vim-firestore")
-        use("lewis6991/gitsigns.nvim")
+        use({
+            "lewis6991/gitsigns.nvim",
+            config = function()
+                require("gitsigns").setup()
+            end
+        })
         -- lazy.nvim
-        use("folke/noice.nvim")
+        use({
+            "folke/noice.nvim",
+            config = function()
+                require("noice").setup({
+                    lsp = {
+                        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                        override = {
+                            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                            ["vim.lsp.util.stylize_markdown"] = true,
+                            ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+                        },
+                        progress = {
+                            throttle = 1000 / 1,
+                        },
+                    },
+                    presets = {
+                        bottom_search = true,         -- use a classic bottom cmdline for search
+                        command_palette = false,      -- position the cmdline and popupmenu together
+                        long_message_to_split = true, -- long messages will be sent to a split
+                        inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+                        lsp_doc_border = false,       -- add a border to hover docs and signature help
+                    },
+                })
+            end
+        })
         use("MunifTanjim/nui.nvim")
         use("rcarriga/nvim-notify")
         use("davidmh/cspell.nvim")
@@ -692,7 +938,11 @@ else
         use({
             "sotte/presenting.nvim",
             config = function()
-                require("presenting").setup({})
+                require("presenting").setup({
+                    options = {
+                        width = 82,
+                    }
+                })
             end,
         })
         use("stevearc/dressing.nvim")
@@ -704,296 +954,85 @@ else
                 })
             end,
         })
+        use({
+            'Wansmer/treesj',
+            requires = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
+            config = function()
+                require('treesj').setup({ use_default_keymaps = false })
+            end,
+        })
+        use({
+            "stevearc/oil.nvim",
+            config = function()
+                require("oil").setup()
+            end,
+        })
+        use({
+            'karb94/neoscroll.nvim',
+            config = function()
+                require("neoscroll").setup()
+            end
+        })
+        use({ 'kevinhwang91/nvim-bqf', ft = 'qf' })
+
+        -- optional
+        use({
+            'junegunn/fzf',
+            run = function()
+                vim.fn['fzf#install']()
+            end
+        })
+        use({
+            "hedyhli/outline.nvim",
+            config = function()
+                -- Example mapping to toggle outline
+                vim.keymap.set("n", "<leader>tO", "<cmd>Outline<CR>",
+                    { desc = "Toggle Outline" })
+
+                require("outline").setup {
+                    -- Your setup opts here (leave empty to use defaults)
+                }
+            end,
+        })
         -- Put this at the end after all plugins
         if packer_bootstrap then
             require("packer").sync()
         end
     end)
 
-    keymap("n", "<leader>ps", "<cmd>PackerStatus<cr>", opts)
-    keymap("n", "<leader>pS", "<cmd>PackerSync<cr>", opts)
-    keymap("n", "<leader>pc", "<cmd>PackerClean<cr>", opts)
-    keymap("n", "<leader>pu", "<cmd>PackerUpdate<cr>", opts)
 
-    local has_colorizer, colorizer = pcall(require, colorizer)
-    if has_colorizer then
-        colorizer.setup()
-    end
-    local has_surround, surround = pcall(require, "nvim-surround")
-    if has_surround then
-        surround.setup()
-    end
-
-    local has_autopairs, autopairs = pcall(require, "nvim-autopairs")
-    if has_autopairs then
-        autopairs.setup()
-    end
-
-    local has_comment, comment = pcall(require, "Comment")
-    if has_comment then
-        comment.setup()
-    end
-
-    local has_todo_comments, todo_comments = pcall(require, "todo-comments")
-
-    if has_todo_comments then
-        todo_comments.setup()
-    end
-
-    local has_leap, leap = pcall(require, "leap")
-    if has_leap then
-        leap.add_default_mappings()
-    end
-
-    local has_lspsaga, lspsaga = pcall(require, "lspsaga")
-    if has_lspsaga then
-        lspsaga.setup({})
-    end
-
-    local has_toggleterm, toggleterm = pcall(require, "toggleterm")
-    if has_toggleterm then
-        toggleterm.setup({
-            size = 24,
-            open_mapping = [[<c-`>]],
-            direction = "float",
-            float_opts = {
-                border = "curved",
-            },
-        })
-
-        keymap("n", "<leader>tt", "<cmd>ToggleTerm<cr>", opts)
-        keymap("t", "<esc><esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-    end
-    local has_ibl, ibl = pcall(require, "ibl")
-    if has_ibl then
-        ibl.setup()
-    end
-
-    local sel_theme = "tokyonight"
-    local has_theme, _ = pcall(vim.cmd, "colorscheme " .. sel_theme)
-    -- Setup Colorscheme
-    if not has_theme then
-        print("Colorscheme " .. sel_theme .. " not found!")
-    end
-
-    local has_lualine, lualine = pcall(require, "lualine")
-    if has_lualine then
-        lualine.setup({
-            options = {
-                theme = theme,
-                component_separators = { left = "", right = "" },
-                section_separators = { left = "", right = "" },
-            },
-            sections = {
-                lualine_x = {
-                    -- {
-                    -- 	require("noice").api.status.message.get_hl,
-                    -- 	cond = require("noice").api.status.message.has,
-                    -- },
-                    {
-                        require("noice").api.status.command.get,
-                        cond = require("noice").api.status.command.has,
-                        color = { fg = "#ff9e64" },
-                    },
-                    {
-                        require("noice").api.status.mode.get,
-                        cond = require("noice").api.status.mode.has,
-                        color = { fg = "#ff9e64" },
-                    },
-                    {
-                        require("noice").api.status.search.get,
-                        cond = require("noice").api.status.search.has,
-                        color = { fg = "#ff9e64" },
-                    },
-                },
-            },
-        })
-    end
-
-    local has_noice, noice = pcall(require, "noice")
-    if has_noice then
-        noice.setup({
-            lsp = {
-                -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-                override = {
-                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-                    ["vim.lsp.util.stylize_markdown"] = true,
-                    ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-                },
-                progress = {
-                    throttle = 1000 / 1,
-                },
-            },
-            presets = {
-                bottom_search = true,         -- use a classic bottom cmdline for search
-                command_palette = false,      -- position the cmdline and popupmenu together
-                long_message_to_split = true, -- long messages will be sent to a split
-                inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-                lsp_doc_border = false,       -- add a border to hover docs and signature help
-            },
-        })
-    end
-
-    local has_outline, outline = pcall(require, "symbols-outline")
-    if has_outline then
-        outline.setup()
-    end
-
-    local has_gitsigns, gitsigns = pcall(require, "gitsigns")
-    if has_gitsigns then
-        gitsigns.setup()
-    end
-
-    local has_nvimtree, nvimtree = pcall(require, "nvim-tree")
-    if has_nvimtree then
-        vim.cmd([[ highlight NvimTreeIndentMarker guifg=#3FC5FF ]])
-        keymap("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", opts)
-        keymap("n", "<leader>tf", "<cmd>NvimTreeFindFile<cr>", opts)
-        keymap("n", "<leader>te", "<cmd>NvimTreeToggle<cr>", opts)
-    end
 
     keymap("n", "<esc>", "<cmd>nohlsearch<cr>", {})
-
-    keymap("n", "<leader>tz", "<cmd>ZenMode<cr>", opts)
-
-    keymap("n", "<leader>tu", "<cmd>UndotreeToggle<cr>", opts)
-
-    keymap("n", "<leader>ts", "<cmd>SymbolsOutline<cr>", opts)
-    keymap("n", "<leader>tc", "<cmd>ColorizerToggle<cr>", opts)
-
-    local has_neotree, neotree = pcall(require, "neo-tree")
-    if has_neotree then
-        keymap("n", "<leader>ne", "<cmd>Neotree toggle<cr>", opts)
-        keymap("n", "<leader>ng", "<cmd>Neotree git_status<cr>", opts)
-        keymap("n", "<leader>nb", "<cmd>Neotree buffers<cr>", opts)
-        keymap("n", "<leader>ns", "<cmd>Neotree document_symbols<cr>", opts)
-    end
-
-    local has_ltex_extra, ltex_extra = pcall(require, "ltex_extra")
-    if has_ltex_extra then
-        keymap("n", "<leader>tl", "<cmd>lua require('ltex_extra').reload()<cr>", opts)
-        ltex_extra.setup({
-            -- table <string> : languages for witch dictionaries will be loaded, e.g. { "es-AR", "en-US" }
-            -- https://valentjn.github.io/ltex/supported-languages.html#natural-languages
-            load_langs = { "en-US" }, -- en-US as default
-            -- boolean : whether to load dictionaries on startup
-            init_check = false,
-            -- string : relative or absolute path to store dictionaries
-            -- e.g. subfolder in the project root or the current working directory: ".ltex"
-            -- e.g. shared files for all projects:  vim.fn.expand("~") .. "/.local/share/ltex"
-            path = "", -- project root or current working directory
-            -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
-            log_level = "none",
-            -- table : configurations of the ltex language server.
-            -- Only if you are calling the server from ltex_extra
-            server_opts = nil,
-        })
-    end
-
-    local has_neogit, neogit = pcall(require, "neogit")
-
-    if has_neogit then
-        keymap("n", "<leader>gg", "<cmd>Neogit<cr>", opts)
-        keymap("n", "<leader>gl", "<cmd>Neogit log<cr>", opts)
-    end
-
-    local has_wk, wk = pcall(require, "which-key")
-    if has_wk then
-        vim.o.timeout = true
-        vim.o.timeoutlen = 300
-        wk.setup()
-    end
-
-    if has_wk then
-        wk.add({
-
-            { "<leader>.",       "<cmd>Telescope find_files<cr>",         desc = "Find File",     remap = false },
-            { "<leader>,",       "<cmd>edit ~/.config/nvim/init.lua<cr>", desc = "Edit Config",   remap = false },
-            { "<leader>/",       "<cmd>Telescope live_grep<cr>",          desc = "Find Text",     remap = false },
-            { "<leader>;",       "<cmd>Neotree toggle<cr>",               desc = "Neotree",       remap = false },
-            { "<leader>'",       "<cmd>Neogit<cr>",                       desc = "Neogit",        remap = false },
-            { "<leader>\\",      "<cmd>PackerSync<cr>",                   desc = "Packer Sync",   remap = false },
-            { "<leader>[",       "<cmd>PackerClean<cr>",                  desc = "Packer Clean",  remap = false },
-            { "<leader>]",       "<cmd>PackerUpdate<cr>",                 desc = "Packer Update", remap = false },
-            { "<leader>`",       "<cmd>ToggleTerm<cr>",                   desc = "Primary Term",  remap = false },
-            { "<leader><cr>",    "<cmd>TermSelect<cr>",                   desc = "Find Term",     remap = false },
-            { "<leader><space>", "<cmd>Telescope<cr>",                    desc = "Find All",      remap = false },
-
-            { "<leader>e",       group = "Edit",                          remap = false },
-            { "<leader>f",       group = "File",                          remap = false },
-            { "<leader>n",       group = "Neotree",                       remap = false },
-            { "<leader>p",       group = "Packer",                        remap = false },
-            { "<leader>g",       group = "Git",                           remap = false },
-            { "<leader>i",       group = "Insert",                        remap = false },
-            { "<leader>l",       group = "Lsp",                           remap = false },
-            { "<leader>w",       group = "Window",                        remap = false },
-            { "<leader>sl",      group = "LSP",                           remap = false },
-
-        })
-        wk.add({
-            { "<leader>en", "<cmd>edit ~/.config/nvim/init.lua<cr>",      desc = "Edit Neovim",   remap = false },
-            { "<leader>eh", "<cmd>edit ~/.config/hypr/hyprland.conf<cr>", desc = "Edit Hyprland", remap = false },
-            { "<leader>ew", "<cmd>edit ~/.config/hypr/waybar/<cr>",       desc = "Edit Waybar",   remap = false },
-            { "<leader>ee", "<cmd>edit ~/.emacs.d/init.el",               desc = "Edit Emacs",    remap = false },
-            { "<leader>eb", "<cmd>edit ~/.bashrc",                        desc = "Edit Bash",     remap = false },
-            { "<leader>ek", "<cmd>edit ~/.config/kitty/",                 desc = "Edit Kitty",    remap = false },
-            { "<leader>et", "<cmd>edit ~/.tmux.conf",                     desc = "Edit Tmux",     remap = false },
-        })
-        wk.add({
-            { "<leader>t",  group = "Toggle",          remap = false },
-            { "<leader>te", "<cmd>Neotree toggle<cr>", desc = "Neo Tree",   remap = false },
-            { "<leader>ts", "<cmd>SymbolsOutline<cr>", desc = "Symbols",    remap = false },
-            { "<leader>tt", "<cmd>ToggleTerm<cr>",     desc = "Terminal",   remap = false },
-            { "<leader>tu", "<cmd>UndotreeToggle<cr>", desc = "Undo Tree",  remap = false },
-            { "<leader>tp", "<cmd>Presenting<cr>",     desc = "Presenting", remap = false },
-            { "<leader>tz", "<cmd>ZenMode<cr>",        remap = false },
-
-        }, opts)
-    end
-
+    keymap("n", "<leader>tj", "<cmd>TSJToggle<cr>", opts)
     keymap("n", "<leader>ii", "<cmd>IconPickerNormal<cr>", opts)
     keymap("n", "<leader>En", "<cmd>cnext<cr>", opts)
     keymap("n", "<leader>Ep", "<cmd>cprev<cr>", opts)
-
-    if has_wk then
-        wk.add({
-            { "<leader>E",  group = "Error",  remap = false },
-            { "<leader>En", "<cmd>cnext<cr>", desc = "Next", remap = false },
-            { "<leader>Ep", "<cmd>cprev<cr>", desc = "Prev", remap = false },
-        }, opts)
-    end
 
     keymap("n", "<leader>bn", "<cmd>bn<cr>", opts)
     keymap("n", "<leader>bp", "<cmd>bp<cr>", opts)
     keymap("n", "<leader>bd", "<cmd>bd<cr>", opts)
 
-    if has_wk then
-        wk.add({
-            { "<leader>b",  group = "Buffer",           remap = false },
-            { "<leader>bd", "<cmd>bd<cr>",              desc = "Buffer Delete",   remap = false },
-            { "<leader>bn", "<cmd>bn<cr>",              desc = "Buffer Next",     remap = false },
-            { "<leader>bp", "<cmd>bp<cr>",              desc = "Buffer Previous", remap = false },
-            { "<leader>bb", "<cmd>Neotree buffers<cr>", desc = "Buffer List",     remap = false },
-        }, opts)
-    end
+    keymap("n", "<leader>tt", "<cmd>ToggleTerm<cr>", opts)
+    keymap("t", "<esc><esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
-    local has_nvim_tree, nvim_tree = pcall(require, "nvim-tree")
-
-    if has_nvim_tree then
-        nvim_tree.setup({
-            sort_by = "case_sensitive",
-            view = {
-                width = 24,
-            },
-        })
-    end
-
-    local has_orgmode, orgmode = pcall(require, "orgmode")
-
-    if has_orgmode then
-        orgmode.setup({})
-    end
-
+    keymap("n", "<leader>gg", "<cmd>Neogit<cr>", opts)
+    keymap("n", "<leader>gl", "<cmd>Neogit log<cr>", opts)
+    keymap("n", "<leader>ps", "<cmd>PackerStatus<cr>", opts)
+    keymap("n", "<leader>pS", "<cmd>PackerSync<cr>", opts)
+    keymap("n", "<leader>pc", "<cmd>PackerClean<cr>", opts)
+    keymap("n", "<leader>pu", "<cmd>PackerUpdate<cr>", opts)
+    keymap("n", "<leader>tc", "<cmd>ColorizerToggle<cr>", opts)
+    keymap("n", "<leader>tu", "<cmd>UndotreeToggle<cr>", opts)
+    keymap("n", "<leader>tz", "<cmd>ZenMode<cr>", opts)
+    keymap("n", "<leader>oT", "<cmd>TableModeToggle<cr>", opts)
+    keymap("n", "\\", "<cmd>Neotree reveal<cr>", opts)
+    keymap("n", "<leader>ne", "<cmd>Neotree toggle<cr>", opts)
+    keymap("n", "<leader>ng", "<cmd>Neotree git_status<cr>", opts)
+    keymap("n", "<leader>nb", "<cmd>Neotree buffers<cr>", opts)
+    keymap("n", "<leader>ns", "<cmd>Neotree document_symbols<cr>", opts)
+    keymap("n", "<leader>ta", "<cmd>Alpha<cr>", opts)
+    keymap("n", "<leader>to", "<cmd>Oil<cr>", opts)
+    keymap("n", "<leader>tl", "<cmd>lua require('ltex_extra').reload()<cr>", opts)
     local has_treesitter_configs, treesitter_configs = pcall(require, "nvim-treesitter.configs")
 
     local treesitter_list = {
@@ -1348,6 +1387,27 @@ else
         -- load_extension, somewhere after setup function:
         telescope.load_extension("ui-select")
         telescope.setup({
+            extensions = {
+                ["ui-select"] = {
+                    require("telescope.themes").get_dropdown({
+                        -- even more opts
+                    }),
+
+                    -- pseudo code / specification for writing custom displays, like the one
+                    -- for "codeactions"
+                    -- specific_opts = {
+                    --   [kind] = {
+                    --     make_indexed = function(items) -> indexed_items, width,
+                    --     make_displayer = function(widths) -> displayer
+                    --     make_display = function(displayer) -> function(e)
+                    --     make_ordinal = function(e) -> string
+                    --   },
+                    --   -- for example to disable the custom builtin "codeactions" display
+                    --      do the following
+                    --   codeactions = false,
+                    -- }
+                },
+            },
             pickers = {
                 find_files = {
                     hidden = true,
@@ -1387,59 +1447,6 @@ else
         vim.keymap.set("n", "<leader>ss", "<cmd>Telescope<cr>", { desc = "Find all" })
     end
 
-    if has_wk then
-        wk.add({
-            { "<leader>o", group = "Org",    remap = false },
-            { "<leader>s", group = "Search", remap = false },
-        }, opts)
-    end
-
-    if has_wk then
-        wk.add(
-            {
-                { "<leader>w",    group = "Window",    remap = false },
-
-                { "<leader>wr",   group = "Resize",    remap = false },
-                { "<leader>wrr",  "<cmd>wincmd =<cr>", desc = "Reset",    remap = false },
-                { "<leader>wrh",  group = "Height",    remap = false },
-                { "<leader>wrhi", "<cmd>wincmd +<cr>", desc = "Inc",      remap = false },
-                { "<leader>wrhd", "<cmd>wincmd -<cr>", desc = "Dec",      remap = false },
-                { "<leader>wrhm", "<cmd>wincmd _<cr>", desc = "Max",      remap = false },
-                { "<leader>wrw",  group = "Width",     remap = false },
-                { "<leader>wrwi", "<cmd>wincmd ><cr>", desc = "Inc",      remap = false },
-                { "<leader>wrwd", "<cmd>wincmd <<cr>", desc = "Dec",      remap = false },
-                { "<leader>wrwm", "<cmd>wincmd |<cr>", desc = "Max",      remap = false },
-
-                { "<leader>wf",   group = "Focus",     remap = false },
-                { "<leader>wfh",  "<cmd>wincmd h<cr>", desc = "Lf",       remap = false },
-                { "<leader>wfj",  "<cmd>wincmd j<cr>", desc = "Dn",       remap = false },
-                { "<leader>wfk",  "<cmd>wincmd k<cr>", desc = "Up",       remap = false },
-                { "<leader>wfl",  "<cmd>wincmd l<cr>", desc = "Ri",       remap = false },
-                { "<leader>wfn",  "<cmd>wincmd w<cr>", desc = "Next",     remap = false },
-                { "<leader>wfp",  "<cmd>wincmd W<cr>", desc = "Prev",     remap = false },
-
-                { "<leader>wm",   group = "Move",      remap = false },
-                { "<leader>wmh",  "<cmd>wincmd H<cr>", desc = "Lf",       remap = false },
-                { "<leader>wmj",  "<cmd>wincmd J<cr>", desc = "Dn",       remap = false },
-                { "<leader>wmk",  "<cmd>wincmd K<cr>", desc = "Up",       remap = false },
-                { "<leader>wml",  "<cmd>wincmd L<cr>", desc = "Ri",       remap = false },
-                { "<leader>wmt",  "<cmd>wincmd T<cr>", desc = "Tab",      remap = false },
-                { "<leader>wmx",  "<cmd>wincmd x<cr>", desc = "Exch",     remap = false },
-                { "<leader>wmd",  "<cmd>wincmd r<cr>", desc = "Dn",       remap = false },
-                { "<leader>wmu",  "<cmd>wincmd R<cr>", desc = "Up",       remap = false },
-
-                { "<leader>wo",   "<cmd>wincmd o<cr>", desc = "Only",     remap = false },
-                { "<leader>wc",   "<cmd>wincmd c<cr>", desc = "Close",    remap = false },
-                { "<leader>wq",   "<cmd>wincmd q<cr>", desc = "Quit",     remap = false },
-                { "<leader>wx",   "<cmd>wincmd x<cr>", desc = "Exchange", remap = false },
-
-                { "<leader>ws",   group = "Split",     remap = false },
-                { "<leader>wsj",  "<cmd>split<cr>",    desc = "Down",     remap = false },
-                { "<leader>wsl",  "<cmd>vsplit<cr>",   desc = "Right",    remap = false },
-
-            }
-        )
-    end
 
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
@@ -1459,7 +1466,6 @@ else
                 null_ls.builtins.formatting.markdownlint,
                 null_ls.builtins.formatting.mdformat,
                 null_ls.builtins.formatting.nixfmt,
-                null_ls.builtins.formatting.stylua,
                 null_ls.builtins.formatting.prettier,
                 null_ls.builtins.formatting.rustywind,
                 null_ls.builtins.formatting.shellharden,
@@ -1515,30 +1521,7 @@ else
             },
         })
     end
-    -- This is your opts table
-    require("telescope").setup({
-        extensions = {
-            ["ui-select"] = {
-                require("telescope.themes").get_dropdown({
-                    -- even more opts
-                }),
 
-                -- pseudo code / specification for writing custom displays, like the one
-                -- for "codeactions"
-                -- specific_opts = {
-                --   [kind] = {
-                --     make_indexed = function(items) -> indexed_items, width,
-                --     make_displayer = function(widths) -> displayer
-                --     make_display = function(displayer) -> function(e)
-                --     make_ordinal = function(e) -> string
-                --   },
-                --   -- for example to disable the custom builtin "codeactions" display
-                --      do the following
-                --   codeactions = false,
-                -- }
-            },
-        },
-    })
     local has_dap, dap = pcall(require, "dap")
     local has_dapui, dapui = pcall(require, "dapui")
     local has_dapwidgets, dapwidgets = pcall(require, "dap.ui.widgets")
@@ -1595,12 +1578,31 @@ else
             dapuiwidget.centered_float(dapwidgets.scopes)
         end, { desc = "Debug: Scope" })
     end
-    require("mason-nvim-dap").setup({
-        automatic_installation = true,
-        handlers = {},
-        ensure_installed = {},
-    })
-    wk.add({
-        { "<leader>d", group = "Debug", remap = false },
-    })
+    local has_mason_nvim_dap, mason_nvim_dap = pcall(require, "manson-nvim-dap")
+    if has_mason_nvim_dap then
+        mason_nvim_dap.setup({
+            automatic_installation = true,
+            handlers = {},
+            ensure_installed = {},
+        })
+    end
+    local has_ltex_extra, ltex_extra = pcall(require, "ltex-extra")
+    if has_ltex_extra then
+        ltex_extra.setup({
+            -- table <string> : languages for witch dictionaries will be loaded, e.g. { "es-AR", "en-US" }
+            -- https://valentjn.github.io/ltex/supported-languages.html#natural-languages
+            load_langs = { "en-US" }, -- en-US as default
+            -- boolean : whether to load dictionaries on startup
+            init_check = false,
+            -- string : relative or absolute path to store dictionaries
+            -- e.g. subfolder in the project root or the current working directory: ".ltex"
+            -- e.g. shared files for all projects:  vim.fn.expand("~") .. "/.local/share/ltex"
+            path = "", -- project root or current working directory
+            -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
+            log_level = "none",
+            -- table : configurations of the ltex language server.
+            -- Only if you are calling the server from ltex_extra
+            server_opts = nil,
+        })
+    end
 end

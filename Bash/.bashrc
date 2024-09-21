@@ -89,7 +89,7 @@ alias l='ls -lh'
 alias grep='grep --color=auto'
 alias es="emacs -nw"
 alias ec="emacsclient -ta 'emacs'"
-alias vi=nvim
+alias vi="nvim"
 alias nv=nvim
 alias lg=lazygit
 alias lgit=lazygit
@@ -97,9 +97,9 @@ alias ges="launch emacs"
 alias gec="launch emacsclient -ca 'emacs'"
 alias gnv="launch neovide"
 
-alias more=moar
-alias less=moar
-alias cat=bat
+alias more="moar"
+alias less="moar"
+alias cat="bat"
 alias cp="cp -i"
 alias df="df -h"
 alias free="free -m"
@@ -109,7 +109,7 @@ alias -- -="cd -"
 # export EDITOR="emacsclient -ta 'emacs'"
 # export VISUAL="emacsclient -ca 'emacs'"
 export EDITOR="nvim"
-export VISUAL="neovide"
+export VISUAL="nvim"
 export HISTSIZE=10000
 export HISTFILESIZE=10000
 
