@@ -7,7 +7,6 @@ alias rd=rmdir
 
 alias _="sudo "
 
-alias vi=nvim
 alias nv=nvim
 alias es="emacs -nw"
 alias ec="emacsclient -tqua ''"
@@ -33,7 +32,9 @@ alias lsa='ls -lah'
 alias l='ls -lah'
 alias ll='ls -lh'
 alias la='ls -lAh'
+if command -v lsd >/dev/null; then
 alias ls="lsd -h --color=auto --group-directories-first"
+fi
 alias lg=lazygit
 alias lgit=lazygit
 
@@ -43,11 +44,14 @@ alias fgrep='fgrep --colour=auto'
 alias cp="cp -i"     # confirm before overwriting something
 alias df='df -h'     # human-readable sizes
 alias free='free -m' # show sizes in MB
+if command -v moar >/dev/null; then
 alias more=moar
 alias less=moar
+fi
 alias act=appimage-cli-tool
 alias db=distrobox
 alias cat=bat
 alias ff=fastfetch
 alias datef="date -u +%a,\ %Y-%b-%d"
 alias datetimef="date -u +%a,\ %Y-%b-%d%n%H:%M\ \(%Z\)"
+alias wget="wget -c -T 60"

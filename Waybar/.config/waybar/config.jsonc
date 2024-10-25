@@ -167,10 +167,10 @@
     "format": "{usage}%\n ",
   },
   "memory": {
-    "format": "{}%\n ",
+    "format": "{percentage}%\n ",
   },
   "disk": {
-    "format": "{}%\n 󰋊",
+    "format": "{percentage_used}%\n 󰋊",
   },
   "temperature": {
     // "thermal-zone": 2,

@@ -29,9 +29,15 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 zstyle ':completion:*' menu select
+if command -v starship >/dev/null; then
 eval "$(starship init zsh)"
+fi
+if command -v zoxide >/dev/null; then
 eval "$(zoxide init zsh)"
+fi
+if command -v fastfetch >/dev/null; then
 fastfetch
+fi
 
 [ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
 
@@ -44,6 +50,10 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 [ -f  "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
 [ -f  "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
+if command -v fzf-share >/dev/null; then
+source $(fzf-share)/completion.zsh
+source $(fzf-share)/key-bindings.zsh
+fi
 
 # opam configuration
 [[ ! -r /home/ani/.opam/opam-init/init.zsh ]] || source /home/ani/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
