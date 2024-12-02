@@ -60,10 +60,10 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term foot
-set $dmenu dmenu-wl_path | dmenu-wl -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-10' -p 'Dmenu%' | xargs swaymsg exce --
-set $menu wofi --show drun,run
+set $dmenu dmenu-wl_path | dmenu-wl -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'Firacode Nerd Font 16' -p 'Applications...%' | xargs swaymsg exce --
+set $menu wofi -i --show 'drun,run' -p 'Applications...'
 set $browser org.mozilla.firefox
-set $fileManager yazi
+set $fileManager foot -e yazi
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -176,7 +176,8 @@ exec swayidle -w \
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+x exec $nag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
-    bindsym $mod+x exec archlinux-logout
+    # bindsym $mod+x exec archlinux-logout
+    bindsym $mod+x exec wlogout
 #
 # Moving around:
 #
