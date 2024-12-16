@@ -216,8 +216,8 @@
   "workbench.editor.showTabs": "single",
   "workbench.startupEditor": "none",
   "workbench.editor.enablePreview": false,
-  "editor.scrollbar.vertical": "visible",
-  "editor.scrollbar.verticalScrollbarSize": 8,
+  "editor.scrollbar.vertical": "hidden",
+  "editor.scrollbar.verticalScrollbarSize": 0,
   "window.menuBarVisibility": "toggle",
   "workbench.editorAssociations": {
     "*.pdf": "default"
@@ -255,5 +255,11 @@
   "editor.stickyScroll.maxLineCount": 3,
   "editor.stickyScroll.enabled": true,
   "editor.renderWhitespace": "all",
-  "editor.minimap.renderCharacters": false
+  "editor.minimap.renderCharacters": false,
+  "editor.folding": false,
+  "editor.foldingHighlight": false,
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.horizontalScrollbarSize": 0,
+  "editor.stickyScroll.scrollWithEditor": false,
+  "workbench.statusBar.visible": false
 }
