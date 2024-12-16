@@ -151,12 +151,30 @@ ex() {
 
 [ -f "/usr/share/fzf/completion.bash" ] && source "/usr/share/fzf/completion.bash"
 [ -f "/usr/share/fzf/key-bindings.bash" ] && source "/usr/share/fzf/key-bindings.bash"
+if command -v fzf-share >/dev/null; then
+source "$(fzf-share)/completions.bash"
+source "$(fzf-share)/key-bindings.bash"
+fi
 
+if command -v starship >/dev/null; then
 eval "$(starship init bash)"
+fi
+if command -v zoxide >/dev/null; then
 eval "$(zoxide init bash)"
+fi
+if command -v fastfetch >/dev/null; then
 fastfetch
+fi
 
 [ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
 
 bind -x '"\es":"sesh-sessions"'
 bind -x '"\et":"sesh-connect"'
+
+# Automatically added by the Guix install script.
+if [ -n "$GUIX_ENVIRONMENT" ]; then
+    if [[ $PS1 =~ (.*)"\\$" ]]; then
+        PS1="${BASH_REMATCH[1]} [env]\\\$ "
+    fi
+fi
+

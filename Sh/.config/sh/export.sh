@@ -21,3 +21,4 @@ export PATH="$PATH:$HOME/.emacs.d/bin"
 
 export MANPATH="$MANPATH:/nix/var/nix/profiles/default/share/man"
 export MANPATH="$MANPATH:$HOME/.nix-profile/share/man"
+export MANPAGER="nvim +Man!"

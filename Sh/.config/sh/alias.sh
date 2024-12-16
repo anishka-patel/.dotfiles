@@ -33,8 +33,9 @@ alias l='ls -lah'
 alias ll='ls -lh'
 alias la='ls -lAh'
 if command -v lsd >/dev/null; then
-alias ls="lsd -h --color=auto --group-directories-first"
+	alias ls="lsd -h --color=auto --group-directories-first"
 fi
+
 alias lg=lazygit
 alias lgit=lazygit
 
@@ -45,12 +46,14 @@ alias cp="cp -i"     # confirm before overwriting something
 alias df='df -h'     # human-readable sizes
 alias free='free -m' # show sizes in MB
 if command -v moar >/dev/null; then
-alias more=moar
-alias less=moar
+	alias more=moar
+	alias less=moar
 fi
 alias act=appimage-cli-tool
 alias db=distrobox
-alias cat=bat
+if command -v bat >/dev/null; then
+	alias cat=bat
+fi
 alias ff=fastfetch
 alias datef="date -u +%a,\ %Y-%b-%d"
 alias datetimef="date -u +%a,\ %Y-%b-%d%n%H:%M\ \(%Z\)"
