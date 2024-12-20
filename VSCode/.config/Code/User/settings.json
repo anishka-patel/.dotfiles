@@ -1,7 +1,7 @@
 {
   "editor.fontFamily": "'FiraCode Nerd Font'",
   "editor.fontLigatures": true,
-  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.defaultProfile.linux": "sh",
   "cSpell.customDictionaries": {
     "custom-dictionary-user": {
       "name": "custom-dictionary-user",
@@ -262,5 +262,28 @@
   "window.menuBarVisibility": "toggle",
   "editor.hover.sticky": false,
   "editor.folding": false,
-  "editor.foldingHighlight": false
+  "editor.foldingHighlight": false,
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "bash",
+      "icon": "terminal-bash"
+    },
+    "zsh": {
+      "path": "zsh"
+    },
+    "fish": {
+      "path": "fish"
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    },
+    "sh": {
+      "path": "/bin/sh"
+    }
+  }
 }

@@ -50,6 +50,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 [ -f  "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
 [ -f  "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
+[ -f  "/usr/share/fzf/shell/key-bindings.zsh" ] && source "/usr/share/fzf/shell/key-bindings.zsh"
 if command -v fzf-share >/dev/null; then
 source $(fzf-share)/completion.zsh
 source $(fzf-share)/key-bindings.zsh

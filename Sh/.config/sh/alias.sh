@@ -20,7 +20,6 @@ alias gvi=gvim
 alias ges="launch emacs"
 alias gec="launch emacsclient -caua ''"
 alias gnv=neovide
-alias code=codium
 # Dotfiles
 alias dotcfg="/usr/bin/git --git-dir=\$HOME/.cfg/ --work-tree=\$HOME"
 # Man / Tldr
