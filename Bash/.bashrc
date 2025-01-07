@@ -196,10 +196,6 @@ fi
 
 [ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
 
-if command -v sesh >/dev/null; then
-    sesh connect "~"
-fi
-
 bind -x '"\es":"sesh-sessions"'
 bind -x '"\et":"sesh-connect"'
 
