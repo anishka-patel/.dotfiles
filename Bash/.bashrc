@@ -27,11 +27,17 @@ fi
 unset rc
 
 bind 'set show-all-if-ambiguous on'
+bind 'set menu-complete-display-prefix on'
 bind 'TAB:menu-complete'
+bind 'set colored-completion-prefix on'
+bind 'set colored-stats on'
 
 # Vi style bindings
 set -o vi
+
 shopt -s autocd
+shopt -s expand_aliases
+shopt -s histappend
 
 [[ $- != *i* ]] && return
 
