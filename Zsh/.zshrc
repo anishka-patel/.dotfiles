@@ -29,6 +29,8 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 zstyle ':completion:*' menu select
+
+
 if command -v starship >/dev/null; then
 eval "$(starship init zsh)"
 fi
@@ -59,6 +61,8 @@ fi
 # opam configuration
 [[ ! -r /home/ani/.opam/opam-init/init.zsh ]] || source /home/ani/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
+if comman -v sesh >/dev/null; then
+sesh connect "~"
 zle     -N             sesh-sessions
 bindkey -M emacs '\es' sesh-sessions
 bindkey -M vicmd '\es' sesh-sessions
@@ -68,3 +72,6 @@ zle -N             sesh-connect
 bindkey -M emacs '\et' sesh-connect
 bindkey -M vicmd '\et' sesh-connect
 bindkey -M viins '\et' sesh-connect
+
+fi
+

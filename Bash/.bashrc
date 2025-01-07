@@ -185,14 +185,20 @@ fi
 if command -v starship >/dev/null; then
 eval "$(starship init bash)"
 fi
+
 if command -v zoxide >/dev/null; then
 eval "$(zoxide init bash)"
 fi
+
 if command -v fastfetch >/dev/null; then
 fastfetch
 fi
 
 [ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
+
+if command -v sesh >/dev/null; then
+    sesh connect "~"
+fi
 
 bind -x '"\es":"sesh-sessions"'
 bind -x '"\et":"sesh-connect"'
@@ -204,3 +210,6 @@ if [ -n "$GUIX_ENVIRONMENT" ]; then
     fi
 fi
 
+### bling.sh source start
+test -f /usr/share/ublue-os/aurora-cli/bling.sh && source /usr/share/ublue-os/aurora-cli/bling.sh
+### bling.sh source end

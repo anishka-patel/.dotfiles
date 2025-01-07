@@ -1,7 +1,7 @@
 {
   "editor.fontFamily": "'FiraCode Nerd Font'",
   "editor.fontLigatures": true,
-  "terminal.integrated.defaultProfile.linux": "sh",
+  "terminal.integrated.defaultProfile.linux": "bash",
   "cSpell.customDictionaries": {
     "custom-dictionary-user": {
       "name": "custom-dictionary-user",
@@ -248,7 +248,7 @@
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "workbench.iconTheme": "material-icon-theme",
+  "workbench.iconTheme": "vscode-icons",
   "editor.stickyScroll.maxLineCount": 1,
   "editor.stickyScroll.enabled": false,
   "editor.renderWhitespace": "all",
@@ -284,6 +284,9 @@
     },
     "sh": {
       "path": "/bin/sh"
+    },
+    "bash (2)": {
+      "path": "/usr/bin/bash"
     }
   }
 }
