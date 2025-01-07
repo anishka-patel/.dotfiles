@@ -6,9 +6,15 @@ SAVEHIST=50000
 bindkey -v
 setopt autocd autopushd pushdignoredups
 
+if command -v brew >/dev/null; then
+autosuggestionspath="/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+syntaxhighlightingpath="/home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+historysubstringpath="/home/linuxbrew/.linuxbrew/share/zsh-history-substring-search.zsh"
+else
 autosuggestionspath="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 syntaxhighlightingpath="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 historysubstringpath="/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
+fi
 [ -f $autosuggestionspath ] && source $autosuggestionspath
 [ -f $syntaxhighlightingpath ] && source $syntaxhighlightingpath
 [ -f $historysubstringpath ] && source $historysubstringpath
@@ -74,4 +80,13 @@ bindkey -M emacs '\et' sesh-connect
 bindkey -M vicmd '\et' sesh-connect
 bindkey -M viins '\et' sesh-connect
 fi
-
+# Change cursor shape for different vi modes
+function zle-keymap-select {
+    if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+        echo -ne '\e[1 q' # Set block cursor
+    else
+        echo -ne '\e[5 q' # Set beam cursor
+    fi
+}
+zle -N zle-keymap-select
+precmd_functions+=(zle-keymap-select)
