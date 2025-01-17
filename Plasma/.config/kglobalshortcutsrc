@@ -30,7 +30,7 @@ mute=Volume Mute,Volume Mute,Mute
 
 [ksmserver]
 Halt Without Confirmation=none,,Shut Down Without Confirmation
-Lock Session=Meta+L\tScreensaver,Meta+L\tScreensaver,Lock Session
+Lock Session=Ctrl+Alt+L\tScreensaver\tCtrl+Alt+X,Meta+L\tScreensaver,Lock Session
 Log Out=Meta+X\tCtrl+Alt+Del,Ctrl+Alt+Del,Show Logout Screen
 Log Out Without Confirmation=none,,Log Out Without Confirmation
 LogOut=none,,Log Out
@@ -90,9 +90,9 @@ Switch to Desktop 6=Meta+6,,Switch to Desktop 6
 Switch to Desktop 7=Meta+7,,Switch to Desktop 7
 Switch to Desktop 8=Meta+8,,Switch to Desktop 8
 Switch to Desktop 9=Meta+9,,Switch to Desktop 9
-Switch to Next Desktop=none,,Switch to Next Desktop
+Switch to Next Desktop=Meta+L,,Switch to Next Desktop
 Switch to Next Screen=Meta+Shift+J,,Switch to Next Screen
-Switch to Previous Desktop=none,,Switch to Previous Desktop
+Switch to Previous Desktop=Meta+H,,Switch to Previous Desktop
 Switch to Previous Screen=Meta+Shift+K,,Switch to Previous Screen
 Switch to Screen 0=none,,Switch to Screen 0
 Switch to Screen 1=none,,Switch to Screen 1
@@ -177,9 +177,9 @@ Window to Desktop 6=Meta+^,,Window to Desktop 6
 Window to Desktop 7=Meta+&,,Window to Desktop 7
 Window to Desktop 8=Meta+*,,Window to Desktop 8
 Window to Desktop 9=Meta+(,,Window to Desktop 9
-Window to Next Desktop=none,,Window to Next Desktop
+Window to Next Desktop=Meta+Shift+L,,Window to Next Desktop
 Window to Next Screen=Meta+Shift+Right\tMeta+Ctrl+J,Meta+Shift+Right,Move Window to Next Screen
-Window to Previous Desktop=none,,Window to Previous Desktop
+Window to Previous Desktop=Meta+Shift+H,,Window to Previous Desktop
 Window to Previous Screen=Meta+Ctrl+K\tMeta+Shift+Left,Meta+Shift+Left,Move Window to Previous Screen
 Window to Screen 0=none,,Move Window to Screen 0
 Window to Screen 1=none,,Move Window to Screen 1
@@ -256,7 +256,7 @@ toggle do not disturb=none,,Toggle do not disturb
 new-window=Meta+I
 
 [services][net.local.konsole.desktop]
-_launch=Meta+Y
+_launch=Ctrl+Alt+E\tMeta+Y
 
 [services][net.local.plasmashell.desktop]
 _launch=Meta+Ctrl+C
@@ -268,10 +268,10 @@ _launch=Ctrl+Alt+F
 _launch=Ctrl+Alt+A
 
 [services][org.gnome.Ptyxis.desktop]
-new-window=Meta+Return\tCtrl+Alt+T
+new-window=Meta+Return\tCtrl+Alt+T\tMeta+`
 
 [services][org.kde.konsole.desktop]
-NewWindow=Ctrl+Alt+Return
+NewWindow=Ctrl+Alt+Return\tCtrl+Alt+`
 _launch=none
 
 [services][org.kde.krunner.desktop]
@@ -282,4 +282,4 @@ _launch=Meta+.
 
 [yakuake]
 _k_friendly_name=Yakuake
-toggle-window-state=F12\tMeta+`,F12,Open/Retract Yakuake
+toggle-window-state=F12,F12,Open/Retract Yakuake

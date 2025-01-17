@@ -1,4 +1,3 @@
-local vim = vim
 local ensure_packer = function()
     local fn = vim.fn
     local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
@@ -11,15 +10,6 @@ local ensure_packer = function()
 end
 
 local packer_bootstrap = ensure_packer()
-
--- Autocommand to source the file and run PackerSync on write to file
-
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost init.lua source <afile> | PackerSync
-  augroup end
-]])
 
 local has_packer, packer = pcall(require, "packer")
 if not has_packer then
@@ -348,7 +338,7 @@ else
         use({
             "nvim-focus/focus.nvim",
             config = function()
-                require("focus").setup()
+                require("focus").setup({})
             end
         })
         use({
@@ -648,48 +638,9 @@ else
         keymap("n", "<leader>gl", "<cmd>Neogit log<cr>", opts)
     end
 
-    local has_wk, wk = pcall(require, "which-key")
-    if has_wk then
-        vim.o.timeout = true
-        vim.o.timeoutlen = 300
-        wk.setup()
-    end
-
-    if has_wk then
-        wk.add({
-            { "<leader>n", group = "Neotree", remap = false },
-        })
-        wk.add({
-            { "<leader>t",  group = "Toggle",          remap = false },
-            { "<leader>te", "<cmd>NeoTree toggle<cr>", desc = "Neo Tree",  remap = false },
-            { "<leader>ts", "<cmd>SymbolsOutline<cr>", desc = "Symbols",   remap = false },
-            { "<leader>tt", "<cmd>ToggleTerm<cr>",     desc = "Terminal",  remap = false },
-            { "<leader>tu", "<cmd>UndotreeToggle<cr>", desc = "Undo Tree", remap = false },
-            { "<leader>tz", "<cmd>ZenMode<cr>",        remap = false },
-        }, opts)
-    end
-
-    if has_wk then
-        wk.add({
-            { "<leader>E",  group = "Error",  remap = false },
-            { "<leader>En", "<cmd>cnext<cr>", desc = "Next", remap = false },
-            { "<leader>Ep", "<cmd>cprev<cr>", desc = "Prev", remap = false },
-        }, opts)
-    end
-
     keymap("n", "<leader>bn", "<cmd>bn<cr>", opts)
     keymap("n", "<leader>bp", "<cmd>bp<cr>", opts)
     keymap("n", "<leader>bd", "<cmd>bd<cr>", opts)
-
-    if has_wk then
-        wk.add({
-            { "<leader>b",  group = "Buffer",           remap = false },
-            { "<leader>bd", "<cmd>bd<cr>",              desc = "Buffer Delete",   remap = false },
-            { "<leader>bn", "<cmd>bn<cr>",              desc = "Buffer Next",     remap = false },
-            { "<leader>bp", "<cmd>bp<cr>",              desc = "Buffer Previous", remap = false },
-            { "<leader>bb", "<cmd>Neotree buffers<cr>", desc = "Buffer List",     remap = false },
-        }, opts)
-    end
 
     local has_nvim_tree, nvim_tree = pcall(require, "nvim-tree")
 
@@ -767,6 +718,13 @@ else
         lspconfig.nil_ls.setup({})
         lspconfig.grammarly.setup({})
         lspconfig.ltex.setup({})
+        lspconfig.lua_ls.setup({
+            settings = {
+                Lua = {
+                    diagnostics = { globals = { "vim" }, },
+                },
+            },
+        })
     end
 
     local has_lspzero, lspzero = pcall(require, "lsp-zero")
@@ -975,11 +933,6 @@ else
                 { desc = "Signature", buffer = bufnr, remap = false }
             )
 
-            if has_wk then
-                wk.add({
-                    { "<leader>v", buffer = 1, group = "Vim Lsp", remap = false },
-                })
-            end
 
             keymap("n", "<leader>ls", vim.lsp.buf.workspace_symbol, {
                 desc = "Symbols",
@@ -1023,12 +976,6 @@ else
                 { desc = "Signature", buffer = bufnr, remap = false }
             )
             keymap("n", "<leader>lf", vim.lsp.buf.format, { desc = "Format", buffer = bufnr, remap = false })
-
-            if has_wk then
-                wk.add({
-                    { "<leader>l", buffer = 1, group = "Lsp", remap = false },
-                })
-            end
         end)
 
         lspzero.setup()
@@ -1088,13 +1035,6 @@ else
         keymap("n", "<leader>slS", telescope_builtin.lsp_workspace_symbols, { desc = "Lsp Workspace Symbols" })
         keymap("n", "<leader>ss", "<cmd>Telescope<cr>", { desc = "Find all" })
         keymap("n", "<leader>sp", "<cmd>Telescope project<cr>", { desc = "Find project" })
-    end
-
-    if has_wk then
-        wk.add({
-            { "<leader>o", group = "Org",    remap = false },
-            { "<leader>s", group = "Search", remap = false },
-        }, opts)
     end
 
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -1264,11 +1204,119 @@ else
         ensure_installed = {},
     })
 
-    wk.add({
-        { "<leader>d", group = "Debug", remap = false },
-    })
+    local has_wk, wk = pcall(require, "which-key")
+
+    if has_wk then
+        vim.o.timeout = true
+        vim.o.timeoutlen = 300
+        wk.setup()
+
+        wk.add({
+
+            { "<leader>.",       "<cmd>Telescope find_files<cr>", desc = "Find File",   remap = false },
+            { "<leader>,",       "<cmd>Oil<cr>",                  desc = "Oil",         remap = false },
+            { "<leader>/",       "<cmd>Telescope live_grep<cr>",  desc = "Live Grep",   remap = false },
+            { "<leader>;",       "<cmd>Telescope<cr>",            desc = "Telescope",   remap = false },
+            { "<leader>'",       "<cmd>Neogit<cr>",               desc = "Neogit",      remap = false },
+            { "<leader>`",       "<cmd>ToggleTerm<cr>",           desc = "Toggle Term", remap = false },
+            { "<leader><space>", "<cmd>Neotree toggle<cr>",       desc = "Neotree",     remap = false },
+
+            { "<leader>e",       group = "Edit",                  remap = false },
+            { "<leader>f",       group = "File",                  remap = false },
+            { "<leader>n",       group = "Neotree",               remap = false },
+            { "<leader>g",       group = "Git",                   remap = false },
+            { "<leader>i",       group = "Insert",                remap = false },
+            { "<leader>l",       group = "Lsp",                   remap = false },
+            { "<leader>w",       group = "Window",                remap = false },
+            { "<leader>sl",      group = "LSP",                   remap = false },
+            { "<leader>o",       group = "Org",                   remap = false },
+            { "<leader>s",       group = "Search",                remap = false },
+            { "<leader>d",       group = "Debug",                 remap = false },
+            { "<leader>l",       group = "Lsp",                   remap = false },
+
+        })
+
+        wk.add({
+            { "<leader>en", "<cmd>edit ~/.config/nvim/init.lua<cr>",      desc = "Edit Neovim",   remap = false },
+            { "<leader>eh", "<cmd>edit ~/.config/hypr/hyprland.conf<cr>", desc = "Edit Hyprland", remap = false },
+            { "<leader>ew", "<cmd>edit ~/.config/hypr/waybar/<cr>",       desc = "Edit Waybar",   remap = false },
+            { "<leader>ek", "<cmd>edit ~/.config/kitty/<cr>",             desc = "Edit Kitty",    remap = false },
+            { "<leader>ee", "<cmd>edit ~/.emacs.d/init.el<cr>",           desc = "Edit Emacs",    remap = false },
+            { "<leader>eb", "<cmd>edit ~/.bashrc<cr>",                    desc = "Edit Bash",     remap = false },
+            { "<leader>et", "<cmd>edit ~/.tmux.conf<cr>",                 desc = "Edit Tmux",     remap = false },
+        })
+
+        wk.add({
+            { "<leader>t",  group = "Toggle",          remap = false },
+            { "<leader>te", "<cmd>Neotree toggle<cr>", desc = "Neo Tree",   remap = false },
+            { "<leader>tt", "<cmd>ToggleTerm<cr>",     desc = "Terminal",   remap = false },
+            { "<leader>tp", "<cmd>Presenting<cr>",     desc = "Presenting", remap = false },
+            { "<leader>tf", "<cmd>FocusToggle<cr>",    desc = "Presenting", remap = false },
+
+        }, opts)
+
+        wk.add({
+            { "<leader>E",  group = "Error",  remap = false },
+            { "<leader>En", "<cmd>cnext<cr>", desc = "Next", remap = false },
+            { "<leader>Ep", "<cmd>cprev<cr>", desc = "Prev", remap = false },
+        }, opts)
+
+        wk.add({
+            { "<leader>b",  group = "Buffer",           remap = false },
+            { "<leader>bd", "<cmd>bd<cr>",              desc = "Buffer Delete",   remap = false },
+            { "<leader>bn", "<cmd>bn<cr>",              desc = "Buffer Next",     remap = false },
+            { "<leader>bp", "<cmd>bp<cr>",              desc = "Buffer Previous", remap = false },
+            { "<leader>bb", "<cmd>Neotree buffers<cr>", desc = "Buffer List",     remap = false },
+        }, opts)
+
+        wk.add(
+            {
+                { "<leader>w",    group = "Window",    remap = false },
+
+                { "<leader>wr",   group = "Resize",    remap = false },
+                { "<leader>wrr",  "<cmd>wincmd =<cr>", desc = "Reset",    remap = false },
+                { "<leader>wrh",  group = "Height",    remap = false },
+                { "<leader>wrhi", "<cmd>wincmd +<cr>", desc = "Inc",      remap = false },
+                { "<leader>wrhd", "<cmd>wincmd -<cr>", desc = "Dec",      remap = false },
+                { "<leader>wrhm", "<cmd>wincmd _<cr>", desc = "Max",      remap = false },
+                { "<leader>wrw",  group = "Width",     remap = false },
+                { "<leader>wrwi", "<cmd>wincmd ><cr>", desc = "Inc",      remap = false },
+                { "<leader>wrwd", "<cmd>wincmd <<cr>", desc = "Dec",      remap = false },
+                { "<leader>wrwm", "<cmd>wincmd |<cr>", desc = "Max",      remap = false },
+
+                { "<leader>wf",   group = "Focus",     remap = false },
+                { "<leader>wfh",  "<cmd>wincmd h<cr>", desc = "Lf",       remap = false },
+                { "<leader>wfj",  "<cmd>wincmd j<cr>", desc = "Dn",       remap = false },
+                { "<leader>wfk",  "<cmd>wincmd k<cr>", desc = "Up",       remap = false },
+                { "<leader>wfl",  "<cmd>wincmd l<cr>", desc = "Ri",       remap = false },
+                { "<leader>wfn",  "<cmd>wincmd w<cr>", desc = "Next",     remap = false },
+                { "<leader>wfp",  "<cmd>wincmd W<cr>", desc = "Prev",     remap = false },
+
+                { "<leader>wm",   group = "Move",      remap = false },
+                { "<leader>wmh",  "<cmd>wincmd H<cr>", desc = "Lf",       remap = false },
+                { "<leader>wmj",  "<cmd>wincmd J<cr>", desc = "Dn",       remap = false },
+                { "<leader>wmk",  "<cmd>wincmd K<cr>", desc = "Up",       remap = false },
+                { "<leader>wml",  "<cmd>wincmd L<cr>", desc = "Ri",       remap = false },
+                { "<leader>wmt",  "<cmd>wincmd T<cr>", desc = "Tab",      remap = false },
+                { "<leader>wmx",  "<cmd>wincmd x<cr>", desc = "Exch",     remap = false },
+                { "<leader>wmd",  "<cmd>wincmd r<cr>", desc = "Dn",       remap = false },
+                { "<leader>wmu",  "<cmd>wincmd R<cr>", desc = "Up",       remap = false },
+
+                { "<leader>wo",   "<cmd>wincmd o<cr>", desc = "Only",     remap = false },
+                { "<leader>wc",   "<cmd>wincmd c<cr>", desc = "Close",    remap = false },
+                { "<leader>wq",   "<cmd>wincmd q<cr>", desc = "Quit",     remap = false },
+                { "<leader>wx",   "<cmd>wincmd x<cr>", desc = "Exchange", remap = false },
+
+                { "<leader>ws",   group = "Split",     remap = false },
+                { "<leader>wsj",  "<cmd>split<cr>",    desc = "Down",     remap = false },
+                { "<leader>wsl",  "<cmd>vsplit<cr>",   desc = "Right",    remap = false },
+
+            }
+        )
+    end
 
     keymap({ "v", "n" }, "ga", require("actions-preview").code_actions)
+
 
 
     vim.api.nvim_create_autocmd('TextYankPost', {

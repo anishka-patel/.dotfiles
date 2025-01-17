@@ -1,7 +1,7 @@
 # export TERM="alacritty"
 export EDITOR="nvim"
 export VISUAL="nvim"
-export SUDO_EDITOR="nvim --clean"
+export SUDO_EDITOR="vim"
 # Incrase history size
 export HISTSIZE=10000
 export HISTFILESIZE=10000

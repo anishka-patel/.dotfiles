@@ -23,7 +23,7 @@ if command -v emacs >/dev/null;then
 alias es="emacs -nw"
 alias ec="emacsclient -tqua ''"
 alias ges="launch emacs"
-alias gec="launch emacsclient -caua ''"
+alias gec="launch emacsclient -cqua ''"
 fi
 
 if command -v neovide >/dev/null; then
@@ -71,7 +71,7 @@ alias db=distrobox
 fi
 
 if command -v bat >/dev/null; then
-	alias cat=bat
+	alias cat="bat --theme Dracula"
 fi
 
 if command -v fastfetch  >/dev/null;then

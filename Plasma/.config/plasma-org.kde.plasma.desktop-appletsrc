@@ -70,7 +70,7 @@ plugin=org.kde.plasma.kicker
 [Containments][2][Applets][32][Configuration]
 PreloadWeight=100
 popupHeight=443
-popupWidth=561
+popupWidth=300
 
 [Containments][2][Applets][32][Configuration][General]
 favoritesPortedToKAstats=true
@@ -90,7 +90,7 @@ DialogWidth=1536
 
 [Containments][2][Applets][5][Configuration][General]
 groupingStrategy=0
-launchers=applications:com.brave.Browser.desktop,applications:org.kde.discover.desktop,preferred://filemanager,applications:org.gnome.Ptyxis.desktop,applications:systemsettings.desktop
+launchers=applications:com.brave.Browser.desktop,applications:org.kde.discover.desktop,applications:systemsettings.desktop,preferred://filemanager,applications:org.gnome.Ptyxis.desktop
 showOnlyCurrentScreen=true
 
 [Containments][2][Applets][7]
@@ -98,7 +98,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][2][Applets][7][Configuration]
-PreloadWeight=90
+PreloadWeight=100
 SystrayContainmentId=8
 
 [Containments][2][General]
@@ -163,6 +163,9 @@ PreloadWeight=55
 immutability=1
 plugin=org.kde.plasma.printmanager
 
+[Containments][8][Applets][18][Configuration]
+PreloadWeight=55
+
 [Containments][8][Applets][19]
 immutability=1
 plugin=org.kde.plasma.vault
@@ -189,14 +192,14 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][8][Applets][24][Configuration]
-PreloadWeight=60
+PreloadWeight=65
 
 [Containments][8][Applets][25]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][8][Applets][25][Configuration]
-PreloadWeight=5
+PreloadWeight=0
 
 [Containments][8][Applets][26]
 immutability=1
@@ -204,6 +207,13 @@ plugin=org.kde.plasma.brightness
 
 [Containments][8][Applets][26][Configuration]
 PreloadWeight=0
+
+[Containments][8][Applets][33]
+immutability=1
+plugin=org.kde.plasma.mediacontroller
+
+[Containments][8][Applets][33][Configuration]
+PreloadWeight=42
 
 [Containments][8][Applets][9]
 immutability=1

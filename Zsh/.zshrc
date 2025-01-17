@@ -75,7 +75,7 @@ bindkey -M emacs '\es' sesh-sessions
 bindkey -M vicmd '\es' sesh-sessions
 bindkey -M viins '\es' sesh-sessions
 
-zle -N             sesh-connect
+zle     -N             sesh-connect
 bindkey -M emacs '\et' sesh-connect
 bindkey -M vicmd '\et' sesh-connect
 bindkey -M viins '\et' sesh-connect

@@ -1,0 +1,11 @@
+theme = "dracula"
+[editor]
+line-number = "relative"
+rulers = [80]
+cursorline = true
+cursorcolumn = true
+scrolloff = 8
+[editor.whitespace]
+render = "all"
+[editor.indent-guides]
+render = true
