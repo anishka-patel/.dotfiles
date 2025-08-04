@@ -738,7 +738,7 @@
 
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
-(use-package dired-single)
+;; (use-package dired-single)
 
 (use-package all-the-icons-dired)
 

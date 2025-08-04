@@ -90,3 +90,6 @@ function zle-keymap-select {
 }
 zle -N zle-keymap-select
 precmd_functions+=(zle-keymap-select)
+### bling.sh source start
+test -f /usr/share/ublue-os/bling/bling.sh && source /usr/share/ublue-os/bling/bling.sh
+### bling.sh source end

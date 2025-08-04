@@ -783,7 +783,7 @@ else
         "stylelint_lsp",
         -- "tsserver",
         "vimls",
-        "volar",
+        -- "volar",
         "yamlls",
         "zls",
     }

@@ -288,5 +288,9 @@
     "bash (2)": {
       "path": "/usr/bin/bash"
     }
-  }
+  },
+  "godotTools.editorPath.godot4": "org.godotengine.Godot",
+  "chat.commandCenter.enabled": false,
+  "workbench.layoutControl.enabled": false,
+  "workbench.navigationControl.enabled": false
 }
