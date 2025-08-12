@@ -1,28 +1,18 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-        vim.cmd([[packadd packer.nvim]])
-        return true
-    end
-    return false
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
-
-local packer_bootstrap = ensure_packer()
-
-local has_packer, packer = pcall(require, "packer")
-if not has_packer then
-    print("Packer not found!")
-end
-
-packer.init({
-    display = {
-        open_fn = function()
-            return require("packer.util").float({ border = "rounded" })
-        end,
-    },
-})
+vim.opt.rtp:prepend(lazypath)
 
 if vim.g.vscode then
     -- if true then  -- Uncomment to chekcout vscode config in neovim
@@ -65,51 +55,51 @@ if vim.g.vscode then
     vim.opt.ignorecase = true
     vim.opt.smartcase = true
     vim.opt.scrolloff = 8
+    vim.opt.sidescrolloff = 16
     vim.opt.termguicolors = true
 
-    packer.startup(function(use)
-        use({
-            "kylechui/nvim-surround",
-            config = function()
-                require("nvim-surround").setup()
-            end
-        })
-        use({
-            "windwp/nvim-autopairs",
-            config = function()
-                require("nvim-autopairs").setup()
-            end
-        })
-        use({
-            "ggandor/leap.nvim",
-            config = function()
-                require("leap").add_default_mappings()
-            end
-        })
-
-        use({
-            "numToStr/Comment.nvim",
-            config = function()
-                require("Comment").setup()
-            end
-        })
-        use({
-            "echasnovski/mini.ai",
-            config = function()
-                require("mini.ai").setup()
-            end
-        })
-        use({
-            "Wansmer/treesj",
-            requries = { "nvim-treesitter/nvim-treesitter" },
-            config = function()
-                require("treesj").setup({ use_default_keymaps = false })
-            end
-        })
-        if packer_bootstrap then
-            require("packer").sync()
-        end
-    end)
+    require("lazy").setup({
+        spec = {
+            {
+                "kylechui/nvim-surround",
+                config = function()
+                    require("nvim-surround").setup()
+                end
+            },
+            {
+                "windwp/nvim-autopairs",
+                config = function()
+                    require("nvim-autopairs").setup()
+                end
+            },
+            {
+                "ggandor/leap.nvim",
+                config = function()
+                    require("leap").add_default_mappings()
+                end
+            },
+            {
+                "numToStr/Comment.nvim",
+                config = function()
+                    require("Comment").setup()
+                end
+            },
+            {
+                "echasnovski/mini.ai",
+                config = function()
+                    require("mini.ai").setup()
+                end
+            },
+            {
+                "Wansmer/treesj",
+                dependencies = { "nvim-treesitter/nvim-treesitter" },
+                config = function()
+                    require("treesj").setup({ use_default_keymaps = false })
+                end
+            }
+        },
+        checker = {enabled = true},
+    })
 
     vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
         callback = function(_)
@@ -181,12 +171,13 @@ else
 
     -- Options
     vim.opt.scrolloff = 8
+    vim.opt.sidescrolloff = 16
     vim.opt.backup = false
     vim.opt.clipboard:append({ "unnamedplus" })
     vim.opt.hlsearch = true
     vim.opt.mouse = "a"
     vim.opt.pumheight = 10
-    vim.opt.showmode = false
+    vim.opt.showmode = true
     vim.opt.showtabline = 1
     vim.opt.ignorecase = true
     vim.opt.smartcase = true
@@ -217,275 +208,280 @@ else
     vim.opt.foldcolumn = "auto"
     vim.opt.cmdheight = 1
 
-    packer.startup(function(use)
-        use({
-            "NeogitOrg/neogit",
-            requires = {
-                { "nvim-lua/plenary.nvim" },
-                { "sindrets/diffview.nvim" },
-                { "nvim-telescope/telescope.nvim" },
+    require("lazy").setup( {
+        spec = {
+            {
+                "NeogitOrg/neogit",
+                dependencies = {
+                    { "nvim-lua/plenary.nvim" },
+                    { "sindrets/diffview.nvim" },
+                    { "nvim-telescope/telescope.nvim" },
+                },
+                config = function()
+                    local neogit = require("neogit")
+                    neogit.setup({})
+                end,
             },
-            config = function()
-                local neogit = require("neogit")
-                neogit.setup({})
-            end,
-        })
-        use("wbthomason/packer.nvim")
-        use("habamax/vim-asciidoctor")
-        use("Mofiqul/dracula.nvim")
-        -- Lualine
-        use("nvim-lualine/lualine.nvim")
-        use("kyazdani42/nvim-web-devicons")
-        -- Telescope
-        use({
-            "nvim-telescope/telescope-fzf-native.nvim",
-            run =
-            "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-        })
-        use({
-            "nvim-telescope/telescope.nvim",
-            tag = "0.1.x",
-            requires = { { "nvim-lua/plenary.nvim" } },
-        })
-        -- Ease of life stuff
-        use({
-            "kylechui/nvim-surround",
-            config = function()
-                require("nvim-surround").setup()
-            end
-        })
-        use({
-            "windwp/nvim-autopairs",
-            config = function()
-                require("nvim-autopairs").setup()
-            end
-        })
-        use("windwp/nvim-ts-autotag")
-        use({
-            "numToStr/Comment.nvim",
-            config = function()
-                require("Comment").setup()
-            end
-        })
-        -- leap
-        use({
-            "ggandor/leap.nvim",
-            config = function()
-                require("leap").add_default_mappings()
-            end
-        })
-        -- Display hexcodes as colors
-        use({
-            "norcalli/nvim-colorizer.lua",
-            config = function()
-                require("colorizer").setup()
-            end
-        })
-        -- Treesitter
-        use({ "nvim-treesitter/nvim-treesitter", run = "<cmd>TSUpdate" })
-        use("HiPhish/rainbow-delimiters.nvim")
-        use({
-            "echasnovski/mini.ai",
-            config = function()
-                require("mini.ai").setup()
-            end
-        })
-        -- Undo Tree
-        use("mbbill/undotree")
-        -- Terminal
-        use("akinsho/toggleterm.nvim")
-        -- LSP
-        use({
-            "VonHeikemen/lsp-zero.nvim",
-            branch = "v1.x",
-            requires = {
-                -- LSP Support
-                { "neovim/nvim-lspconfig" },
-                { "williamboman/mason.nvim" },
-                { "williamboman/mason-lspconfig.nvim" },
+            {"wbthomason/packer.nvim"},
+            {"habamax/vim-asciidoctor"},
+            {"Mofiqul/dracula.nvim"},
 
-                -- Autocompletion
-                { "hrsh7th/nvim-cmp" },
-                { "hrsh7th/cmp-buffer" },
-                { "hrsh7th/cmp-path" },
-                { "saadparwaiz1/cmp_luasnip" },
-                { "hrsh7th/cmp-nvim-lsp" },
-                { "hrsh7th/cmp-nvim-lua" },
-
-                -- Snippets
-                { "L3MON4D3/LuaSnip" },
-                { "rafamadriz/friendly-snippets" },
+            -- Lualine
+            { "nvim-lualine/lualine.nvim" },
+            { "kyazdani42/nvim-web-devicons" },
+            -- Telescope
+            {
+                "nvim-telescope/telescope-fzf-native.nvim",
+                run =
+                    "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
             },
-        })
-        use({ "L3MON4D3/LuaSnip", run = "make install_jsregexp" })
-        -- Zen mode
-        use("folke/zen-mode.nvim")
-        -- Orgmode
-        use("nvim-orgmode/orgmode")
-        use({
-            "dhruvasagar/vim-table-mode",
-            ft = { "md", "org" }
-        })
+            {
+                "nvim-telescope/telescope.nvim",
+                tag = "0.1.8",
+                dependencies = { { "nvim-lua/plenary.nvim" } },
+            },
+            -- Ease of life stuff
+            {
+                "kylechui/nvim-surround",
+                config = function()
+                    require("nvim-surround").setup()
+                end
+            },
+            {
+                "windwp/nvim-autopairs",
+                config = function()
+                    require("nvim-autopairs").setup()
+                end
+            },
+            { "windwp/nvim-ts-autotag" },
+            {
+                "numToStr/Comment.nvim",
+                config = function()
+                    require("Comment").setup()
+                end
+            },
+            -- leap
+            {
+                "ggandor/leap.nvim",
+                config = function()
+                    require("leap").add_default_mappings()
+                end
+            },
+            -- Display hexcodes as colors
+            {
+                "norcalli/nvim-colorizer.lua",
+                config = function()
+                    require("colorizer").setup()
+                end
+            },
+            -- Treesitter
+            { "nvim-treesitter/nvim-treesitter", run = "<cmd>TSUpdate" },
+            { "HiPhish/rainbow-delimiters.nvim" },
+            {
+                "echasnovski/mini.ai",
+                config = function()
+                    require("mini.ai").setup()
+                end
+            },
+            -- Undo Tree
+            { "mbbill/undotree" },
+            -- Terminal
+            { "akinsho/toggleterm.nvim" },
+            -- LSP
+            {
+                "VonHeikemen/lsp-zero.nvim",
+                branch = "v1.x",
+                dependencies = {
+                    -- LSP Support
+                    { "neovim/nvim-lspconfig" },
+                    { "williamboman/mason.nvim" },
+                    { "williamboman/mason-lspconfig.nvim" },
 
-        use({
-            "folke/todo-comments.nvim",
-            config = function()
-                require("todo-comments").setup()
-            end
-        })
-        -- Indent
-        use("lukas-reineke/indent-blankline.nvim")
-        use({
-            "nvim-focus/focus.nvim",
-            config = function()
-                require("focus").setup({})
-            end
-        })
-        use({
-            "aznhe21/actions-preview.nvim"
-        })
-        -- Which key
-        use("folke/which-key.nvim")
-        use("barreiroleo/ltex-extra.nvim")
-        use("echasnovski/mini.icons")
-        use({
-            "nvim-neo-tree/neo-tree.nvim",
-            branch = "v3.x",
-            requires = {
-                "nvim-lua/plenary.nvim",
-                "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-                "MunifTanjim/nui.nvim",
-                -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-                {
-                    "s1n7ax/nvim-window-picker",
-                    version = "2.*",
-                    config = function()
-                        require("window-picker").setup({
-                            filter_rules = {
-                                include_current_win = false,
-                                autoselect_one = true,
-                                -- filter using buffer options
-                                bo = {
-                                    -- if the file type is one of following, the window will be ignored
-                                    filetype = { "neo-tree", "neo-tree-popup", "notify" },
-                                    -- if the buffer type is one of following, the window will be ignored
-                                    buftype = { "terminal", "quickfix" },
-                                },
-                            },
-                        })
-                    end,
+                    -- Autocompletion
+                    { "hrsh7th/nvim-cmp" },
+                    { "hrsh7th/cmp-buffer" },
+                    { "hrsh7th/cmp-path" },
+                    { "saadparwaiz1/cmp_luasnip" },
+                    { "hrsh7th/cmp-nvim-lsp" },
+                    { "hrsh7th/cmp-nvim-lua" },
+
+                    -- Snippets
+                    { "L3MON4D3/LuaSnip" },
+                    { "rafamadriz/friendly-snippets" },
                 },
             },
-        })
-        use({
-            "glepnir/lspsaga.nvim",
-            branch = "main",
-            requires = {
-                { "nvim-tree/nvim-web-devicons" },
-                { "nvim-treesitter/nvim-treesitter" },
+            { "L3MON4D3/LuaSnip", run = "make install_jsregexp" },
+            -- Zen mode
+            { "folke/zen-mode.nvim" },
+            -- Orgmode
+            {
+                "nvim-orgmode/orgmode",
+                ft = { "org" }
             },
-            config = function()
-                require("lspsaga").setup()
-            end
-        })
-        use("onsails/lspkind.nvim")
-        use("simrat39/symbols-outline.nvim")
-        use("delphinus/vim-firestore")
-        use("lewis6991/gitsigns.nvim")
-        -- lazy.nvim
-        use("folke/noice.nvim")
-        use("MunifTanjim/nui.nvim")
-        use("rcarriga/nvim-notify")
-        use("davidmh/cspell.nvim")
-        use({
-            "nvimtools/none-ls.nvim",
-            requires = { "nvim-lua/plenary.nvim" },
-        })
-        use({ "nvim-telescope/telescope-ui-select.nvim" })
-        use({
-            "mfussenegger/nvim-dap",
-            requires = {
-                { "rcarriga/nvim-dap-ui" },
-                { "nvim-neotest/nvim-nio" },
-                { "williamboman/mason.nvim" },
-                { "jay-babu/mason-nvim-dap.nvim" },
+
+            {
+                "dhruvasagar/vim-table-mode",
+                ft = { "md", "org" }
             },
-        })
-        use({
-            "goolord/alpha-nvim",
-            requires = { "nvim-tree/nvim-web-devicons" },
-            config = function()
-                require("alpha").setup(require("alpha.themes.startify").config)
-            end,
-        })
-        use({
-            "MeanderingProgrammer/render-markdown.nvim",
-            after = { "nvim-treesitter" },
-            requires = { "echasnovski/mini.nvim", opt = true }, -- if you use the mini.nvim suite
-            -- requires = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
-            -- requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
-            config = function()
-                require("render-markdown").setup({})
-            end,
-        })
-        use({
-            "sotte/presenting.nvim",
-            config = function()
-                require("presenting").setup({
-                    options = {
-                        width = 82,
+
+            {
+                "folke/todo-comments.nvim",
+                config = function()
+                    require("todo-comments").setup()
+                end
+            },
+            -- Indent
+            { "lukas-reineke/indent-blankline.nvim" },
+            {
+                "nvim-focus/focus.nvim",
+                config = function()
+                    require("focus").setup({})
+                end
+            },
+            {
+                "aznhe21/actions-preview.nvim"
+            },
+            -- Which key
+            { "folke/which-key.nvim" },
+            { "barreiroleo/ltex-extra.nvim" },
+            { "echasnovski/mini.icons" },
+            {
+                "nvim-neo-tree/neo-tree.nvim",
+                branch = "v3.x",
+                dependencies = {
+                    "nvim-lua/plenary.nvim",
+                    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+                    "MunifTanjim/nui.nvim",
+                    -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+                    {
+                        "s1n7ax/nvim-window-picker",
+                        version = "2.*",
+                        config = function()
+                            require("window-picker").setup({
+                                filter_rules = {
+                                    include_current_win = false,
+                                    autoselect_one = true,
+                                    -- filter using buffer options
+                                    bo = {
+                                        -- if the file type is one of following, the window will be ignored
+                                        filetype = { "neo-tree", "neo-tree-popup", "notify" },
+                                        -- if the buffer type is one of following, the window will be ignored
+                                        buftype = { "terminal", "quickfix" },
+                                    },
+                                },
+                            })
+                        end,
+                    },
+                },
+            },
+            {
+                "glepnir/lspsaga.nvim",
+                branch = "main",
+                dependencies = {
+                    { "nvim-tree/nvim-web-devicons" },
+                    { "nvim-treesitter/nvim-treesitter" },
+                },
+                config = function()
+                    require("lspsaga").setup()
+                end
+            },
+            { "onsails/lspkind.nvim" },
+            { "delphinus/vim-firestore" },
+            { "lewis6991/gitsigns.nvim" },
+            -- lazy.nvim
+            { "folke/noice.nvim" },
+            { "MunifTanjim/nui.nvim" },
+            { "rcarriga/nvim-notify" },
+            { "davidmh/cspell.nvim" },
+            {
+                "nvimtools/none-ls.nvim",
+                dependencies = { "nvim-lua/plenary.nvim" },
+            },
+            { "nvim-telescope/telescope-ui-select.nvim" },
+            {
+                "mfussenegger/nvim-dap",
+                dependencies = {
+                    { "rcarriga/nvim-dap-ui" },
+                    { "nvim-neotest/nvim-nio" },
+                    { "williamboman/mason.nvim" },
+                    { "jay-babu/mason-nvim-dap.nvim" },
+                },
+            },
+            {
+                "goolord/alpha-nvim",
+                dependencies = { "nvim-tree/nvim-web-devicons" },
+                config = function()
+                    require("alpha").setup(require("alpha.themes.startify").config)
+                end,
+            },
+            {
+                "MeanderingProgrammer/render-markdown.nvim",
+                after = { "nvim-treesitter" },
+                dependencies = { "echasnovski/mini.nvim", opt = true }, -- if you use the mini.nvim suite
+                -- dependencies = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
+                -- dependencies = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
+                config = function()
+                    require("render-markdown").setup({})
+                end,
+            },
+            {
+                "sotte/presenting.nvim",
+                config = function()
+                    require("presenting").setup({
+                        options = {
+                            width = 82,
+                        }
+                    })
+                end,
+            },
+            { "stevearc/dressing.nvim" },
+            {
+                "ziontee113/icon-picker.nvim",
+                config = function()
+                    require("icon-picker").setup({
+                        disable_legacy_commands = true
+                    })
+                end,
+            },
+            {
+                "Wansmer/treesj",
+                requries = { "nvim-treesitter/nvim-treesitter" },
+                config = function()
+                    require("treesj").setup({ use_default_keymaps = false })
+                end
+            },
+            {
+                "stevearc/oil.nvim",
+                config = function()
+                    require("oil").setup()
+                end
+            },
+            {
+                "karb94/neoscroll.nvim",
+                config = function()
+                    require("neoscroll").setup()
+                end
+            },
+            { "kevinhwang91/nvim-bqf", ft = "qf" },
+            {
+                "junegunn/fzf",
+                run = function()
+                    vim.fn['fzf#install']()
+                end
+            },
+            {
+                "hedyhli/outline.nvim",
+                config = function()
+                    require("outline").setup {
+
                     }
-                })
-            end,
-        })
-        use("stevearc/dressing.nvim")
-        use({
-            "ziontee113/icon-picker.nvim",
-            config = function()
-                require("icon-picker").setup({
-                    disable_legacy_commands = true
-                })
-            end,
-        })
-        use({
-            "Wansmer/treesj",
-            requries = { "nvim-treesitter/nvim-treesitter" },
-            config = function()
-                require("treesj").setup({ use_default_keymaps = false })
-            end
-        })
-        use({
-            "stevearc/oil.nvim",
-            config = function()
-                require("oil").setup()
-            end
-        })
-        use({
-            "karb94/neoscroll.nvim",
-            config = function()
-                require("neoscroll").setup()
-            end
-        })
-        use({ "kevinhwang91/nvim-bqf", ft = "qf" })
-        use({
-            "junegunn/fzf",
-            run = function()
-                vim.fn['fzf#install']()
-            end
-        })
-        use({
-            "hedyhli/outline.nvim",
-            config = function()
-                require("outline").setup {
+                end,
+            }
+        },
+        install = { colorscheme = {"dracula"} },
+        checker = {enabled = true},
 
-                }
-            end,
-        })
-        if packer_bootstrap then
-            require("packer").sync()
-        end
-    end)
-
+    } )
 
     local has_toggleterm, toggleterm = pcall(require, "toggleterm")
     if has_toggleterm then
@@ -570,11 +566,6 @@ else
         })
     end
 
-    local has_outline, outline = pcall(require, "symbols-outline")
-    if has_outline then
-        outline.setup()
-    end
-
     local has_gitsigns, gitsigns = pcall(require, "gitsigns")
     if has_gitsigns then
         gitsigns.setup()
@@ -589,7 +580,6 @@ else
     keymap("n", "<leader>u", "<cmd>UndotreeToggle<cr>", opts)
     keymap("n", "<leader>tu", "<cmd>UndotreeToggle<cr>", opts)
 
-    keymap("n", "<leader>ts", "<cmd>SymbolsOutline<cr>", opts)
     keymap("n", "<leader>tc", "<cmd>ColorizerToggle<cr>", opts)
     keymap("n", "<leader>oT", "<cmd>TableModeToggle<cr>", opts)
     keymap("n", "<leader>ta", "<cmd>Alpha<cr>", opts)
@@ -669,10 +659,9 @@ else
         "lua",
         "rust",
         "go",
-        "org",
+        "regex",
         "markdown",
         "c_sharp",
-        "org",
         "bash",
         "css",
         "html",
@@ -680,7 +669,6 @@ else
         "solidity",
         "vue",
         "yaml",
-        "org",
         "markdown",
         "markdown_inline",
     }
@@ -751,6 +739,13 @@ else
                 completion = cmp.config.window.bordered(),
                 documentation = cmp.config.window.bordered(),
             },
+            mapping = cmp.mapping.preset.insert({
+                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                ['<C-Space>'] = cmp.mapping.complete(),
+                ['<C-e>'] = cmp.mapping.abort(),
+                ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+            }),
         })
     end
 
@@ -1050,7 +1045,6 @@ else
                 null_ls.builtins.formatting.black,
                 null_ls.builtins.formatting.cbfmt,
                 null_ls.builtins.formatting.csharpier,
-                null_ls.builtins.formatting.forge_fmt,
                 null_ls.builtins.formatting.gofmt,
                 null_ls.builtins.formatting.goimports,
                 null_ls.builtins.formatting.markdownlint,
@@ -1072,17 +1066,19 @@ else
                 null_ls.builtins.diagnostics.pylint,
                 null_ls.builtins.diagnostics.solhint,
                 null_ls.builtins.diagnostics.staticcheck,
-                null_ls.builtins.diagnostics.statix,
                 null_ls.builtins.diagnostics.stylelint,
                 null_ls.builtins.diagnostics.write_good,
                 null_ls.builtins.diagnostics.yamllint,
                 null_ls.builtins.diagnostics.commitlint,
+                null_ls.builtins.diagnostics.codespell,
                 -- Completions
                 null_ls.builtins.completion.spell,
                 null_ls.builtins.completion.tags,
                 -- Hover
                 null_ls.builtins.hover.dictionary,
                 -- Code Actions
+                null_ls.builtins.code_actions.textlint,
+                null_ls.builtins.code_actions.gitsigns,
                 null_ls.builtins.code_actions.refactoring,
                 null_ls.builtins.code_actions.impl,
             },
@@ -1251,7 +1247,7 @@ else
             { "<leader>te", "<cmd>Neotree toggle<cr>", desc = "Neo Tree",   remap = false },
             { "<leader>tt", "<cmd>ToggleTerm<cr>",     desc = "Terminal",   remap = false },
             { "<leader>tp", "<cmd>Presenting<cr>",     desc = "Presenting", remap = false },
-            { "<leader>tf", "<cmd>FocusToggle<cr>",    desc = "Presenting", remap = false },
+            { "<leader>tf", "<cmd>FocusToggle<cr>",    desc = "Focus",      remap = false },
 
         }, opts)
 
@@ -1269,50 +1265,47 @@ else
             { "<leader>bb", "<cmd>Neotree buffers<cr>", desc = "Buffer List",     remap = false },
         }, opts)
 
-        wk.add(
-            {
-                { "<leader>w",    group = "Window",    remap = false },
+        wk.add({
+            { "<leader>w",    group = "Window",    remap = false },
 
-                { "<leader>wr",   group = "Resize",    remap = false },
-                { "<leader>wrr",  "<cmd>wincmd =<cr>", desc = "Reset",    remap = false },
-                { "<leader>wrh",  group = "Height",    remap = false },
-                { "<leader>wrhi", "<cmd>wincmd +<cr>", desc = "Inc",      remap = false },
-                { "<leader>wrhd", "<cmd>wincmd -<cr>", desc = "Dec",      remap = false },
-                { "<leader>wrhm", "<cmd>wincmd _<cr>", desc = "Max",      remap = false },
-                { "<leader>wrw",  group = "Width",     remap = false },
-                { "<leader>wrwi", "<cmd>wincmd ><cr>", desc = "Inc",      remap = false },
-                { "<leader>wrwd", "<cmd>wincmd <<cr>", desc = "Dec",      remap = false },
-                { "<leader>wrwm", "<cmd>wincmd |<cr>", desc = "Max",      remap = false },
+            { "<leader>wr",   group = "Resize",    remap = false },
+            { "<leader>wrr",  "<cmd>wincmd =<cr>", desc = "Reset",    remap = false },
+            { "<leader>wrh",  group = "Height",    remap = false },
+            { "<leader>wrhi", "<cmd>wincmd +<cr>", desc = "Inc",      remap = false },
+            { "<leader>wrhd", "<cmd>wincmd -<cr>", desc = "Dec",      remap = false },
+            { "<leader>wrhm", "<cmd>wincmd _<cr>", desc = "Max",      remap = false },
+            { "<leader>wrw",  group = "Width",     remap = false },
+            { "<leader>wrwi", "<cmd>wincmd ><cr>", desc = "Inc",      remap = false },
+            { "<leader>wrwd", "<cmd>wincmd <<cr>", desc = "Dec",      remap = false },
+            { "<leader>wrwm", "<cmd>wincmd |<cr>", desc = "Max",      remap = false },
 
-                { "<leader>wf",   group = "Focus",     remap = false },
-                { "<leader>wfh",  "<cmd>wincmd h<cr>", desc = "Lf",       remap = false },
-                { "<leader>wfj",  "<cmd>wincmd j<cr>", desc = "Dn",       remap = false },
-                { "<leader>wfk",  "<cmd>wincmd k<cr>", desc = "Up",       remap = false },
-                { "<leader>wfl",  "<cmd>wincmd l<cr>", desc = "Ri",       remap = false },
-                { "<leader>wfn",  "<cmd>wincmd w<cr>", desc = "Next",     remap = false },
-                { "<leader>wfp",  "<cmd>wincmd W<cr>", desc = "Prev",     remap = false },
+            { "<leader>wf",   group = "Focus",     remap = false },
+            { "<leader>wfh",  "<cmd>wincmd h<cr>", desc = "Lf",       remap = false },
+            { "<leader>wfj",  "<cmd>wincmd j<cr>", desc = "Dn",       remap = false },
+            { "<leader>wfk",  "<cmd>wincmd k<cr>", desc = "Up",       remap = false },
+            { "<leader>wfl",  "<cmd>wincmd l<cr>", desc = "Ri",       remap = false },
+            { "<leader>wfn",  "<cmd>wincmd w<cr>", desc = "Next",     remap = false },
+            { "<leader>wfp",  "<cmd>wincmd W<cr>", desc = "Prev",     remap = false },
 
-                { "<leader>wm",   group = "Move",      remap = false },
-                { "<leader>wmh",  "<cmd>wincmd H<cr>", desc = "Lf",       remap = false },
-                { "<leader>wmj",  "<cmd>wincmd J<cr>", desc = "Dn",       remap = false },
-                { "<leader>wmk",  "<cmd>wincmd K<cr>", desc = "Up",       remap = false },
-                { "<leader>wml",  "<cmd>wincmd L<cr>", desc = "Ri",       remap = false },
-                { "<leader>wmt",  "<cmd>wincmd T<cr>", desc = "Tab",      remap = false },
-                { "<leader>wmx",  "<cmd>wincmd x<cr>", desc = "Exch",     remap = false },
-                { "<leader>wmd",  "<cmd>wincmd r<cr>", desc = "Dn",       remap = false },
-                { "<leader>wmu",  "<cmd>wincmd R<cr>", desc = "Up",       remap = false },
+            { "<leader>wm",   group = "Move",      remap = false },
+            { "<leader>wmh",  "<cmd>wincmd H<cr>", desc = "Lf",       remap = false },
+            { "<leader>wmj",  "<cmd>wincmd J<cr>", desc = "Dn",       remap = false },
+            { "<leader>wmk",  "<cmd>wincmd K<cr>", desc = "Up",       remap = false },
+            { "<leader>wml",  "<cmd>wincmd L<cr>", desc = "Ri",       remap = false },
+            { "<leader>wmt",  "<cmd>wincmd T<cr>", desc = "Tab",      remap = false },
+            { "<leader>wmx",  "<cmd>wincmd x<cr>", desc = "Exch",     remap = false },
+            { "<leader>wmd",  "<cmd>wincmd r<cr>", desc = "Dn",       remap = false },
+            { "<leader>wmu",  "<cmd>wincmd R<cr>", desc = "Up",       remap = false },
 
-                { "<leader>wo",   "<cmd>wincmd o<cr>", desc = "Only",     remap = false },
-                { "<leader>wc",   "<cmd>wincmd c<cr>", desc = "Close",    remap = false },
-                { "<leader>wq",   "<cmd>wincmd q<cr>", desc = "Quit",     remap = false },
-                { "<leader>wx",   "<cmd>wincmd x<cr>", desc = "Exchange", remap = false },
+            { "<leader>wo",   "<cmd>wincmd o<cr>", desc = "Only",     remap = false },
+            { "<leader>wc",   "<cmd>wincmd c<cr>", desc = "Close",    remap = false },
+            { "<leader>wq",   "<cmd>wincmd q<cr>", desc = "Quit",     remap = false },
+            { "<leader>wx",   "<cmd>wincmd x<cr>", desc = "Exchange", remap = false },
 
-                { "<leader>ws",   group = "Split",     remap = false },
-                { "<leader>wsj",  "<cmd>split<cr>",    desc = "Down",     remap = false },
-                { "<leader>wsl",  "<cmd>vsplit<cr>",   desc = "Right",    remap = false },
-
-            }
-        )
+            { "<leader>ws",   group = "Split",     remap = false },
+            { "<leader>wsj",  "<cmd>split<cr>",    desc = "Down",     remap = false },
+            { "<leader>wsl",  "<cmd>vsplit<cr>",   desc = "Right",    remap = false },
+        })
     end
 
     keymap({ "v", "n" }, "ga", require("actions-preview").code_actions)
