@@ -1,21 +1,21 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out,                            "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
 end
 vim.opt.rtp:prepend(lazypath)
 
 if vim.g.vscode then
-    -- if true then  -- Uncomment to chekcout vscode config in neovim
+    -- if true then  -- Uncomment to checkout vscode config in neovim
     -- VSCode extension
     local opts = { noremap = true, silent = true }
     local keymap = vim.keymap.set
@@ -98,7 +98,7 @@ if vim.g.vscode then
                 end
             }
         },
-        checker = {enabled = true},
+        checker = { enabled = true },
     })
 
     vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
@@ -208,7 +208,7 @@ else
     vim.opt.foldcolumn = "auto"
     vim.opt.cmdheight = 1
 
-    require("lazy").setup( {
+    require("lazy").setup({
         spec = {
             {
                 "NeogitOrg/neogit",
@@ -222,9 +222,8 @@ else
                     neogit.setup({})
                 end,
             },
-            {"wbthomason/packer.nvim"},
-            {"habamax/vim-asciidoctor"},
-            {"Mofiqul/dracula.nvim"},
+            { "habamax/vim-asciidoctor" },
+            { "Mofiqul/dracula.nvim" },
 
             -- Lualine
             { "nvim-lualine/lualine.nvim" },
@@ -233,7 +232,7 @@ else
             {
                 "nvim-telescope/telescope-fzf-native.nvim",
                 run =
-                    "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+                "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
             },
             {
                 "nvim-telescope/telescope.nvim",
@@ -310,7 +309,7 @@ else
                     { "rafamadriz/friendly-snippets" },
                 },
             },
-            { "L3MON4D3/LuaSnip", run = "make install_jsregexp" },
+            { "L3MON4D3/LuaSnip",   run = "make install_jsregexp" },
             -- Zen mode
             { "folke/zen-mode.nvim" },
             -- Orgmode
@@ -392,7 +391,93 @@ else
             { "folke/noice.nvim" },
             { "MunifTanjim/nui.nvim" },
             { "rcarriga/nvim-notify" },
-            { "davidmh/cspell.nvim" },
+            {
+                "davidmh/cspell.nvim",
+                config = function()
+                    local has_cspell, cspell = pcall(require, "cspell")
+                    local has_null_ls, null_ls = pcall(require, "null-ls")
+                    if has_cspell and has_null_ls then
+                        null_ls.setup({
+                            sources = {
+                                cspell.diagnostics,
+                                cspell.code_actions,
+                            },
+                        })
+                    end
+                end
+            },
+            {
+                "jay-babu/mason-null-ls.nvim",
+                event = { "BufReadPre", "BufNewFile" },
+                dependencies = {
+                    "williamboman/mason.nvim",
+                    "nvimtools/none-ls.nvim",
+                },
+                config = function()
+                    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+                    local has_null_ls, null_ls = pcall(require, "null-ls")
+
+                    if has_null_ls then
+                        null_ls.setup({
+                            -- you can reuse a shared lspconfig on_attach callback here
+                            sources = {
+                                -- Formatters
+                                null_ls.builtins.formatting.isort,
+                                null_ls.builtins.formatting.black,
+                                null_ls.builtins.formatting.cbfmt,
+                                null_ls.builtins.formatting.csharpier,
+                                null_ls.builtins.formatting.gofmt,
+                                null_ls.builtins.formatting.goimports,
+                                null_ls.builtins.formatting.markdownlint,
+                                null_ls.builtins.formatting.mdformat,
+                                null_ls.builtins.formatting.nixfmt,
+                                -- null_ls.builtins.formatting.stylua,
+                                null_ls.builtins.formatting.prettier,
+                                null_ls.builtins.formatting.rustywind,
+                                -- null_ls.builtins.formatting.shellharden,
+                                null_ls.builtins.formatting.shfmt,
+                                null_ls.builtins.formatting.stylelint,
+                                null_ls.builtins.formatting.yamlfmt,
+                                -- diagnostics
+                                null_ls.builtins.diagnostics.gitlint,
+                                null_ls.builtins.diagnostics.markdownlint,
+                                null_ls.builtins.diagnostics.pylint,
+                                null_ls.builtins.diagnostics.solhint,
+                                null_ls.builtins.diagnostics.staticcheck,
+                                null_ls.builtins.diagnostics.stylelint,
+                                null_ls.builtins.diagnostics.write_good,
+                                null_ls.builtins.diagnostics.yamllint,
+                                null_ls.builtins.diagnostics.commitlint,
+                                null_ls.builtins.diagnostics.codespell,
+                                -- Completions
+                                null_ls.builtins.completion.spell,
+                                null_ls.builtins.completion.tags,
+                                -- Hover
+                                null_ls.builtins.hover.dictionary,
+                                -- Code Actions
+                                null_ls.builtins.code_actions.textlint,
+                                null_ls.builtins.code_actions.gitsigns,
+                                null_ls.builtins.code_actions.refactoring,
+                                null_ls.builtins.code_actions.impl,
+                            },
+                            on_attach = function(client, bufnr)
+                                if client.supports_method("textDocument/formatting") then
+                                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                                    vim.api.nvim_create_autocmd("BufWritePre", {
+                                        group = augroup,
+                                        buffer = bufnr,
+                                        callback = function()
+                                            -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+                                            -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
+                                            vim.lsp.buf.format({ async = false })
+                                        end,
+                                    })
+                                end
+                            end,
+                        })
+                    end
+                end,
+            },
             {
                 "nvimtools/none-ls.nvim",
                 dependencies = { "nvim-lua/plenary.nvim" },
@@ -445,7 +530,7 @@ else
             },
             {
                 "Wansmer/treesj",
-                requries = { "nvim-treesitter/nvim-treesitter" },
+                dependencies = { "nvim-treesitter/nvim-treesitter" },
                 config = function()
                     require("treesj").setup({ use_default_keymaps = false })
                 end
@@ -478,10 +563,10 @@ else
                 end,
             }
         },
-        install = { colorscheme = {"dracula"} },
-        checker = {enabled = true},
+        install = { colorscheme = { "dracula" } },
+        checker = { enabled = true },
 
-    } )
+    })
 
     local has_toggleterm, toggleterm = pcall(require, "toggleterm")
     if has_toggleterm then
@@ -702,7 +787,6 @@ else
     local has_lspconfig, lspconfig = pcall(require, "lspconfig")
 
     if has_lspconfig then
-        lspconfig.glslls.setup({})
         lspconfig.nil_ls.setup({})
         lspconfig.grammarly.setup({})
         lspconfig.ltex.setup({})
@@ -1023,7 +1107,7 @@ else
         keymap("n", "<leader>El", telescope_builtin.diagnostics, { desc = "Find diagnostics" })
         keymap("n", "<leader>le", telescope_builtin.diagnostics, { desc = "Diagnostics" })
         keymap("n", "<leader>slr", telescope_builtin.lsp_references, { desc = "Lsp References" })
-        keymap("n", "<leader>sld", telescope_builtin.lsp_definitions, { desc = "Lsp Defenitions" })
+        keymap("n", "<leader>sld", telescope_builtin.lsp_definitions, { desc = "Lsp Definitions" })
         keymap("n", "<leader>sli", telescope_builtin.lsp_implementations, { desc = "Lsp Implementations" })
         keymap("n", "<leader>sls", telescope_builtin.lsp_document_symbols, { desc = "Lsp Symbols" })
         keymap("n", "<leader>slt", telescope_builtin.lsp_type_definitions, { desc = "Lsp Typedefs" })
@@ -1032,82 +1116,8 @@ else
         keymap("n", "<leader>sp", "<cmd>Telescope project<cr>", { desc = "Find project" })
     end
 
-    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
-    local has_null_ls, null_ls = pcall(require, "null-ls")
 
-    if has_null_ls then
-        null_ls.setup({
-            -- you can reuse a shared lspconfig on_attach callback here
-            sources = {
-                -- Formatters
-                null_ls.builtins.formatting.isort,
-                null_ls.builtins.formatting.black,
-                null_ls.builtins.formatting.cbfmt,
-                null_ls.builtins.formatting.csharpier,
-                null_ls.builtins.formatting.gofmt,
-                null_ls.builtins.formatting.goimports,
-                null_ls.builtins.formatting.markdownlint,
-                null_ls.builtins.formatting.mdformat,
-                null_ls.builtins.formatting.nixfmt,
-                -- null_ls.builtins.formatting.stylua,
-                null_ls.builtins.formatting.prettier,
-                null_ls.builtins.formatting.rustywind,
-                null_ls.builtins.formatting.shellharden,
-                null_ls.builtins.formatting.shfmt,
-                null_ls.builtins.formatting.stylelint,
-                null_ls.builtins.formatting.yamlfmt,
-                null_ls.builtins.diagnostics.glslc.with({
-                    extra_args = { "--target-env=opengl" }, -- use opengl instead of vulkan1.0
-                }),
-                -- diagnostics
-                null_ls.builtins.diagnostics.gitlint,
-                null_ls.builtins.diagnostics.markdownlint,
-                null_ls.builtins.diagnostics.pylint,
-                null_ls.builtins.diagnostics.solhint,
-                null_ls.builtins.diagnostics.staticcheck,
-                null_ls.builtins.diagnostics.stylelint,
-                null_ls.builtins.diagnostics.write_good,
-                null_ls.builtins.diagnostics.yamllint,
-                null_ls.builtins.diagnostics.commitlint,
-                null_ls.builtins.diagnostics.codespell,
-                -- Completions
-                null_ls.builtins.completion.spell,
-                null_ls.builtins.completion.tags,
-                -- Hover
-                null_ls.builtins.hover.dictionary,
-                -- Code Actions
-                null_ls.builtins.code_actions.textlint,
-                null_ls.builtins.code_actions.gitsigns,
-                null_ls.builtins.code_actions.refactoring,
-                null_ls.builtins.code_actions.impl,
-            },
-            on_attach = function(client, bufnr)
-                if client.supports_method("textDocument/formatting") then
-                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                    vim.api.nvim_create_autocmd("BufWritePre", {
-                        group = augroup,
-                        buffer = bufnr,
-                        callback = function()
-                            -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-                            -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
-                            vim.lsp.buf.format({ async = false })
-                        end,
-                    })
-                end
-            end,
-        })
-    end
-
-    local has_cspell, cspell = pcall(require, "cspell")
-    if has_cspell and has_null_ls then
-        null_ls.setup({
-            sources = {
-                cspell.diagnostics,
-                cspell.code_actions,
-            },
-        })
-    end
 
     -- This is your opts table
     require("telescope").setup({
