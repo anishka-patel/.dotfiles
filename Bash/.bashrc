@@ -215,3 +215,4 @@ fi
 ### bling.sh source start
 test -f /usr/share/ublue-os/aurora-cli/bling.sh && source /usr/share/ublue-os/aurora-cli/bling.sh
 ### bling.sh source end
+. "$HOME/.cargo/env"

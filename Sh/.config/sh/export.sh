@@ -1,8 +1,17 @@
 # export TERM="alacritty"
-export EDITOR="nvim"
-export VISUAL="nvim"
-export SUDO_EDITOR="vim"
-# Incrase history size
+
+nvimeditor=$(command -v nvim)
+if command -v nvim &>/dev/null; then
+    export EDITOR="nvim"
+    export VISUAL="nvim"
+    export SUDO_EDITOR="${nvimeditor}"
+else
+    export EDITOR="vim"
+    export VISUAL="vim"
+    export SUDO_EDITOR="vim"
+fi
+
+# Increase history size
 export HISTSIZE=10000
 export HISTFILESIZE=10000
 

@@ -8,35 +8,33 @@ alias rd=rmdir
 alias _="sudo "
 
 if command -v nvim >/dev/null; then
-    alias vi=nvim
-    alias vim=nvim
-    alias nv=nvim
+	alias vi=nvim
+	alias nv=nvim
 fi
 
 if [ -d "$HOME/.config/lazyvim" ]; then
-alias lvim="NVIM_APPNAME=lazyvim nvim"
-alias lv="NVIM_APPNAME=lazyvim nvim"
+	alias lvim="NVIM_APPNAME=lazyvim nvim"
+	alias lv="NVIM_APPNAME=lazyvim nvim"
 fi
 
-
-if command -v emacs >/dev/null;then
-alias es="emacs -nw"
-alias ec="emacsclient -tqua ''"
-alias ges="launch emacs"
-alias gec="launch emacsclient -cqua ''"
+if command -v emacs >/dev/null; then
+	alias es="emacs -nw"
+	alias ec="emacsclient -tqua ''"
+	alias ges="launch emacs"
+	alias gec="launch emacsclient -cqua ''"
 fi
 
 if command -v neovide >/dev/null; then
-    if [ "$WAYLAND_DISPLAY" = "" ]; then
-        alias neovide="neovide"
-    else
-        alias neovide="env -u WAYLAND_DISPLAY neovide"
-    fi
-alias gnv=neovide
+	if [ "$WAYLAND_DISPLAY" = "" ]; then
+		alias neovide="neovide"
+	else
+		alias neovide="env -u WAYLAND_DISPLAY neovide"
+	fi
+	alias gnv=neovide
 fi
 
-if command -v gvim >/dev/null;then
-alias gvi=gvim
+if command -v gvim >/dev/null; then
+	alias gvi=gvim
 fi
 
 alias info="info --vi-keys"
@@ -51,8 +49,8 @@ if command -v lsd >/dev/null; then
 fi
 
 if command -v lazygit >/dev/null; then
-alias lg=lazygit
-alias lgit=lazygit
+	alias lg=lazygit
+	alias lgit=lazygit
 fi
 
 alias grep='grep --colour=auto'
@@ -67,15 +65,15 @@ if command -v moar >/dev/null; then
 	alias less=moar
 fi
 if command -v distrobox >/dev/null; then
-alias db=distrobox
+	alias db=distrobox
 fi
 
 if command -v bat >/dev/null; then
 	alias cat="bat --theme Dracula"
 fi
 
-if command -v fastfetch  >/dev/null;then
-alias ff=fastfetch
+if command -v fastfetch >/dev/null; then
+	alias ff=fastfetch
 fi
 alias datef="date -u +%a,\ %Y-%b-%d"
 alias datetimef="date -u +%a,\ %Y-%b-%d%n%H:%M\ \(%Z\)"

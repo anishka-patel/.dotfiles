@@ -7,13 +7,14 @@ bindkey -v
 setopt autocd autopushd pushdignoredups
 
 if command -v brew >/dev/null; then
-autosuggestionspath="/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-syntaxhighlightingpath="/home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-historysubstringpath="/home/linuxbrew/.linuxbrew/share/zsh-history-substring-search.zsh"
+    autosuggestionspath="/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    syntaxhighlightingpath="/home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    historysubstringpath="/home/linuxbrew/.linuxbrew/share/zsh-history-substring-search.zsh"
+    eval "$(brew shellenv)"
 else
-autosuggestionspath="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-syntaxhighlightingpath="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-historysubstringpath="/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
+    autosuggestionspath="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    syntaxhighlightingpath="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    historysubstringpath="/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
 fi
 [ -f $autosuggestionspath ] && source $autosuggestionspath
 [ -f $syntaxhighlightingpath ] && source $syntaxhighlightingpath
@@ -32,6 +33,7 @@ bindkey -M vicmd v edit-command-line
 zstyle :compinstall filename '/home/ani/.zshrc'
 
 autoload -Uz compinit
+fpath+=~/.zfunc
 compinit
 # End of lines added by compinstall
 zstyle ':completion:*' menu select
@@ -68,8 +70,6 @@ fi
 [[ ! -r /home/ani/.opam/opam-init/init.zsh ]] || source /home/ani/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 if command -v sesh >/dev/null; then
-sesh connect "~"
-
 zle     -N             sesh-sessions
 bindkey -M emacs '\es' sesh-sessions
 bindkey -M vicmd '\es' sesh-sessions

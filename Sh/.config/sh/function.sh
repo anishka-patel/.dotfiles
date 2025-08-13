@@ -1,35 +1,39 @@
 cp2bk() {
-	cp -r "$1" "$1.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
+    for i in "$@"; do
+        cp -r "$i" "$i.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
+    done
 }
 
 sudocp2bk() {
-	sudo cp -r "$1" "$1.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
+    for i in "$@"; do
+        sudo cp -r "$i" "$i.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
+    done
 }
 
 mv2bk() {
-	mv "$1" "$1.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
+    for i in "$@"; do
+        mv "$i" "$i.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
+    done
 }
 
 sudomv2bk() {
-	sudo mv "$1" "$1.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
+    for i in "$@"; do
+        sudo mv "$i" "$i.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
+    done
 }
 
 bked() {
-	cp "$1" "$1.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
-	if [ "$?" -ne 0 ]; then
-		echo "Cannot make backup copy"
-		return
-	fi
-	nvim "$1"
+    for i in "$@"; do
+        cp "$i" "$i.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
+    done
+	nvim "$@"
 }
 
 sudobked() {
-	sudo cp "$1" "$1.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
-	if [ "$?" -ne 0 ]; then
-		echo "Cannot make backup copy"
-		return
-	fi
-	sudoedit "$1"
+    for i in "$@"; do
+        sudo cp "$i" "$i.$(date +'%Y-%m-%d_%H:%M:%S_%Z').bak"
+    done
+	sudoedit "$@"
 }
 
 sesh-sessions() {
