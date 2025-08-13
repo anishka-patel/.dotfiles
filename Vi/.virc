@@ -3,6 +3,7 @@ syntax enable
 filetype on
 filetype indent on
 
+colorscheme sorbet
 
 set ruler
 set cmdheight=1
@@ -64,6 +65,7 @@ nnoremap <C-L> <C-W>l
 
 tnoremap <ESC><ESC> <C-\><C-n>
 nnoremap <leader>e <cmd>Lex<cr>
+nnoremap <leader>t <cmd>terminal<cr>
 nnoremap \ <cmd>Lex<cr>
 
 

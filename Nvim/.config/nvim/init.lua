@@ -12,6 +12,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
         os.exit(1)
     end
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 if vim.g.vscode then
@@ -164,7 +165,7 @@ else
     vim.g.neovide_remember_window_size = true
     vim.g.neovide_refresh_rate = 60
 
-    vim.o.completeopt = "menuone,noselect,preview"
+    vim.o.completeopt = "menu,menuone,preview,noselect"
 
     -- Setup GUI Fonts
     vim.opt.guifont = "FiraCode Nerd Font:h12"
@@ -800,6 +801,16 @@ else
     end
 
     local has_lspzero, lspzero = pcall(require, "lsp-zero")
+    if has_lspzero then
+        lspzero.preset('system-lsp')  -- or recommended, or whatever...
+        lspzero.setup_nvim_cmp({
+            preselect = 'none',
+            completion = {
+                completeopt = 'menu,menuone,noinsert,noselect'
+            },
+        })
+        lspzero.setup()
+    end 
     local has_cmp, cmp = pcall(require, "cmp")
     local has_lspkind, lspkind = pcall(require, "lspkind")
 
@@ -829,6 +840,7 @@ else
                 ['<C-Space>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                ['<C-y>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
         })
     end

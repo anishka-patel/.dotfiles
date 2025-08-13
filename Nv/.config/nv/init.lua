@@ -86,6 +86,7 @@ vim.g.netrw_altv = 1
 
 vim.cmd("filetype on")
 vim.cmd("filetype plugin on")
+vim.cmd("colorscheme sorbet")
 
 vim.o.completeopt = "menuone,noselect,preview"
 
@@ -95,4 +96,5 @@ vim.opt.guifont = "FiraCode Nerd Font:h12"
 keymap("t", "<esc><esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 keymap("n", "<esc>", "<cmd>nohlsearch<cr>", {})
 keymap("n", "<leader>e", "<cmd>Lex<cr>", {})
+keymap("n", "<leader>t", "<cmd>terminal<cr>", {})
 keymap("n", "\\", "<cmd>Lex<cr>", {})
