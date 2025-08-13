@@ -1,14 +1,16 @@
 # export TERM="alacritty"
 
-nvimeditor=$(command -v nvim)
 if command -v nvim &>/dev/null; then
     export EDITOR="nvim"
     export VISUAL="nvim"
-    export SUDO_EDITOR="${nvimeditor}"
+    export SUDO_EDITOR="nvim -u /home/ani/.virc"
 else
     export EDITOR="vim"
     export VISUAL="vim"
-    export SUDO_EDITOR="vim"
+    export SUDO_EDITOR="vim -u /home/ani/.virc"
+fi
+
+if command -v vim &>/dev/null; then
 fi
 
 # Increase history size

@@ -47,7 +47,7 @@ set nocompatible
 set cursorline
 set colorcolumn=80
 set foldcolumn=1
-set nowrap
+set wrap
 set number relativenumber
 set splitbelow splitright
 set shiftwidth=4 tabstop=4 softtabstop=4
