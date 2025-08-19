@@ -12,37 +12,41 @@ datefmt() {
 }
 
 cp2bk() {
-	cp -r "$1" "$1.$(datefmt).bak"
+    for i in $@; do
+        cp -r "$i" "$i.$(datefmt).bak"
+    done
 }
 
 sudocp2bk() {
-	sudo cp -r "$1" "$1.$(datefmt).bak"
+    for i in $@; do
+        sudo cp -r "$i" "$i.$(datefmt).bak"
+    done
 }
 
 mv2bk() {
-	mv "$1" "$1.$(datefmt).bak"
+    for i in $@; do
+        mv "$i" "$i.$(datefmt).bak"
+    done
 }
 
 sudomv2bk() {
-	sudo mv "$1" "$1.$(datefmt).bak"
+    for i in $@; do
+        sudo mv "$i" "$i.$(datefmt).bak"
+    done
 }
 
 bked() {
-	cp "$1" "$1.$(datefmt).bak"
-	if [ "$?" -ne 0 ]; then
-		echo "Cannot make backup copy"
-		return
-	fi
-	nvim "$1"
+    for i in $@; do
+        cp "$i" "$i.$(datefmt).bak"
+    done
+    nvim "$@"
 }
 
 sudobked() {
-	sudo cp "$1" "$1.$(datefmt).bak"
-	if [ "$?" -ne 0 ]; then
-		echo "Cannot make backup copy"
-		return
-	fi
-	sudoedit "$1"
+    for i in $@; do
+        sudo cp "$i" "$i.$(datefmt).bak"
+    done
+	sudoedit "$@"
 }
 
 sesh-sessions() {
@@ -89,7 +93,7 @@ alias l='ls -lh'
 alias grep='grep --color=auto'
 alias es="emacs -nw"
 alias ec="emacsclient -ta 'emacs'"
-alias vi="nvim"
+alias vi="vim -u .virc"
 alias nv=nvim
 alias lg=lazygit
 alias lgit=lazygit
@@ -127,3 +131,5 @@ fastfetch
 
 bind -x '"\es":"sesh-sessions"'
 bind -x '"\et":"sesh-connect"'
+export PATH="$PATH:$HOME/go/bin"
+export PATH="$PATH:$HOME/.cargo/bin"

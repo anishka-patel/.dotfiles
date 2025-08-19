@@ -66,6 +66,7 @@ if vim.g.vscode then
     vim.opt.smartcase = true
     vim.opt.scrolloff = 8
     vim.opt.termguicolors = true
+    vim.opt.virtualedit =  "block"
 
     packer.startup(function(use)
         use({
@@ -1144,11 +1145,11 @@ else
 
     local lsp_list = {
         "bashls",
-        "clangd",
+        -- "clangd",
         "cmake",
         "cssls",
-        "csharp_ls",
-        "denols",
+        -- "csharp_ls",
+        -- "denols",
         "diagnosticls",
         "dockerls",
         "docker_compose_language_service",
@@ -1158,21 +1159,21 @@ else
         "grammarly",
         "html",
         "jsonls",
-        "ltex",
-        "lua_ls",
+        -- "ltex",
+        -- "lua_ls",
         "marksman",
         "omnisharp",
         "pylsp",
         "pyright",
         "rome",
-        "rust_analyzer",
+        -- "rust_analyzer",
         "solidity",
-        "sqlls",
+        -- "sqlls",
         "stylelint_lsp",
         "vimls",
         "volar",
         "yamlls",
-        "zls",
+        -- "zls",
     }
 
     if has_lspzero then
@@ -1387,6 +1388,9 @@ else
         -- load_extension, somewhere after setup function:
         telescope.load_extension("ui-select")
         telescope.setup({
+            defaults = {
+                layout_strategy = "horizontal"
+            },
             extensions = {
                 ["ui-select"] = {
                     require("telescope.themes").get_dropdown({

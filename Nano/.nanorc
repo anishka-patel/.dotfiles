@@ -1,0 +1,12 @@
+set atblanks
+set autoindent
+set linenumbers
+set boldtext
+set brackets ""')>}]"
+set multibuffer
+set regexp
+set matchbrackets "(<{[)>}]"
+set tabsize 4
+set tabstospaces
+set nohelp
+set minibar

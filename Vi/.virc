@@ -1,0 +1,70 @@
+syntax enable
+
+filetype on
+filetype indent on
+
+
+set ruler
+set cmdheight=1
+set number relativenumber
+set path+=**
+set scrolloff=8
+set hidden
+set backspace=eol,start,indent
+set cursorline
+set wrap
+set showmode
+set splitbelow splitright
+set shiftwidth=4 tabstop=4 softtabstop=4
+set shiftround
+set expandtab autoindent smartindent
+set showmatch showcmd
+set ignorecase smartcase                " Ignore case when searching
+set incsearch hlsearch                  " Highlight search results
+set wildmenu wildmode=list,longest,full " Turn on the wildmenu
+set history=1000
+set nobackup nowb noswapfile
+set clipboard=unnamedplus
+set list
+set listchars=eol:↵,tab:>-,space:·,nbsp:␣,trail:~,multispace:\|···
+set encoding=utf8
+set nocompatible
+set termguicolors
+
+nnoremap <C-u> <C-u>zz
+nnoremap <C-d> <C-d>zz
+nnoremap <C-f> <C-f>zz
+nnoremap <C-b> <C-b>zz
+nnoremap n nzz
+nnoremap N Nzz
+
+
+nnoremap <SPACE> <Nop>
+nnoremap <ESC> :nohlsearch<CR>
+
+let mapleader=" "
+
+let g:netrw_banner=0
+let g:netrw_liststyle=3
+let g:netrw_browse_split=4
+let g:netrw_altv=1
+let g:netrw_winsize=75
+
+" Set to auto read when a file is changed from the outside
+set autoread
+au FocusGained,BufEnter * checktime
+
+" :W sudo saves the file
+" (useful for handling the permission-denied error)
+command! W execute 'w !sudo tee %> /dev/null' <bar> edit!
+nnoremap <C-H> <C-W>h
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>K
+nnoremap <C-L> <C-W>l
+
+
+hi Normal guibg=NONE ctermbg=NONE
+
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+" vim: ft=vim
