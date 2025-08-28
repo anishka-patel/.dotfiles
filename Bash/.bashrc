@@ -220,3 +220,4 @@ test -f /usr/share/ublue-os/aurora-cli/bling.sh && source /usr/share/ublue-os/au
 export NVM_DIR="$HOME/.nvm"
   [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk@21/bin:$PATH"

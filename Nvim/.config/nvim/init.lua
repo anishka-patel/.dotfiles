@@ -421,74 +421,12 @@ else
                     "williamboman/mason.nvim",
                     "nvimtools/none-ls.nvim",
                 },
-                config = function()
-                    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-                    local has_null_ls, null_ls = pcall(require, "null-ls")
 
-                    if has_null_ls then
-                        null_ls.setup({
-                            -- you can reuse a shared lspconfig on_attach callback here
-                            sources = {
-                                -- Formatters
-                                null_ls.builtins.formatting.isort,
-                                null_ls.builtins.formatting.black,
-                                null_ls.builtins.formatting.cbfmt,
-                                null_ls.builtins.formatting.csharpier,
-                                null_ls.builtins.formatting.gofmt,
-                                null_ls.builtins.formatting.goimports,
-                                null_ls.builtins.formatting.markdownlint,
-                                null_ls.builtins.formatting.mdformat,
-                                null_ls.builtins.formatting.nixfmt,
-                                -- null_ls.builtins.formatting.stylua,
-                                null_ls.builtins.formatting.prettier,
-                                null_ls.builtins.formatting.rustywind,
-                                -- null_ls.builtins.formatting.shellharden,
-                                null_ls.builtins.formatting.shfmt,
-                                null_ls.builtins.formatting.stylelint,
-                                null_ls.builtins.formatting.yamlfmt,
-                                -- diagnostics
-                                null_ls.builtins.diagnostics.gitlint,
-                                null_ls.builtins.diagnostics.markdownlint,
-                                null_ls.builtins.diagnostics.pylint,
-                                null_ls.builtins.diagnostics.solhint,
-                                null_ls.builtins.diagnostics.staticcheck,
-                                null_ls.builtins.diagnostics.stylelint,
-                                null_ls.builtins.diagnostics.write_good,
-                                null_ls.builtins.diagnostics.yamllint,
-                                null_ls.builtins.diagnostics.commitlint,
-                                null_ls.builtins.diagnostics.codespell,
-                                -- Completions
-                                null_ls.builtins.completion.spell,
-                                null_ls.builtins.completion.tags,
-                                -- Hover
-                                null_ls.builtins.hover.dictionary,
-                                -- Code Actions
-                                null_ls.builtins.code_actions.textlint,
-                                null_ls.builtins.code_actions.gitsigns,
-                                null_ls.builtins.code_actions.refactoring,
-                                null_ls.builtins.code_actions.impl,
-                            },
-                            on_attach = function(client, bufnr)
-                                if client.supports_method("textDocument/formatting") then
-                                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                                    vim.api.nvim_create_autocmd("BufWritePre", {
-                                        group = augroup,
-                                        buffer = bufnr,
-                                        callback = function()
-                                            -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-                                            -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
-                                            vim.lsp.buf.format({ async = false })
-                                        end,
-                                    })
-                                end
-                            end,
-                        })
-                    end
-                end,
             },
             {
                 "nvimtools/none-ls.nvim",
                 dependencies = { "nvim-lua/plenary.nvim" },
+
             },
             { "nvim-telescope/telescope-ui-select.nvim" },
             {
@@ -659,6 +597,68 @@ else
         })
     end
 
+    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+    local has_null_ls, null_ls = pcall(require, "null-ls")
+
+    if has_null_ls then
+        null_ls.setup({
+            -- you can reuse a shared lspconfig on_attach callback here
+            sources = {
+                -- Formatters
+                null_ls.builtins.formatting.isort,
+                null_ls.builtins.formatting.black,
+                null_ls.builtins.formatting.cbfmt,
+                null_ls.builtins.formatting.csharpier,
+                null_ls.builtins.formatting.gofmt,
+                null_ls.builtins.formatting.goimports,
+                null_ls.builtins.formatting.markdownlint,
+                null_ls.builtins.formatting.mdformat,
+                null_ls.builtins.formatting.nixfmt,
+                -- null_ls.builtins.formatting.stylua,
+                null_ls.builtins.formatting.prettier,
+                null_ls.builtins.formatting.rustywind,
+                -- null_ls.builtins.formatting.shellharden,
+                null_ls.builtins.formatting.shfmt,
+                null_ls.builtins.formatting.stylelint,
+                null_ls.builtins.formatting.yamlfmt,
+                -- diagnostics
+                null_ls.builtins.diagnostics.gitlint,
+                null_ls.builtins.diagnostics.markdownlint,
+                null_ls.builtins.diagnostics.pylint,
+                null_ls.builtins.diagnostics.solhint,
+                null_ls.builtins.diagnostics.staticcheck,
+                null_ls.builtins.diagnostics.stylelint,
+                null_ls.builtins.diagnostics.write_good,
+                null_ls.builtins.diagnostics.yamllint,
+                null_ls.builtins.diagnostics.commitlint,
+                null_ls.builtins.diagnostics.codespell,
+                -- Completions
+                null_ls.builtins.completion.spell,
+                null_ls.builtins.completion.tags,
+                -- Hover
+                null_ls.builtins.hover.dictionary,
+                -- Code Actions
+                null_ls.builtins.code_actions.textlint,
+                null_ls.builtins.code_actions.gitsigns,
+                null_ls.builtins.code_actions.refactoring,
+                null_ls.builtins.code_actions.impl,
+            },
+            on_attach = function(client, bufnr)
+                if client.supports_method("textDocument/formatting") then
+                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                    vim.api.nvim_create_autocmd("BufWritePre", {
+                        group = augroup,
+                        buffer = bufnr,
+                        callback = function()
+                            -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+                            -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
+                            vim.lsp.buf.format({ async = false })
+                        end,
+                    })
+                end
+            end,
+        })
+    end
     local has_gitsigns, gitsigns = pcall(require, "gitsigns")
     if has_gitsigns then
         gitsigns.setup()
@@ -796,7 +796,6 @@ else
 
     if has_lspconfig then
         lspconfig.nil_ls.setup({})
-        lspconfig.grammarly.setup({})
         lspconfig.ltex.setup({})
         lspconfig.lua_ls.setup({
             settings = {
@@ -809,7 +808,7 @@ else
 
     local has_lspzero, lspzero = pcall(require, "lsp-zero")
     if has_lspzero then
-        lspzero.preset('system-lsp')  -- or recommended, or whatever...
+        lspzero.preset('system-lsp') -- or recommended, or whatever...
         lspzero.setup_nvim_cmp({
             preselect = 'none',
             completion = {
@@ -817,7 +816,7 @@ else
             },
         })
         lspzero.setup()
-    end 
+    end
     local has_cmp, cmp = pcall(require, "cmp")
     local has_lspkind, lspkind = pcall(require, "lspkind")
 
@@ -865,7 +864,6 @@ else
         "emmet_ls",
         "eslint",
         -- "gopls",
-        "grammarly",
         "html",
         "jsonls",
         "ltex",
@@ -1340,43 +1338,43 @@ else
     keymap({ "v", "n" }, "ga", require("actions-preview").code_actions)
 
     require("image").setup({
-    backend = "kitty",
-    processor = "magick_cli", -- or "magick_rock"
-    integrations = {
-        markdown = {
-        enabled = true,
-        clear_in_insert_mode = false,
-        download_remote_images = true,
-        only_render_image_at_cursor = false,
-        only_render_image_at_cursor_mode = "popup", -- or "inline"
-        floating_windows = false, -- if true, images will be rendered in floating markdown windows
-        filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
+        backend = "kitty",
+        processor = "magick_cli", -- or "magick_rock"
+        integrations = {
+            markdown = {
+                enabled = true,
+                clear_in_insert_mode = false,
+                download_remote_images = true,
+                only_render_image_at_cursor = false,
+                only_render_image_at_cursor_mode = "popup", -- or "inline"
+                floating_windows = false,                   -- if true, images will be rendered in floating markdown windows
+                filetypes = { "markdown", "vimwiki" },      -- markdown extensions (ie. quarto) can go here
+            },
+            neorg = {
+                enabled = true,
+                filetypes = { "norg" },
+            },
+            typst = {
+                enabled = true,
+                filetypes = { "typst" },
+            },
+            html = {
+                enabled = true,
+            },
+            css = {
+                enabled = false,
+            },
         },
-        neorg = {
-        enabled = true,
-        filetypes = { "norg" },
-        },
-        typst = {
-        enabled = true,
-        filetypes = { "typst" },
-        },
-        html = {
-            enabled = true,
-        },
-        css = {
-            enabled = false,
-        },
-    },
-    max_width = nil,
-    max_height = nil,
-    max_width_window_percentage = nil,
-    max_height_window_percentage = 50,
-    scale_factor = 1.0,
-    window_overlap_clear_enabled = false, -- toggles images when windows are overlapped
-    window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "snacks_notif", "scrollview", "scrollview_sign" },
-    editor_only_render_when_focused = false, -- auto show/hide images when the editor gains/looses focus
-    tmux_show_only_in_active_window = false, -- auto show/hide images in the correct Tmux window (needs visual-activity off)
-    hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.avif" }, -- render image files as images when opened
+        max_width = nil,
+        max_height = nil,
+        max_width_window_percentage = nil,
+        max_height_window_percentage = 50,
+        scale_factor = 1.0,
+        window_overlap_clear_enabled = false,                                               -- toggles images when windows are overlapped
+        window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "snacks_notif", "scrollview", "scrollview_sign" },
+        editor_only_render_when_focused = false,                                            -- auto show/hide images when the editor gains/looses focus
+        tmux_show_only_in_active_window = false,                                            -- auto show/hide images in the correct Tmux window (needs visual-activity off)
+        hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.avif" }, -- render image files as images when opened
     })
 
     vim.api.nvim_create_autocmd('TextYankPost', {
