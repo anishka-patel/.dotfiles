@@ -1,0 +1,41 @@
+FROM quay.io/toolbx/arch-toolbox:latest
+
+RUN pacman -Syu --noconfirm --needed \
+    bash-completion \
+    bat \
+    bc \
+    fastfetch \
+    fzf \
+    git \
+    github-cli \
+    imagemagick \
+    kitty \
+    lsd \
+    neovim \
+    pandoc-cli \
+    ripgrep \
+    starship \
+    stow \
+    tealdeer \
+    tmux \
+    tree \
+    vim \
+    wget \
+    yazi \
+    zoxide \
+    zsh \
+    zsh-autocomplete \
+    zsh-completions \
+    zsh-history-substring-search \
+    zsh-syntax-highighting
+
+# Install Yay from aur
+RUN git clone https://aur.archlinux.org/yay-bin.git && \
+    pushd yay-bin && \
+    makepkg && \
+    pacman -U yay-bin-*.tar.zst --noconfirm && \
+    popd && \
+    rm-rf yay-bin 
+RUN yay -Syu --noconfirm aseprite sesh-bin
+
+CMD ["/bin/zsh"]

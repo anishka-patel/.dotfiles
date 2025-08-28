@@ -1,0 +1,3 @@
+ERROR: Hello stargazers looks like you are trying to use DNF on Aurora, please ]8;;https://docs.getaurora.dev/guides/software/read our documentation here]8;;
+]8;;https://docs.getaurora.dev/guides/software/https://docs.getaurora.dev/guides/software/]8;;
+

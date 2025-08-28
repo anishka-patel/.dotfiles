@@ -1,0 +1,19 @@
+FROM docker.io/blackarchlinux/blackarch:latest
+RUN pacman -Syu --noconfirm --needed \
+    bash-completion \
+    bat \
+    fastfetch \
+    fzf \
+    git \
+    github-cli \
+    imagemagick \
+    kitty \
+    lsd \
+    neovim \
+    ripgrep \
+    starship \
+    tmux \
+    vim \
+    yazi \
+    zoxide
+CMD ["/bin/bash"]

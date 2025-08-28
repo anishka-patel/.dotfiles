@@ -2,7 +2,7 @@
   "editor.fontFamily": "'FiraCode Nerd Font'",
   "editor.fontLigatures": true,
   "terminal.integrated.defaultProfile.linux": "zsh",
-  "workbench.colorTheme": "Dracula",
+  "workbench.colorTheme": "Dracula Theme Soft",
   "cSpell.customDictionaries": {
     "custom-dictionary-user": {
       "name": "custom-dictionary-user",

@@ -10,7 +10,7 @@
       "scope": "user"
     }
   },
-  "editor.minimap.autohide": true,
+  "editor.minimap.autohide": "mouseover",
   "editor.minimap.enabled": false,
   "breadcrumbs.showArrays": false,
   "breadcrumbs.showBooleans": false,
@@ -41,7 +41,6 @@
   "breadcrumbs.symbolPath": "off",
   "editor.lineNumbers": "relative",
   "editor.formatOnSave": true,
-  "editor.wordWrap": "on",
   "vetur.validation.template": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
@@ -241,14 +240,12 @@
       "borderColor": "theme.editor.findMatchHighlightBorder"
     }
   },
-  "workbench.activityBar.location": "hidden",
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "workbench.iconTheme": "vscode-icons",
   "editor.stickyScroll.maxLineCount": 1,
   "editor.stickyScroll.enabled": false,
   "editor.renderWhitespace": "all",
@@ -258,8 +255,6 @@
   "editor.scrollbar.horizontalScrollbarSize": 0,
   "editor.stickyScroll.scrollWithEditor": false,
   "workbench.tree.enableStickyScroll": false,
-  "workbench.colorTheme": "Dracula Theme",
-  "window.menuBarVisibility": "toggle",
   "editor.hover.sticky": false,
   "editor.folding": false,
   "editor.foldingHighlight": false,
@@ -292,5 +287,15 @@
   "godotTools.editorPath.godot4": "org.godotengine.Godot",
   "chat.commandCenter.enabled": false,
   "workbench.layoutControl.enabled": false,
-  "workbench.navigationControl.enabled": false
+  "workbench.navigationControl.enabled": false,
+  "editor.wordWrap": "on",
+  "workbench.colorTheme": "Dracula Theme",
+  "workbench.iconTheme": "material-icon-theme",
+  "dev.containers.dockerPath": "podman",
+  "window.commandCenter": false,
+  "workbench.activityBar.location": "hidden",
+  "editor.titleBar.enable": false,
+  "window.customTitleBarVisibility": "never",
+  "window.menuBarVisibility": "hidden",
+  "window.titleBarStyle": "native",
 }

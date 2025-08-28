@@ -1,0 +1,15 @@
+FROM quay.io/fedora/fedora-toolbox:rawhide
+
+RUN dnf install -y \
+    ImageMagick \
+    alacritty \
+    bash-completion \
+    fastfetch \
+    git \
+    neovim \
+    ripgrep \
+    vim-minimal \
+    which 
+RUN dnf install -y\
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+CMD ["/bin/bash"]

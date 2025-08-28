@@ -10,9 +10,6 @@ else
     export SUDO_EDITOR="vim -u /home/ani/.virc"
 fi
 
-if command -v vim &>/dev/null; then
-fi
-
 # Increase history size
 export HISTSIZE=10000
 export HISTFILESIZE=10000

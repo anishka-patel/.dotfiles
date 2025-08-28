@@ -8,8 +8,11 @@ alias rd=rmdir
 alias _="sudo "
 
 if command -v nvim >/dev/null; then
-	alias vi="vim -u $HOME/.virc"
 	alias nv="NVIM_APPNAME=nv nvim"
+    alias vi=nv
+    alias vim=nvim
+else
+	alias vi="vim -u $HOME/.virc"
 fi
 
 if [ -d "$HOME/.config/lazyvim" ]; then
