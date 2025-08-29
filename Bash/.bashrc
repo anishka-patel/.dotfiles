@@ -93,7 +93,7 @@ alias l='ls -lh'
 alias grep='grep --color=auto'
 alias es="emacs -nw"
 alias ec="emacsclient -ta 'emacs'"
-alias vi="vim -u .virc"
+alias vi=vim
 alias nv=nvim
 alias lg=lazygit
 alias lgit=lazygit
