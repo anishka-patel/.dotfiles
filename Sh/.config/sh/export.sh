@@ -3,11 +3,11 @@
 if command -v nvim &>/dev/null; then
     export EDITOR="nvim"
     export VISUAL="nvim"
-    export SUDO_EDITOR="nvim -u /home/ani/.virc"
+    export SUDO_EDITOR="vim"
 else
     export EDITOR="vim"
     export VISUAL="vim"
-    export SUDO_EDITOR="vim -u /home/ani/.virc"
+    export SUDO_EDITOR="vim"
 fi
 
 # Increase history size

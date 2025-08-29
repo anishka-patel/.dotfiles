@@ -1,5 +1,3 @@
-# Editors
-
 alias -- -='cd -'
 
 alias md='mkdir -p'
@@ -12,7 +10,7 @@ if command -v nvim >/dev/null; then
     alias vi=nv
     alias vim=nvim
 else
-	alias vi="vim -u $HOME/.virc"
+	alias vi=vim
 fi
 
 if [ -d "$HOME/.config/lazyvim" ]; then
