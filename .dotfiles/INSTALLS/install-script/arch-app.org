@@ -1,0 +1,74 @@
+#+TITLE: Arch Applications Guide
+
+* Pacman Apps
+  #+BEGIN_SRC bash
+  pacman -S --needed vi gvim nvim emacs neovide # editors
+  pacman -S --needed ranger vifm lf # explorers
+  pacman -S --needed lynx w3m # browsers
+  pacman -S --needed dmenu # runner
+  pacman -S --needed imagemagick feh # imageviewers
+  pacman -S --needed mlocate # indexer
+  pacman -S --needed trash-cli rmlint # trash can
+  pacman -S --needed mandb tealdeer # man pages
+  pacman -S --needed bat moar exa ripgrep fd stow scrot fzf # utils
+  pacman -S --needed starship tmux zoxide # utils
+  pacman -S --needed nodejs npm python pip rustup go zig # dev
+  pacman -S --needed git github-cli lazygit # dev
+  pacman -S --needed android-tools # dev
+  pacman -S --needed jupyterlab ipython # dev 
+  pacman -S --needed alacritty xterm rxvt-unicode # terminal emulators
+  pacman -S --needed apparmor sbctl lynis arch-audit veracrypt rkhunter # security
+  pacman -S --needed flatpak appimage-cli-tool appimagelauncher # package managers
+  pacman -S --needed virt-manager qemu-full # virt 
+  pacman -S --needed htop conky # monitors
+  pacman -S --needed timeshift timeshift-autosnap # backup and restore
+  
+  #+END_SRC
+
+* Yay Apps
+  #+BEGIN_SRC bash
+  yay -S --needed vscodium-bin vscodium-bin-marketplace # editor
+  yay -S --needed demu-wayland-git # runner
+  yay -S --needed swhkd-bin
+  yay -S --needed waydroid 
+  #+END_SRC
+* External Apps
+  ** LunarVim
+  #+BEGIN_SRC bash
+  LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
+  #+END_SRC
+  ** Spacemacs
+  #+BEGIN_SRC bash
+  git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+  #+END_SRC
+  ** Blackarch
+  #+BEGIN_SRC bash
+  curl -O https://blackarch.org/strap.sh
+  echo 5ea40d49ecd14c2e024deecf90605426db97ea0c strap.sh | sha1sum -c
+  chmod +x strap.sh
+  sudo ./strap.sh
+  sudo pacman -Syu
+  #+END_SRC
+  ** cht.sh
+  #+BEGIN_SRC bash
+  curl -s https://cht.sh/:cht.sh | sudo tee /usr/local/bin/cht.sh && sudo chmod +x /usr/local/bin/cht.sh
+  #+END_SRC
+* Flatpak Apps
+  #+BEGIN_SRC bash
+  flatpak install -y com.github.tchx84.Flatseal
+  flatpak install -y com.brave.Browser com.google.Chrome 
+  flatpak install -y org.qutebrowser.qutebrowser 
+  flatpak install -y org.gimp.GIMP org.kde.krita org.inkscape.Inkscape 
+  flatpak install -y com.github.libresprite.LibreSprite com.chez.GrafX2
+  flatpak install -y io.lmms.LMMS org.audacityteam.Audacity  
+  flatpak install -y org.godotengine.Godot org.gogotengine.Godot3 
+  flatpak install -y org.kde.okular org.onlyoffice.desktopeditors
+  flatpak install -y org.videolan.vlc com.obsproject.Studio
+  flatpak install -y org.kde.kdenlive fr.handbrake.ghb
+  flatpak install -y org.freecadweb.FreeCAD org.blender.Blender org.librecad.librecad
+  flatpak install -y org.mozilla.firefox org.mozilla.Thunderbird
+  flatpak install -y us.zoom.Zoom com.dropbox.Client org.qbittorrent.qBittorrent
+  flatpak install -y org.bleachbit.BleachBit io.github.shiftey.Desktop
+  
+  #+END_SRC
+

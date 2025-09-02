@@ -1,0 +1,47 @@
+#+TITLE: Guide to encrypt drives and swap
+* Modify mkinitcpio
+** Edit ~/etc/mkinicpio.conf~
+  - add ~btrfs~ to ~MODULES~
+    #+BEGIN_SRC bash
+    sed -i '/MODULES/s/)/btrfs)/' /etc/mkinitcpio.conf
+    #+END_SRC
+  - add ~encrypt~ to ~HOOKS~ before ~filesystems~
+    #+BEGIN_SRC bash
+    sed -i '/HOOKS/s/filesystems/encrypt filesystems/' /etc/mkinitcpio.conf
+    #+END_SRC
+  - create new kernel imager
+    #+BEGIN_SRC bash
+    # mkinitcpio -p linux
+    mkinitcpio -p linux-lts  
+    #+END_SRC
+
+* Modify grubconfig
+** Get device uuid (dev-uuid) for root disk with ~blkid~ command
+** Edit ~/etc/default/grub~ on line with ~GRUB_CMDLINE_LINUX_DEFAULT~
+  - add ~cryptdevice=UUID=(dev-uuid):cryptroot root=/dev/mapper/cryptroot~
+    #+BEGIN_SRC bash
+    sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/s/$/cryptdevice=UUID=(dev-uuid):cryptroot root=\/dev\/mapper\/cryptroot/' /etc/default/grub
+    #+END_SRC
+** Regenerate grub config file
+  #+BEGIN_SRC bash
+  grub-mkconfig -o /boot/grub/grub.cfg
+  #+END_SRC
+
+* Encrypt the swap
+** Switch off swap
+  #+BEGIN_SRC bash
+  swapoff /path/to/swap
+  #+END_SRC
+** Make dummy swap label  
+  #+BEGIN_SRC bash
+  mkfs.ext2 -L cryptswap /path/to/swap 1M
+  #+END_SRC
+** Modify crypttab
+  - Edit ~/etc/crypttab~
+  - uncomment line with ~swap~
+  - under ~<device>~ column, add ~LABEL=cryptSwap~
+  - under ~<options>~ column, add ~offset=2048~
+  - under ~<options>~ modify ~size~ accordingley
+** Modify fstab
+  - Edit ~/etc/fstab~
+  - at ~swap~ change ~<filesystem>~ option to ~/dev/mapper/swap~

@@ -1,0 +1,82 @@
+#+TITLE: Read me for Dotcfg
+#+DESCRIPTION: Org file read me for dotfiles configuration
+#+AUTHOR: Anishka Patel
+#+EMAIL: anishka.vpatel@gmail.com
+
+* Project Overview
+** Plasma Specific
+*** X11
+*** Wayland
+** Qtile Specific
+*** X11
+**** Compositor
+    Picom
+**** Notification
+     lxqt-notificationd
+**** Polkit
+     lxqt-polkit
+**** Settings Manager
+    lxqt-config
+**** Display Settings
+    lxappearance
+*** Wayland
+    ??
+** Hyprland Specific
+** Sway Specific
+** Common
+*** Primary Apps
+**** Monitor
+     Htop
+**** Hotkey
+     Swhkd
+**** Terminal
+     Konsole
+***** Shell
+      Zsh
+**** Internet
+***** Web Browser
+      FireFox
+***** E-mail Client
+***** IRC
+***** RSS
+**** Explorer
+     Dolphin
+**** Runner
+     Rofi
+**** Editor
+     Nvim
+*** Web Browser
+    Firefox
+    Google Chrome
+    Qutebrowser
+    Brave
+    Lynx
+
+*** Editors
+    Nvim/Lvim
+    Emacs
+    Vim/Vi
+*** IDEs
+    VSCodium
+    GodotMono
+    Godot
+*** Explorer 
+    Dolphin
+    Krusader
+    Vifm
+    Ranger/Lf
+*** Runner 
+    Rofi
+    Krunner
+    Wofi
+*** Terminal
+    Konsole
+    Yakuake
+    XTerm
+    UXTerm
+    Alacritty
+    Kitty
+    Foot
+    WizTerm
+*** Notification 
+    Dunst

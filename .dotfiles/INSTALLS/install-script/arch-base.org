@@ -1,0 +1,81 @@
+#+TITLE: Arch Base Install Guide
+* Set timezone
+  #+BEGIN_SRC bash
+  ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+  hwclock --systohc
+  #+END_SRC
+* Set locale
+  #+BEGIN_SRC bash
+  sed -i '162s/.//' /etc/locale.gen
+  locale-gen
+  echo "LANG=en_US.UTF-8">> /etc/locale.conf
+  echo "KEYMAP=us" >> /etc/vconsole.conf
+  
+  #+END_SRC
+* Set hostname and host
+  #+BEGIN_SRC bash
+  echo "arch-aero" >> /etc/hostname
+
+  echo "127.0.0.1 localhost" >> /etc/hosts
+  echo "::1       localhost" >> /etc/hosts
+  #+END_SRC
+* Change root password
+  #+BEGIN_SRC bash
+  echo root:password | chpasswd
+  #+END_SRC
+* Install Packages
+  #+BEGIN_SRC bash
+  pacman -S grub grub-btrfs efibootmanager os-prober timeshift timeshift-autosnap # Boot Related
+  pacman -S networkmanager network-manager-applet dialog wpa_supplicant # Network related
+  pacman -S mtools dosfstools base-devel linux-lts-headers avahi \
+  xdg-user-dirs xdg-utils gvfs gvfs-smb nfs-utils inetutils dnsutils ntfs-3g # Fs utils related
+  pacman -S bluez bluez-utils # Bluetooth related
+  pacman -S cups hplip # Printing related
+  pacman -S alsa-utils pipewire pipewire-alsa pipewire-pulse pipewire-jack # Audio related
+  pacman -S bash-completion openssh rsync rclone reflector # Shell related
+  pacman -S zsh zsh-completions zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search # z shell related
+  pacman -S acpi acpi_call tlp # Battery related
+  pacman -S virt-manager qemu qemu-arch-extra edk2-ovmf bridge-utils # Virt related
+  pacman -S dnsmasq vde2 openbsd-netcat iptables-nft ipset gufw nss # firewall related
+  pacman -S flatpak # external packages
+  pacman -S terminus-font ttf-firacode-nerd ttf-terminus-nerd ttf-noto-nerd # fonts related
+  # pacman -S xf86-video-amdgpu # gpu related
+  pacman -S xf86-video-ati 
+  # pacman -S sway sway-bar sway-idle polkit foot alacritty dmenu mako xorg-xwayland xdg-desktop-protal-wlr ly # sway wm
+  pacman -S hyprland waybar hyperland-desktop-portal wofi dunst # hyprland wm
+  # pacman -S qtile qtile-extras rofi dunst # Qtile wm
+  # pacman -S plasma sddm # kde
+  # pacman -S plasma-desktop sddm # kde minimal
+  pacman -S apparmor lynis arch-audit # security related
+
+  # yay -S ly
+ 
+  #+END_SRC
+* Install Grub
+  #+BEGIN_SRC bash
+  grub-install --target=x86-64-efi --efi-directory=/boot --bootloader-id=GRUB
+  grub-mkconfig -o /boot/grub/grub.cfg
+  #+END_SRC
+* Activate services
+  #+BEGIN_SRC bash
+  systemctl enable NetworkManager
+  systemctl enable bluetooth
+  systemctl enable cups.service
+  systemctl enable sshd
+  systemctl enable avahi-daemon
+  systemctl enable tlp
+  systemctl enable reflector.timer
+  systemctl enable fstrim.timer
+  systemctl enable libvirtd
+  systemctl enable ufw.service
+  systemctl enable acpid
+  #+END_SRC
+
+* Add user
+  #+BEGIN_SRC bash
+  useradd -m ani
+  ehco ani:password | chpasswd
+  usermod -aG libvirt ani
+  echo "ani ALL=(ALL) ALL" >> /etc/sudoers.d/ani
+  #+END_SRC
+

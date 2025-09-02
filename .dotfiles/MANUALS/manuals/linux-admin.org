@@ -1,0 +1,404 @@
+#+TITLE: Linux Admin Guide
+#+AUTHOR: Anishka Patel
+#+DESCRIPTION: A guide for Linux administration
+#+DATE: [2022-08-25 Thu]
+#+EMAIL: anishka.vpatel@gmail.com
+
+
+* Linux Fundamentals
+** Bash Prompt Commands
+|---------------+---------------------|
+| Commands      | Action              |
+|---------------+---------------------|
+| ^c (Ctrl - c) | kill the process    |
+| ^z (Ctrl - z) | suspend the process |
+|---------------+---------------------|
+** Vim Style Bindings in terminal - Add ~set -o vi~ to ~.bashrc~ or ~.bash-profile~
+** Package managers -
+ - ~.deb~ packages: apt, nala (Debian based distros)
+ - ~.snap~ packages: snapd (Ubuntu based distros)
+ - ~.pacman~ packages: pacman, yay(AUR) (Arch based distros)
+ - ~.rpm~ packages: yum, dnf (Fedora based distros)
+ - ~.flatpak~ packages: flatpak (*) MoreInfo: [[https://flathub.org/home][Flathub—An app store and build service for Linux]]
+ - ~.nix~ packages: nix-env (*) MoreInfo: [[https://nixos.org/manual/nix/stable/installation/installing-binary.html][Nix Install]]
+ - ~.formula~ packages: brew (*) MoreInfo: [[https://brew.sh/][HomeBrew-Homepage]]
+ - Development related package manager
+   - NPM: Node package manager
+   - PIP: Python package manager
+   - CARGO: Rust package manager
+   - NUGET: DOTNET package manager
+   - ELPA, MELPA: Emacs package manager
+   - Packer, Vimplug: Vim/Neovim package manager
+* System access and file system
+** File system structure
+|--------+------------------------------------------------------------|
+| Dir    | Description                                                |
+|--------+------------------------------------------------------------|
+| /      | root directory                                             |
+| /boot  | contains boot loader i.e. grub.cfg                         |
+| /root  | root user home directory                                   |
+| /dev   | system devices i.e. disk, speakers, thumb-drives, etc.     |
+| /etc   | Configuration files                                        |
+| /bin   | non root users binaries                                    |
+| /sbin  | root user binaries                                         |
+| /opt   | Optional add-on applications (usually not part of os apps) |
+| /proc  | Running processes (only exists in memory)                  |
+| /lib   | library files for users                                    |
+| /tmp   | temporary files                                            |
+| /home  | home directory for non root users                          |
+| /var   | system logs                                                |
+| /mnt   | mount point for external file systems                      |
+| /media | mount for removable media i.e. flash-drives, etc.          |
+|        |                                                            |
+|--------+------------------------------------------------------------|
+** Navigation
+*** Commands
+|---------+---------+----------------------------------|
+| command | options | description                      |
+|---------+---------+----------------------------------|
+| cd      | nil     | Change directory                 |
+| pwd     | nil     | print working director           |
+| ls      | nil     | print items of current directory |
+| ls      | -a      | print all items including hidden |
+| ls      | -l      | list items of current directory  |
+| ls      | -h      | print in human readable format   |
+|---------+---------+----------------------------------|
+*** Aliases
+|-------+----------------------------------|
+| alias | expansion                        |
+|-------+----------------------------------|
+| ~     | current user home directory      |
+| ~+    | pwd - current working directory  |
+| ~-    | oldpwd - older working directory |
+|-------+----------------------------------|
+*** File types
+|-------------+-----------------------------|
+| File symbol | Meaning                     |
+|-------------+-----------------------------|
+| -           | Regular file                |
+| d           | directory                   |
+| l           | link                        |
+| c           | special file or device file |
+| s           | socket                      |
+| p           | named pipe                  |
+| b           | block device                |
+|-------------+-----------------------------|
+*** File/Dir creation, cut, copy, remove
+|---------+------------------|
+| command | description      |
+|---------+------------------|
+| mkdir   | create dir       |
+| rmdir   | remove empty dir |
+| cp -R   | copy dir         |
+| rm -R   | remove dir       |
+| touch   | create file      |
+| cp      | copy files       |
+| mv      | move files/dir   |
+| rm      | remove           |
+|---------+------------------|
+*** Finding files and directories
+|---------+----------------------|
+| command | usage                |
+|---------+----------------------|
+| find    | find ~ -name "*.org" |
+| locate  | locate *.org         |
+|---------+----------------------|
+Note : Wildcard character
+1. ~*~ - represents zero or more characters
+2. ~?~ - represents a single character
+3. ~[]~ ~- represents a range of character
+*** Links
+- ~ln~ : hard links
+- ~ln -s~ : soft links
+*** File permissions
+**** Types - r: read, w: write, x: execute
+Example: ~drwxrwxrwx~
+ * "d---------": "first byte" represents [[*File types][File types]]
+ * "-rwx------": "next 3 bytes" represents permissions for user "u"
+ * "d---rwx---": "middle 3 bytes" represents permission for group "g"
+ * "d------rwx": "last 3 bytes" represents permission for others "o"
+**** ~chmod~ - changing permissions
+Usage does the same thing
+ * ~chmod ugo+r file~
+   |--------+---------+--------+-----------+--------+-----------------|
+   | symbol | meaning | symbol | operation | symbol | permission type |
+   |--------+---------+--------+-----------+--------+-----------------|
+   | u      | user    | -      | remove    | r      | read            |
+   | g      | group   | +      | add       | w      | write           |
+   | o      | other   |        |           | x      | execute         |
+   |--------+---------+--------+-----------+--------+-----------------|
+    * ~chmod 444 file~
+      * "4--": "first byte" represents user permission
+      * "-4-": "mid byte" represents group permission
+      * "--4": "last byte" represents other permission
+
+     Octal value meaning
+      * 0: no permission
+      * 1: execute permission
+      * 4: read permission
+      * 5: read(4) and execute(1) permission
+      * 6: read(4) and write(2) permission
+      * 7: read(5), write(2) and execute(1) permission
+
+    777 - gives complete permission to a file in linux environment
+*** File ownership
+There are 2 owner of a file or directory: user and group
+ * ~chown~ changes user ownership
+ * ~chgrp~ changes group ownership
+Use -R for recursive/cascade ownership changes to directory
+*** Help commands
+ * ~whatis~ command
+ * ~which~ command
+ * ~whereis~ command
+ * command --help and command --usage
+ * ~man~ command
+ * ~tldr~ command
+ * ~curl cheat.sh/<command>~ command
+*** Input and output redirection
+ * Stdin 0, stdout 1, stderr 2, >, >>
+ * ~tee~ command
+ * Redirect to a file and pipe forward
+*** Pipes |
+*** File display commands
+ * ~cat~
+ * ~more~
+ * ~less~
+ * ~head~
+ * ~tail~
+*** Filters/Processors commands
+ * ~cut~
+ * ~awk~
+ * ~grep~
+ * ~sort~
+ * ~uniq~
+ * ~wc~
+*** Compare files
+ * ~diff~
+ * ~cmp~
+*** Compress/extract files
+ * ~tar~
+    Example:
+    - Make a tar file from file1 file2 file3
+        ~tar cvf target.tar file1 file2 file3~ -> ~target.tar~
+    - Make a tar file and compress file1 file2 file3
+        ~tar czvf target.tar.xz file1 file2 file3~ -> ~target.tar.xz~
+    - Extract a  tar file
+        ~tar xvf file.tar~
+    - Extract a compressed tar file
+        ~tar xzvf file.tar.xz~
+ * ~gzip~
+ * ~zip~
+*** Combine/split files
+ * ~cat~ : Concatenates files
+ * ~split~ : Splits a file
+* Linux System Administration
+** Linux file editor
+|-----------------+------------------------------------------|
+| Editor          | Description                              |
+|-----------------+------------------------------------------|
+| Vi/Vim/Nvim     | Modal text editor                        |
+| Emacs           | Advanced text editor with gui client     |
+| AstroNvim       | Nvim based editor with advanced features |
+| nano/micor/pico | No modal basic text editors              |
+|-----------------+------------------------------------------|
+** Linux stream editor ~sed~
+** User Account management
+*** Manager Users and groups
+- ~useradd~
+- ~groupadd~
+- ~userdel~
+- ~groupdel~
+- ~usermod~
+- ~chage~
+*** Files to know
+- ~/etc/passwd~
+- ~/etc/group~
+- ~/etc/shadow~
+- ~/etc/login.def~
+*** switch user
+- ~su -username~
+- ~sudo~
+- ~doas~
+- Files: ~/etc/sudoers~
+*** Monitor users
+- ~who~
+- ~last~
+- ~w~
+- ~finger~
+- ~id~
+*** Communication between users
+- ~users~
+- ~wall~
+- ~write~
+*** System utility commands
+- ~date~
+- ~uptime~
+- ~hostname~
+- ~uname~
+- ~which~
+- ~cal~
+- ~bc~
+*** Process / service commands
+- ~systemctl~
+  - ~systemctl start|stop|status|enable|disable|restart|reload~
+- ~ps~
+- ~top~ or ~htop~
+- ~kill~
+- ~crontab~
+- ~at~
+*** Job management
+- ~ctrl-z~
+- ~bg~
+- ~fg~
+- ~jobs~
+- ~kill~
+- ~command &~
+*** System monitoring
+- ~top/htop~
+- ~df/du~
+- ~dmesg~
+- ~iostat~
+- ~netstat~
+- ~free~
+- ~cat /proc/cpuinfo~
+- ~cat /proc/meminfo~
+- ~cat /var/log~
+*** System management
+- ~shutdown~
+- ~halt~
+- ~reboot~
+- ~init 0-6~
+*** Terminal commands
+- ~ctrl-c~
+- ~ctrl-d~
+- ~ctrl-z~
+- ~exit~
+- ~clear~
+- ~script~
+*** Special permissions
+- ~setuid~
+- ~setgid~
+- ~sitckybit~
+*** PATH and ENV
+* Bash and Shell Scripting
+** Types of shells
+ * ~sh~ : Bourne shell
+ * ~bash~: Bourne Again Shell
+ * ~zsh~:
+ * ~fish~:
+ * ~dash~:
+** Shells entry and exit
+ * Enter: Type shell name: ~bash~ in the terminal or command line
+ * Exit: Type ~exit~ in the terminal or command line
+** Shell scripting
+*** Components of shell script
+ * Header/ shebang :
+   * ~#!/bin/bash~: looks at specific location provider for interpreter
+   * ~#!/usr/bin/env bash~: looks at the ~PATH~ variable for the interpreter
+ * Comments: ~# This is a comment~: Comments
+ * Commands: ~echo, cp, mv, rm, etc.~
+ * Statements: ~if, while, for, etc.~
+ * Professional components:
+   1. Author: ~Name~
+   2. Created: ~Date~
+   3. Last Modified: ~Date~
+   4. Description: ~Text~
+   5. Usage: ~Text~
+*** Exit codes:
+ * ~0~: exit without error
+ * More info: [[https://tldp.org/LDP/abs/html/exitcodes.html][Exit Code Reference]]
+*** Requirements:
+ * Execute permissions required: ~-rwxr-xr-x~: will execute for everyone
+   Click [[*File permissions][File permissions]] for more info.
+ * Need to call with correct absolute path or relative path
+ * Availability from everywhere
+   * add to ~$PATH~ in ~.profile~ or ~.bashrc~
+*** Variables and shell expansions:
+*** Bash command processing:
+*** IO:
+ * Requesting user input
+ * ~read~: input from user
+ * ~echo~: output from script
+ * Reading options
+ * Processing files
+*** Branching logic:
+ * ~if-elif-else~:
+ * ~case~:
+ * Test statements
+*** Looping logic;
+ * ~for~:
+ * ~while~:
+*** Arrays
+*** Debugging
+*** Automation
+ * ~cron-tab~
+ * ~at~
+*** Remote connection
+ * ~ssh~
+ * ~scp~
+ * ~rsync~
+ * ~vnc~
+* Linux Networking
+** Network Management
+*** ~ping~
+*** ~ip~
+*** ~netstat~
+*** ~route~
+*** ~traceroute~
+*** ~tcpdump~
+*** ~netstat~
+*** ~nmtui~
+*** ~nmcli~
+** Remote management
+*** ~ssh~
+*** ~scp~
+*** ~rsync~
+*** ~sendmail~
+** Firewall
+*** ~ufw~
+*** ~iptables~
+** LDAP
+** NFS
+** FTP
+** HTTP
+** Linux Hardening
+** System performance
+** Containers
+** Automate Linux Installation
+** DHCP
+* Disk Management
+** Disk ~mount~, ~umount~
+** Disk usage
+ * ~df~
+ * ~du~
+ * ~dd~
+** Disk partition
+ * ~fdisk~
+** Disk file system
+ * ~mkfs~
+ * ~fsck~
+** Persistence ~/etc/fstab~, ~genfstab~
+** Swap: ~mkswap~, ~swapon~
+** LVM
+** RAID
+** NFS, SAN and SAMBA
+** SATA vs SAS
+* Linux Services management
+** Init. system ~ststemd~
+** Run levels 0 - 6
+** Service Management ~systemctl~
+** Hardware management
+ * ~lscpu~
+ * ~lsmem~
+ * ~lspci~
+ * ~lsblk~
+ * ~lsfd~
+ * ~lsof~
+ * ~lsusb~
+ * ~lsb_release -a~
+ * ~lsmod~
+ * ~lsinitcpio~
+
+#  LocalWords:  Stdin Ctrl nala snapd distros pacman yay AUR dnf flatpak env os
+#  LocalWords:  NPM NUGET ELPA linux Init SATA SAS NFS LVM cfg dev sbin proc
+#  LocalWords:  tmp mnt

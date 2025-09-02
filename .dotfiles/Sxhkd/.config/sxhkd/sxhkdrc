@@ -1,0 +1,108 @@
+# Open
+super + o; {a,c,d,e,f,g,i,k,m,o,p,r,t,v,w}
+    {krita,blender,vscodium,konsole -e vim,dolphin,gvim,gwenview,meld,elisa,onlyoffice-desktopeditors,aesprite,okular,konsole,vlc,firefox}
+
+# Art
+super + o; super + a; {0,1,2,3,4}
+    {krita,inkscape,gimp,pencil,com.jgraph.draw.desktop}
+super + o; super + c; {0,1}
+    {blender, freecad}
+super + o; super + d; {0,1,2,3,4,5}
+    {vscodium,geany,kdevelop,godot,godotmono,processing}
+super + o; super + e; {0,1,2,3,4}
+    konsole -e {vim,nvim,/home/ani/.local/bin/lvim,emacsclient -ta '',vi}
+super + o; super + f; {0,1,2,3}
+    {dolphin,krusader,vifm,konqueror}
+super + o; super + g; {0,1,2,3,4,5}
+    {gvim, neovide, leovide,emacsclient -ca '', kate, kwrite}
+super + o; super + i; {0,1}
+    {gwenview, digikam}
+super + o; super + k; {0,1,2}
+    {meld,kompare,kdiff3}
+super + o; super + m; {0,1,2}
+    {elisa,audacity,lmms}
+super + o; super + o; {0,1}
+    {onlyoffice-desktopeditors,pdfarranger}
+super + o; super + p; {0,1,2}
+    {aesprite,pixelorama,grafx2}
+super + o; super + r; {0,1}
+    {okular,calibre}
+super + o; super + t; {0,1,2,3,4,5}
+    {konsole,yakuake,kitty,alacritty,xterm,uxterm}
+super + o; super + v; {0,1,2,3}
+    {vlc,mpv,shotcut,kdenlive}
+super + o; super + w; {0,1,2,3,4,5,6}
+    {firefox,qutebrowser,google-chrome-stable,chromium,brave,konqueror,konsole -e lynx}
+
+
+super + Escape
+    xkill
+
+super + r
+    rofi -no-config -no-lazy-grab -show drun -modi drun -theme ~/.config/qtile/rofi/launcher2.rasi
+
+super + shift + d ; m
+	dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
+super + shift + d ; o
+    rofi -no-config -no-lazy-grab -show drun -modi drun -theme ~/.config/qtile/rofi/launcher2.rasi
+super + shift + d ; w
+    rofi -show
+super + shift + d ; t
+    rofi-theme-selector
+
+super + shift + r; x
+    pkill -USR1 -x sxhkd
+super + shift + r; w
+    pkill -USR1 -x swhkd
+super + shift + r; p
+    plasmashell --replace
+super + shift + r; q
+    qtile-cmd -o cmd -f restart
+
+super + shift + v; {t,n,p,f,space}
+    variety {-t, -n, -p, -f, --toggle-pause}
+
+super + shift + escape
+    systemmonitor
+
+#Scrot
+Print
+    scrot 'ArchLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
+
+#screeenshooter
+ctrl + Print
+     spectacle
+
+#Gnome-Screenshot
+ctrl + shift + Print
+     flameshot launcher
+
+super + `
+    yakuake
+
+F12
+    yakuake
+
+Alt + F2
+    krunner
+
+
+super + n
+    emacsclient -ca ''
+
+super + shift + n
+    emacsclient --eval '(emacs-everywhere)'
+
+super + s; g
+    konsole -e glances
+super + s; h
+    konsole -e htop
+super + s; b
+    konsole -e /home/ani/.local/bin/bpytop
+super + s; t
+    konsole -e top 
+
+super + shift + p; {o,p,d}
+    {/usr/bin/octopi, pamac-manager, plasma-discover}
+
+

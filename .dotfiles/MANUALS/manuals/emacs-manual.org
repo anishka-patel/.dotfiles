@@ -1,0 +1,6 @@
+#+TITLE: Emacs Manual
+#+CREATOR: Anishka Patel
+#+EMAIL: anishka.vpatel@gmail.com
+#+DESCRIPTION: A manual for using Emacs in general and Doom Emacs in particular.
+#+DATE: [2022-08-25 Thu]
+#+OPTIONS: toc:2

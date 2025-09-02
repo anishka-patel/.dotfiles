@@ -1,0 +1,9 @@
+Dropbox
+draw.io
+Freedesktop
+Mesa
+Mesa
+openh264
+GNOME
+Breeze
+Zoom

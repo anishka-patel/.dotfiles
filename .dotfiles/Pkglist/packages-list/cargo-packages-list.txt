@@ -1,0 +1,15 @@
+    bacon
+    cargo-info
+    coreutils
+    dust
+    evcxr_jupyter
+    exa
+    irust
+    nu
+    porsmo
+    rtx
+    sccache
+    speedtest-rs
+    starship
+    wiki-tui
+    zellij

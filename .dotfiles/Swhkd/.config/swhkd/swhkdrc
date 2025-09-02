@@ -1,0 +1,371 @@
+### Open Applications ###
+super + o
+    notify-send -a "SWHKD" "Entering Open Mode..." "Press a-z to open apps.\nPress [S]a-z to open modes.\nPress ESC to quit." && @enter open
+
+mode open
+a
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && flatpak run org.kde.krita && @escape    # open
+super + a
+    notify-send -a "SWHKD" "Entering [A]rt Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter art
+c
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && flatpak run org.blender.Blender && @escape    # open
+super + c
+    notify-send -a "SWHKD" "Entering [C]ad Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter cad
+d
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && godotmono && @escape    # open
+super + d
+    notify-send -a "SWHKD" "Entering [D]evelopment Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter development
+e
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && alacritty -e $HOME/.local/bin/lvim && @escape    # open
+super + e
+    notify-send -a "SWHKD" "Entering [E]ditor Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter editor
+f
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && dolphin && @escape    # open
+super + f
+    notify-send -a "SWHKD" "Entering [F]iles Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter files
+i
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && flatpak run org.kde.gwenview && @escape    # open
+super + i
+    notify-send -a "SWHKD" "Entering [I]mage Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter image
+k
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && kompare && @escape    # open
+super + k
+    notify-send -a "SWHKD" "Entering [K]ompare Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter kompare
+m
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && flatpak run org.kde.elisa && @escape    # open
+super + m
+    notify-send -a "SWHKD" "Entering [M]usic Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter music
+n
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && env -u WAYLAND_DISPLAY neovide --neovim-bin $HOME/.local/bin/lvim && @escape    # open
+super + n
+    notify-send -a "SWHKD" "Entering [N]ote Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter note
+o
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && flatpak run org.onlyoffice.desktopeditors && @escape    # open
+super + o
+    notify-send -a "SWHKD" "Entering [O]ffice Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter office
+p
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && flatpak run org.inkscape.Inkscape && @escape    # open
+super + p
+    notify-send -a "SWHKD" "Entering [P]roduction Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter production
+t
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && alacritty && @escape    # open
+super + t
+    notify-send -a "SWHKD" "Entering [T]erminal Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter terminal
+v
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && flatpak run org.videolan.VLC && @escape    # open
+super + v
+    notify-send -a "SWHKD" "Entering [V]ideo Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter video
+w
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && flatpak run org.qutebrowser.qutebrowser && @escape    # open
+super + w
+    notify-send -a "SWHKD" "Entering [W]eb Mode..." "Press 1-9 for opening apps.\nPress ESC to quit." && @enter web
+escape
+    notify-send -a "SWHKD" "Exiting [O]pen Mode." && @escape    # open
+endmode
+
+mode art 
+0
+    notify-send -a "SWHKD" "Exiting [A]rt Mode." "Exiting [O]pen Mode." && flatpak run org.kde.krita && @escape && @escape    # art
+1
+    notify-send -a "SWHKD" "Exiting [A]rt Mode." "Exiting [O]pen Mode." && flatpak run com.github.libresprite.Libresprite && @escape && @escape    # art
+escape
+    notify-send -a "SWHKD" "Exiting [A]rt Mode." "Exiting [O]pen Mode." && @escape && @escape    # art
+endmode
+
+mode cad 
+0
+    notify-send -a "SWHKD" "Exiting [C]ad Mode." "Exiting [O]pen Mode." && flatpak run org.blender.Blender && @escape && @escape    # cad
+1
+    notify-send -a "SWHKD" "Exiting [C]ad Mode." "Exiting [O]pen Mode." && flatpak run org.freecadweb.FreeCAD && @escape && @escape    # cad
+2
+    notify-send -a "SWHKD" "Exiting [C]ad Mode." "Exiting [O]pen Mode." && flatpak run org.librecad.librecad && @escape && @escape    # cad
+escape
+    notify-send -a "SWHKD" "Exiting [C]ad Mode." "Exiting [O]pen Mode." && @escape && @escape    # cad
+endmode
+
+mode development  
+0
+    notify-send -a "SWHKD" "Exiting [D]evelopment Mode." "Exiting [O]pen Mode." && godotmono && @escape && @escape    # development
+1
+    notify-send -a "SWHKD" "Exiting [D]evelopment Mode." "Exiting [O]pen Mode." && flatpak run org.godotengine.godot && @escape && @escape    # development
+2
+    notify-send -a "SWHKD" "Exiting [D]evelopment Mode." "Exiting [O]pen Mode." && godotmono3 && @escape && @escape    # development
+3
+    notify-send -a "SWHKD" "Exiting [D]evelopment Mode." "Exiting [O]pen Mode." && flatpak run org.godotengine.godot3 && @escape && @escape    # development
+escape
+    notify-send -a "SWHKD" "Exiting [D]evelopment Mode." "Exiting [O]pen Mode." && @escape && @escape    # development
+endmode
+
+mode editor 
+0
+    notify-send -a "SWHKD" "Exiting [E]ditor Mode." "Exiting [O]pen Mode." && alacritty -e $HOME/.local/bin/lvim && @escape && @escape    # editor
+1
+    notify-send -a "SWHKD" "Exiting [E]ditor Mode." "Exiting [O]pen Mode." && alacritty -e emacsclient -ta '' && @escape && @escape    # editor
+2
+    notify-send -a "SWHKD" "Exiting [E]ditor Mode." "Exiting [O]pen Mode." && alacritty -e nvim && @escape && @escape    # editor
+3
+    notify-send -a "SWHKD" "Exiting [E]ditor Mode." "Exiting [O]pen Mode." && alacritty -e vim && @escape && @escape    # editor
+escape
+    notify-send -a "SWHKD" "Exiting [E]ditor Mode." "Exiting [O]pen Mode." && @escape && @escape    # editor
+endmode
+
+mode files 
+0
+    notify-send -a "SWHKD" "Exiting [F]iles Mode." "Exiting [O]pen Mode." && dolhpin && @escape && @escape    # files
+1
+    notify-send -a "SWHKD" "Exiting [F]iles Mode." "Exiting [O]pen Mode." && urxvt -e ranger && @escape && @escape    # files
+2
+    notify-send -a "SWHKD" "Exiting [F]iles Mode." "Exiting [O]pen Mode." && urxvt -e lf && @escape && @escape    # files
+3
+    notify-send -a "SWHKD" "Exiting [F]iles Mode." "Exiting [O]pen Mode." && urxvt -e vifm && @escape && @escape    # files
+escape
+    notify-send -a "SWHKD" "Exiting [F]iles Mode." "Exiting [O]pen Mode." && @escape && @escape    # files
+endmode
+
+mode image 
+0
+    notify-send -a "SWHKD" "Exiting [I]mage Mode." "Exiting [O]pen Mode." && flatpak run org.kde.gwenview && @escape && @escape    # image
+1
+    notify-send -a "SWHKD" "Exiting [I]mage Mode." "Exiting [O]pen Mode." && flatpak run org.gimp.GIMP && @escape && @escape    # image
+escape
+    notify-send -a "SWHKD" "Exiting [I]mage Mode." "Exiting [O]pen Mode." && @escape && @escape    # image
+endmode
+
+mode kompare 
+0
+    notify-send -a "SWHKD" "Exiting [K]ompare Mode." "Exiting [O]pen Mode." && kompare && @escape && @escape    # kompare
+1
+    notify-send -a "SWHKD" "Exiting [K]ompare Mode." "Exiting [O]pen Mode." && kdiff3 && @escape && @escape    # kompare
+escape
+    notify-send -a "SWHKD" "Exiting [K]ompare Mode." "Exiting [O]pen Mode." && @escape && @escape    # kompare
+endmode
+
+mode music 
+0
+    notify-send -a "SWHKD" "Exiting [M]usic Mode." "Exiting [O]pen Mode." && flatpak run org.kde.elisa && @escape && @escape    # music
+1
+    notify-send -a "SWHKD" "Exiting [M]usic Mode." "Exiting [O]pen Mode." && flatpak run org.audacityteam.Audacity && @escape && @escape    # music
+2
+    notify-send -a "SWHKD" "Exiting [M]usic Mode." "Exiting [O]pen Mode." && flatpak run io.lmms.LMMS && @escape && @escape    # music
+escape
+    notify-send -a "SWHKD" "Exiting [M]usic Mode." "Exiting [O]pen Mode." && @escape && @escape    # music
+endmode
+
+mode note 
+0
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." "Exiting [O]pen Mode." && env -u WAYLAND_DISPLAY neovide --neovim-bin $HOME/.local/bin/lvim && @escape && @escape    # note
+1
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." "Exiting [O]pen Mode." && env -u WAYLAND_DISPLAY neovide && @escape && @escape    # note
+2
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." "Exiting [O]pen Mode." && gvim && @escape && @escape    # note
+3
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." "Exiting [O]pen Mode." && kate && @escape && @escape    # note
+4
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." "Exiting [O]pen Mode." && kwrite && @escape && @escape    # note
+escape
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." "Exiting [O]pen Mode." && @escape && @escape    # note
+endmode
+
+mode office 
+0
+    notify-send -a "SWHKD" "Exiting [O]ffice Mode." "Exiting [O]pen Mode." && flatpak run org.onlyoffice.desktopeditors && @escape && @escape    # office
+1
+    notify-send -a "SWHKD" "Exiting [O]ffice Mode." "Exiting [O]pen Mode." && flatpak run org.kde.okular && @escape && @escape    # office
+2
+    notify-send -a "SWHKD" "Exiting [O]ffice Mode." "Exiting [O]pen Mode." && flatpak run com.github.jeromerobert.pdfarranger && @escape && @escape    # office
+escape
+    notify-send -a "SWHKD" "Exiting [O]ffice Mode." "Exiting [O]pen Mode." && @escape && @escape    # office
+endmode
+
+mode production 
+0
+    notify-send -a "SWHKD" "Exiting [P]rod Mode." "Exiting [O]pen Mode." && flatpak run org.inkscape.Inkscape && @escape && @escape    # production
+1
+    notify-send -a "SWHKD" "Exiting [P]rod Mode." "Exiting [O]pen Mode." && pencil && @escape && @escape    # production
+escape
+    notify-send -a "SWHKD" "Exiting [P]rod Mode." "Exiting [O]pen Mode." && @escape && @escape  # production
+endmode
+
+
+mode terminal 
+0
+    notify-send -a "SWHKD" "Exiting [T]erminal Mode." "Exiting [O]pen Mode." && alacritty && @escape && @escape    # terminal
+1
+    notify-send -a "SWHKD" "Exiting [T]erminal Mode." "Exiting [O]pen Mode." && konsole && @escape && @escape    # terminal
+2
+    notify-send -a "SWHKD" "Exiting [T]erminal Mode." "Exiting [O]pen Mode." && yakuake && @escape && @escape    # terminal
+3
+    notify-send -a "SWHKD" "Exiting [T]erminal Mode." "Exiting [O]pen Mode." && uxterm && @escape && @escape    # terminal
+4
+    notify-send -a "SWHKD" "Exiting [T]erminal Mode." "Exiting [O]pen Mode." && xterm && @escape && @escape    # terminal
+5
+    notify-send -a "SWHKD" "Exiting [T]erminal Mode." "Exiting [O]pen Mode." && kitty && @escape && @escape    # terminal
+6
+    notify-send -a "SWHKD" "Exiting [T]erminal Mode." "Exiting [O]pen Mode." && foot && @escape && @escape    # terminal
+7
+    notify-send -a "SWHKD" "Exiting [T]erminal Mode." "Exiting [O]pen Mode." && urxvt && @escape && @escape    # terminal
+8
+    notify-send -a "SWHKD" "Exiting [T]erminal Mode." "Exiting [O]pen Mode." && kitty && @escape && @escape    # terminal
+escape
+    notify-send -a "SWHKD" "Exiting [T]erminal Mode." "Exiting [O]pen Mode." && @escape && @escape    # terminal
+endmode
+
+mode video 
+0
+    notify-send -a "SWHKD" "Exiting [V]ideo Mode." "Exiting [O]pen Mode." && flatpak run org.videolan.VLC && @escape && @escape    # video
+1
+    notify-send -a "SWHKD" "Exiting [V]ideo Mode." "Exiting [O]pen Mode." && flatpak run org.kde.kdenlive && @escape && @escape    # video
+2
+    notify-send -a "SWHKD" "Exiting [V]ideo Mode." "Exiting [O]pen Mode." && flatpak run fr.handbrake.ghb && @escape && @escape    # video
+3
+    notify-send -a "SWHKD" "Exiting [V]ideo Mode." "Exiting [O]pen Mode." && flatpak run com.obsproject.Studio && @escape && @escape    # video
+escape
+    notify-send -a "SWHKD" "Exiting [V]ideo Mode." "Exiting [O]pen Mode." && @escape && @escape    # video
+endmode
+
+mode web 
+0
+    notify-send -a "SWHKD" "Exiting [W]eb Mode." "Exiting [O]pen Mode." && flatpak run org.qutebrowser.qutebrowser && @escape && @escape    # web
+1
+    notify-send -a "SWHKD" "Exiting [W]eb Mode." "Exiting [O]pen Mode." && flatpak run org.mozilla.firefox && @escape && @escape    # web
+2
+    notify-send -a "SWHKD" "Exiting [W]eb Mode." "Exiting [O]pen Mode." && flatpak run com.google.Chrome && @escape && @escape    # web
+3
+    notify-send -a "SWHKD" "Exiting [W]eb Mode." "Exiting [O]pen Mode." && alacritty -e lynx && @escape && @escape    # web
+escape
+    notify-send -a "SWHKD" "Exiting [W]eb Mode." "Exiting [O]pen Mode." && @escape && @escape    # web
+endmode
+###
+
+
+### Task Manager ###
+super + shift + escape
+    alacritty -e htop
+###
+
+### Logout ###
+super + shift + x
+    archlinux-logout
+###
+
+### Runner ###
+super + r
+    rofi -combi-modes "drun,run,window" -font "FiraCode Nerd Font 12"  -show combi 
+
+super + d
+    dmenu-wl_run -i -nb '#282A36' -nf '#BD93F9' -sb '#BD93F9' -sf '#282A36' -fn 'FiraCodeNerdFont' 
+
+### Runner ###
+super + shift + d
+    notify-send -a "SWHKD" "Entering [D]menu Mode..." "Press d,o,w,t for opening apps.\nPress ESC to quit." && @enter dmenu-runner
+
+mode dmenu-runner
+d
+    notify-send -a "SWHKD" "Exiting [D]menu Mode." && dmenu-wl_run -i -nb '#282A36' -nf '#BD93F9' -sb '#BD93F9' -sf '#282A36' -fn 'FiraCodeNerdFont' && @escape    # dmenu
+o
+    notify-send -a "SWHKD" "Exiting [D]menu Mode." && rofi -no-config -no-lazy-grab -show drun -modi drun -theme $HOME/.config/qtile/rofi/launcher2.rasi && @escape    # dmenu
+w
+    notify-send -a "SWHKD" "Exiting [D]menu Mode." && rofi -combi-modes "drun,run,window" -font "FiraCode Nerd Font 12"  -show combi  -theme $HOME/.config/qtile/rofi/themes/dracula.rasi && @escape    # dmenu
+t
+    notify-send -a "SWHKD" "Exiting [D]menu Mode." && rofi-theme-selector && @escape    # dmenu
+escape
+    notify-send -a "SWHKD" "Exiting [D]menu Mode." && @escape
+endmode
+###
+
+### Reset ###
+super + shift + r
+    notify-send -a "SWHKD" "Entering [R]eset Mode..." "Press x,w,p,q for opening apps.\nPress ESC to quit." && @enter reset
+
+mode reset
+w
+    notify-send -a "SWHKD" "Exiting [R]eset Mode." && pkill -HUP swhkd && @escape    # reset
+p
+    notify-send -a "SWHKD" "Exiting [R]eset Mode." && plasmashell --replace && @escape    # reset
+q
+    notify-send -a "SWHKD" "Exiting [R]eset Mode." && qtile-cmd -o cmd -f restart && @escape    # reset
+escape
+    notify-send -a "SWHKD" "Exiting [R]eset Mode." && @escape
+endmode
+###
+
+### Variety ###
+super + shift + v
+    notify-send -a "SWHKD" "Entering [V]ariety Mode..." "Press t,n,p,f,SPC.\nPress ESC to quit" && @enter variety
+
+mode variety
+t
+    variety -t    # variety
+n
+    variety -n    # variety
+p
+    variety -p    # variety
+f
+    variety -f    # variety
+space
+    variety --toggle-pause    # variety
+escape
+    notify-send -a "SWHKD" "Exiting [V]ariety Mode." && @escape    # variety
+endmode
+###
+
+### Screenshot Utility ###
+Print
+    scrot 'ArchLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
+
+###
+
+
+### Notes ###
+super + n
+    notify-send -a "SWHKD" "Entering [N]ote Mode..." "Press c,d,e,g,k.l,n,s,w for opening apps.\nPress ESC to quit." && @enter notes
+
+mode notes
+c
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." && codium && @escape    # notes
+e
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." && emacsclient -ca '' && @escape    # notes
+g
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." && gvim && @escape    # notes
+l
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." && env -u WAYLAND_DISPLAY neovide --neovim-bin $HOME/.local/bin/lvim && @escape    # notes
+n
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." && env -u WAYLAND_DISPLAY neovide && @escape    # notes
+k
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." && kate && @escape    # notes
+w
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." && kwrite && @escape    # notes
+escape
+    notify-send -a "SWHKD" "Exiting [N]ote Mode." && @escape
+endmode
+###
+
+### System ###
+super + s
+    notify-send -a "SWHKD" "Entering [S]ystem Mode..." "Press t,h,b for opening apps.\nPress ESC to quit." && @enter system
+
+mode system 
+t
+    notify-send -a "SWHKD" "Exiting [S]ystem Mode." && alacritty -e top && @escape    # system
+h
+    notify-send -a "SWHKD" "Exiting [S]ystem Mode." && alacritty -e htop && @escape    # system
+b
+    notify-send -a "SWHKD" "Exiting [S]ystem Mode." && alacritty -e $HOME/.local/bin/bpytop && @escape    # system
+escape
+    notify-send -a "SWHKD" "Exiting [S]ystem Mode." && @escape
+endmode
+###
+
+### Package Managers ###
+super + shift + p
+    notify-send -a "SWHKD" "Entering [P]ackage Mode..." "Press d,p for opening apps.\nPress ESC to quit." && @enter package
+
+mode package
+d
+    notify-send -a "SWHKD" "Exiting [P]ackage Mode." && plasma-discover && @escape    # package
+p
+    notify-send -a "SWHKD" "Exiting [P]ackage Mode." && pamac-manager && @escape    # package
+escape
+    notify-send -a "SWHKD" "Exiting [P]ackage Mode." && @escape
+endmode
+###

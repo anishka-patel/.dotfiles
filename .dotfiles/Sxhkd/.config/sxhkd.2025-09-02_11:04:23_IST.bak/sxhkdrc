@@ -1,0 +1,148 @@
+# Open
+super + o; {a,p,c,w,e,o,r,g,t,f,i,v,m,d}
+  {krita,aseprite,blender,firefox,konsole -e vim,onlyoffice-desktopeditors,okular,gvim,konsole,gwenview,vlc,elisa,vscodium}
+
+# Art
+super + o; super + a; {a,b,c,d}
+  {inkscape,gimp,com.jgraph.drawio.desktop}
+super + o; super + p; {a,b,c,d,e,f}
+  {pixelorama, grafx2}
+super + o; super + c; {a}
+  {freecad}
+super + o; super + w; {a,b,c,d,e}
+  {com.google.Chrome, brave, konqueror, konsole -e lynx}
+super + o; super + e; {a,b,c,d,e}
+  {lvim, nvim, vim, emacsclient -ta '', vi}
+super + o; super + o; {a}
+  {pdfarranger}
+super + o; super + r; {a}
+  {emacsclient -ca '', neovide, leovide, kate, kwrite}
+super + o; super + t; {a,b,c}
+  {yakuake,kitty,alacritty}
+super + o; super + f; {a,b}
+  {krusader,vifm}
+super + o; super + i; {a,b,c,d,e,f}
+  {digikam}
+super + o; super + v; {a,b,c}
+  {mpv, shotcut, kdenlive}
+super + o; super + m; {a,b}
+  {audacity, lmms}
+super + o; super + d; {a,b,c,d,e}
+  {vscodium, geany, kdevelop, godot, godotmono}
+
+super + c; {t,k,n,p}
+  {conkey-toggle, killall conky, conky-rotate -n, conky-rotate -p}
+super + Escape
+  xkill
+super + x
+  archlinux-logout
+
+super + shift + d ; m
+	  dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
+super + shift + d ; o
+    rofi -no-config -no-lazy-grab -show drun -modi drun -theme ~/.config/qtile/rofi/launcher2.rasi
+super + shift + d ; w
+    rofi -show
+super + shift + d ; t
+    rofi-theme-selector
+
+super + shift + r; x
+    pkill -USR1 -x sxhkd
+super + shift + r; w
+    pkill -USR1 -x swhkd
+super + shift + r; p
+    plasmashell --replace
+super + shift + r; q
+    qtile-cmd -o cmd -f restart
+
+super + shift + v; {t,n,p,f,space}
+    variety {-t, -n, -p, -f, --toggle-pause}
+
+super + shift + escape
+    systemmonitor
+
+#Scrot
+Print
+    scrot 'ArchLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
+
+#screeenshooter
+ctrl + Print
+     spectacle
+
+#Gnome-Screenshot
+ctrl + shift + Print
+     flameshot launcher
+
+super + `
+    yakuake
+
+F12
+    yakuake
+
+Alt + F2
+    krunner
+
+
+super + n
+    emacsclient -ca ''
+
+super + shift + n
+    emacsclient --eval '(emacs-everywhere)'
+
+super + h; g
+    konsole -e glances
+super + h; h
+    konsole -e htop
+super + h: b
+    konsole -e /home/ani/.local/bin/bpytop
+
+super + shift + p; {o,p,d}
+    {/usr/bin/octopi, pamac-manager, plasma-discover}
+
+
+
+#Raises volume
+XF86AudioRaiseVolume
+    amixer set Master 10%+
+
+#Lowers volume
+XF86AudioLowerVolume
+    amixer set Master 10%-
+
+#Mute
+XF86AudioMute
+    amixer -D pulse set Master 1+ toggle
+
+#Playerctl works for Pragha, Spotify and others
+#Delete the line for playerctl if you want to use mpc
+#and replace it with the corresponding code
+#mpc works for e.g.ncmpcpp
+#mpc toggle
+#mpc next
+#mpc prev
+#mpc stop
+
+#PLAY
+XF86AudioPlay
+    playerctl play-pause
+
+#Next
+XF86AudioNext
+    playerctl next
+
+#previous
+XF86AudioPrev
+    playerctl previous
+
+#Stop
+XF86AudioStop
+    playerctl stop
+
+#Brightness up
+XF86MonBrightnessUp
+    xbacklight -inc 10
+
+#Brightness down
+XF86MonBrightnessDown
+    xbacklight -dec 10
+

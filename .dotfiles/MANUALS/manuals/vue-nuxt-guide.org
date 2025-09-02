@@ -1,0 +1,35 @@
+#+TITLE: A guide to efficiently work with Vue/Nuxt App
+#+AUTHOR: Anishka Patel
+#+DESCRIPTION: A org document to serve as everlasting guide to myself.
+#+DATE : [2022-08-18 Thu]
+
+* Setup Vue / Nuxt project
+** Initialize
+*** VUE
+**** Using ~create-vue~
+#+BEGIN_SRC npm
+    npm init vue@latest
+#+END_SRC
+***** Reference
+[[https://vuejs.org/guide/quick-start.html][Quick Start | Vue.js]]
+**** Using ~vue-cli~
+#+BEGIN_SRC npm
+    npm i -g @vue/cli
+
+    vue create <project-name>
+    # or
+    vue ui
+#+END_SRC
+***** Reference
+[[https://cli.vuejs.org/#getting-started][Getting Started | VueCli]]
+*** NUXT
+Using ~create-nuxt-app~
+#+BEGIN_SRC npm
+    npm init nuxt-app <project-name>
+    # or
+    npx create-nuxt-app <project-name>
+#+END_SRC
+**** Reference
+[[https://nuxtjs.org/docs/get-started/installation][Getting Started | Nuxt.js]]
+
+#  LocalWords:  Vue Nuxt

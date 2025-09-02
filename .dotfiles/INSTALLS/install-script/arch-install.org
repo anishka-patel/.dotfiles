@@ -1,0 +1,92 @@
+#+TITLE: Arch Install Guide
+
+* Phase 1
+** Boot into Archiso
+** Partitioning the Disk
+   3 partitions :
+   1. EFI  partition (FAT32) min: 300 MiB opt: 512 MiB
+   2. ROOT partition (BTRFS) min:  20 GiB opt:  40 GiB
+   3. SWAP partition (SWAP)  min:   4 GiB opt: RAM Size [Optional]
+  #+BEGIN_SRC bash
+  cgdisk ${DISK}
+  #+END_SRC
+  #+BEGIN_SRC bash
+  pacman -S --noconfirm --needed gptfdisk btrfs-progs glibc
+  umount -A --recursive /mnt
+  sgdisk -Z ${DISK}
+  sgdisk -a 2048 -o ${DISK}
+  sgdisk ${DISK}
+
+   #Create Partitions
+   sgdisk -n 1::+512 --typecode=1:ef00 --change-name=1:'EFIBOOT' ${DISK}
+   sgdisk -n 2::-0 --typecode=2:8300 --change-name=2:'ROOT' ${DISK}
+  #+END_SRC
+** Make File System
+   1. EFI
+      #+BEGIN_SRC bash
+      mkfs.fat -F32 /path/to/partition
+      #+END_SRC
+   2. ROOT
+      #+BEGIN_SRC bash
+      cryptsetup luksFormat /path/to/partition
+      cryptsetup luksOpen /path/to/dev cryptroot
+
+      mkfs.btrfs /dev/mapper/cryptroot
+      #+END_SRC
+** SWAP / SWAPFILE
+
+   SWAP [Optional]
+   #+BEGIN_SRC bash
+   mkswap /path/to/partition
+   swapon /path/to/partition
+   #+END_SRC
+   SWAPFILE [Optional]
+   #+BEGIN_SRC bash
+   btrfs subvolume create /swap
+   btrfs filesystem mkswapfile --size 8g --uuid clear /swap/swapfile
+   echo /swap/swapfile none swap default 0 0 >> /etc/fstab
+   #+END_SRC
+** Mount and move
+   #+BEGIN_SRC bash
+   mount /dev/mapper/cryptroot /mnt
+   cd /mnt
+   #+END_SRC
+** Create btrfs subvolume
+   #+BEGIN_SRC bash
+   btrfs subvolume create @
+   btrfs subvolume create @home
+   btrfs subvolume create @var
+   #+END_SRC
+** Moveback and unmount 
+   #+BEGIN_SRC bash
+   cd
+   umount /mnt
+   #+END_SRC
+** Mount subvolumes and partitions
+   #+BEGIN_SRC bash
+   mkdir /mnt/{boot,home,var}
+
+   mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@ /dev/mapper/cryptroot /mnt
+   mount -o noatime,compress=zstd.space_cache,discard=async,subvol=@home /dev/mapper/cryptroot /mnt/home
+   mount -o noatime,compress=zstd,space_cache,discard=async,subvol=@var /dev/mapper/cryptroot /mnt/var
+   mount /path/to/partition /mnt/boot
+
+   #+END_SRC
+** Install base packages with pacstrap
+   #+BEGIN_SRC bash
+   pacstrap /mnt base base-devel linux-firmware linux-lts git vim btrfs-progs amd-ucode
+   #+END_SRC
+** Gen fstab
+   #+BEGIN_SRC bash
+   genfstab -U /mnt >> /mnt/etc/fstab
+   #+END_SRC
+** Chroot
+   #+BEGIN_SRC bash
+   arch-chroot /mnt
+   #+END_SRC
+* Phase 2
+  ** Install [[file:./arch-base.org][Arch-Base]]
+* Phase 3
+  ** Install [[file:./arch-encrypt.org][Arch-Encrypt]]
+* Phase 4
+  ** Install [[file:./arch-app.org][Arch-Applications]]

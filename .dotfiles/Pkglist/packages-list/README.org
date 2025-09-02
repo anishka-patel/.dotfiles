@@ -1,0 +1,319 @@
+#+TITLE: Packages List Org File
+
+
+* List of Explicit Yay packages
+|---------------------------------------+---------------------------+-----|
+| Name                                  | Description               | Imp |
+|---------------------------------------+---------------------------+-----|
+| alacritty                             | Terminal Emulator         | **  |
+| alsa-utils                            | Audio Driver              | !   |
+| amd-ucode                             | Micro code                | !   |
+| anbox-modules-dkms-git                | Android VM Extra          | *** |
+| android-file-transfer                 | Android Utils             | *** |
+| android-tools                         | Android Utils             | *** |
+| appimage-cli-tool-git                 | Package Manager           | *** |
+| appimagelauncher                      | Package runner            | *** |
+| appstream-glib                        | ?                         | ?   |
+| apx                                   | Package Manager           | *   |
+| arc-darkest-theme-git                 | Global Theme              | **  |
+| arc-gtk-theme                         | Gtk Theme                 | **  |
+| arc-icon-theme                        | Icon Theme                | **  |
+| arch-wiki-lite                        | TUI Wikipedia             | *   |
+| archlinux-keyring                     |                           |     |
+| archlinux-logout-git                  |                           |     |
+| archlinux-tweak-tool-git              |                           |     |
+| arcolinux-arc-kde                     |                           |     |
+| arcolinux-conky-collection-plasma-git |                           |     |
+| arcolinux-keyring                     |                           |     |
+| arcolinux-meta-sddm-themes            |                           |     |
+| arcolinux-mirrorlist-git              |                           |     |
+| arcolinux-neofetch-git                |                           |     |
+| arcolinux-pamac-all                   |                           |     |
+| arcolinux-qtile-git                   |                           |     |
+| ark                                   | GUI Archiver              | *** |
+| aseprite                              | 2D Editor                 | *** |
+| aspell                                | Doom Emacs Spell          | **  |
+| aspell-en                             | - do -                    | **  |
+| audacity                              | Audio Editor              | *** |
+| autoconf                              | ?                         | ?   |
+| automake                              | ?                         | ?   |
+| base                                  | ?                         | ?   |
+| bash-completion                       | Shell - Extra             | *** |
+| bc                                    | Calculator                | **  |
+| binutils                              | ?                         | ?   |
+| bison                                 | Biniary Json              | **  |
+| bleachbit                             | System Cleaner            | *   |
+| blender                               | 3D Modeling               | **  |
+| blueberry                             | Bluetooth Util            | **  |
+| bluez-utils                           | Bluetooth Util            | **  |
+| brave-bin                             | Web Browser               |     |
+| btrfs-progs                           | Btrfs util                |     |
+| cabal-install                         | Package Manager           |     |
+| calibre                               | Book Reader (.epub, .pdf) |     |
+| cmake                                 | Build Tool for C/C++      |     |
+| cmatrix                               | Terminal Fun              |     |
+| conky                                 | System Monitor            |     |
+| cryfs                                 | Vault Utils               |     |
+| ctags                                 |                           |     |
+| cups                                  | Print Utils               |     |
+| cups-pdf                              | Print Utils               |     |
+| debugedit                             | ?                         |     |
+| deno                                  | JS/TS Runtime Env         |     |
+| digikam                               | Image Viewer              |     |
+| dmenu-wayland-git                     | App Runner                |     |
+| docker                                | Container Management Util |     |
+| dolphin                               | File Explorer             |     |
+| dolphin-plugins                       | File Explorer - extra     |     |
+| dotnet-host                           | Language Runtime          |     |
+| dotnet-runtime                        | Language Runtime          |     |
+| dotnet-sdk                            | Language Runtime          |     |
+| dotnet-sdk-6.0                        | Language Runtime          |     |
+| dotnet-targeting-pack                 | Language Runtime          |     |
+| dracula-icons-git                     | Icon Theme                |     |
+| duf                                   | Disk Monitor Utility      |     |
+| efibootmgr                            | Boot Manager              |     |
+| egl-wayland                           | ?                         |     |
+| elisa                                 | Audio Player              |     |
+| emacs                                 | Text Editor               |     |
+| encfs                                 | Encryption Tool           |     |
+| fakeroot                              | ?                         |     |
+| fd                                    | Finder                    |     |
+| feh                                   | Image Viewer              |     |
+| file                                  | ?                         |     |
+| findutils                             | Finder                    |     |
+| firefox                               | Web Browser               |     |
+| firewalld                             | Firewall                  |     |
+| fish                                  | Shell                     |     |
+| flameshot                             | ScreenShot Util           |     |
+| flatpak                               | Package Manager           |     |
+| flex                                  | ?                         |     |
+| foomatic-db                           |                           |     |
+| foomatic-db-gutenprint-ppds           |                           |     |
+| foomatic-db-nonfree                   |                           |     |
+| foomatic-db-nonfree-ppds              |                           |     |
+| foomatic-db-ppds                      |                           |     |
+| freecad                               | 3D Modelling              |     |
+| fzf                                   | Finder                    |     |
+| gawk                                  | ?                         |     |
+| gcc                                   | Compiler                  |     |
+| geany                                 | IDE                       |     |
+| geany-plugins                         | IDE-Extra                 |     |
+| geany-themes                          | IDE-Extra                 |     |
+| gettext                               | ?                         |     |
+| ghc                                   | Compiler                  |     |
+| ghidra                                | Binary Viewer             |     |
+| gimp                                  | Image Editor              |     |
+| git                                   | Source Control            |     |
+| github-cli                            | Source Control - Extra    |     |
+| glances                               | System Monitor            |     |
+| glow                                  | Markdown Viewer           |     |
+| go                                    | Compiler                  |     |
+| gocryptfs                             | Encryption                |     |
+| godot                                 | IDE                       |     |
+| google-chrome                         | Web Browser               |     |
+| gopls                                 | Language Server           |     |
+| gparted                               | Disk Management           |     |
+| grafx2                                | 2D Editor                 |     |
+| grep                                  | Finder                    |     |
+| groff                                 |                           |     |
+| gutenprint                            | Printer-Extra             |     |
+| gvim                                  | Text Editor               |     |
+| gwenview                              | Image Viewer              |     |
+| gzip                                  | Archiver                  |     |
+| handbrake                             | Video Editor              |     |
+| haskell-cabal-doctest                 |                           |     |
+| haskell-cabal-install-parsers         |                           |     |
+| haskell-language-server               |                           |     |
+| hplip                                 | Printer-Extra             |     |
+| htop                                  | System Monitor            |     |
+| hunspell-en_us                        | Emacs Extra               |     |
+| ihaskell                              | Jupyter Extra             |     |
+| inkscape                              | Image Editor              |     |
+| inkstitch                             | Image Editor - Extra      |     |
+| ipython                               | Jupyter Extra             |     |
+| iwd                                   |                           |     |
+| jdk-openjdk                           | Compiler                  |     |
+| jre-openjdk                           | Runtime                   |     |
+| kapman                                | Game                      |     |
+| kate                                  | Text Editor               |     |
+| kblocks                               | Game                      |     |
+| kcalc                                 | Calculator                |     |
+| kdeconnect                            | Android Util              |     |
+| kdenlive                              | Video Editor              |     |
+| kdevelop                              | IDE                       |     |
+| kdiff3                                | Diff Viewer               |     |
+| kgpg                                  | Encryption                |     |
+| khelpcenter                           | Doc Viewer                |     |
+| kio-gdrive                            | Dolphin - Extra           |     |
+| kitty                                 | Terminal Emulator         |     |
+| kmines                                | Game                      |     |
+| knights                               | Game                      |     |
+| kompare                               | Diff Viewer               |     |
+| konqueror                             | Web Browser               |     |
+| konsave                               | Config Manager            |     |
+| konsole                               | Terminal Emulator         |     |
+| kpat                                  | Game                      |     |
+| krita                                 | Image Editor              |     |
+| krusader                              | File Explorer             |     |
+| ksudoku                               | Game                      |     |
+| ksysguard                             | System Monitor            |     |
+| kvantum                               | Theme Manager             |     |
+| languagetool                          | Emacs - Extra             |     |
+| lazygit                               | Source Control - Extra    |     |
+| libappimage                           | AppImage - Extra          |     |
+| librecad                              | 2D - Drafting             |     |
+| libtool                               |                           |     |
+| libva-mesa-driver                     |                           |     |
+| linux-firmware                        |                           |     |
+| linux-lts                             |                           |     |
+| linux-lts-headers                     |                           |     |
+| lmms                                  | Music Editor              |     |
+| lua                                   | Compiler                  |     |
+| luarocks                              | Language Server           |     |
+| lxqt-notificationd                    | Notification Engine       |     |
+| lynx                                  | Web Browser               |     |
+| m4                                    |                           |     |
+| make                                  | Build Util                |     |
+| man-db                                | Doc Viewer                |     |
+| maven                                 | Package Manager           |     |
+| meld                                  | Diff Viewer               |     |
+| moar                                  | Pager                     |     |
+| mono                                  | Language Runtime          |     |
+| mpv                                   | Video Player              |     |
+| ncdu                                  | Disk Analyzer             |     |
+| neofetch                              | System Info Viewer        |     |
+| neovide                               | Text Editor - extra       |     |
+| neovim                                | Text Editor               |     |
+| nerd-fonts-meta                       | Font                      |     |
+| network-manager-applet                | Network - extra           |     |
+| networkmanager                        | Network                   |     |
+| nmap                                  | Network Analyzer          |     |
+| nodejs-lts-hydrogen                   | Language Runtime          |     |
+| npm                                   | Package Manager           |     |
+| ntfs-3g                               |                           |     |
+| obs-studio                            | Screen Recorder           |     |
+| octopi                                | Package Manager - Extra   |     |
+| okteta                                | Binary viewer             |     |
+| okular                                | Pdf Viewer                |     |
+| onlyoffice-bin                        | Office Suite              |     |
+| openssh                               | Ssh Client                |     |
+| packagekit-qt5                        |                           |     |
+| pacman                                | Package Manager           |     |
+| pacman-contrib                        | Package Manager - Extra   |     |
+| pandoc-cli                            | Document Converter        |     |
+| paru                                  | AUR Helper                |     |
+| patch                                 |                           |     |
+| pavucontrol                           | Audio Manager             |     |
+| pdfarranger                           | Pdf utility               |     |
+| pencil-bin                            | 2D Modelling              |     |
+| picom                                 | Window Compositor         |     |
+| pixelorama-bin                        | 2D Editor                 |     |
+| pkgconf                               |                           |     |
+| pkgfile                               |                           |     |
+| plasma-meta                           |                           |     |
+| plasma-sdk                            |                           |     |
+| plasma-wayland-session                |                           |     |
+| playerctl                             |                           |     |
+| plymouth                              |                           |     |
+| powertop                              | Battery Monitor           |     |
+| print-manager                         | Printer - Extra           |     |
+| processing                            | Language Runtime          |     |
+| progress                              |                           |     |
+| python-notify2                        |                           |     |
+| python-pyqt5                          |                           |     |
+| python-pywlroots                      |                           |     |
+| python-reportlab                      |                           |     |
+| qbittorrent                           | Torrent Downloader        |     |
+| qemu-full                             | VM                        |     |
+| qtile                                 | Display Manager           |     |
+| rclone                                | File Utility              |     |
+| ripgrep                               | Finder                    |     |
+| rlwrap                                |                           |     |
+| rofi-lbonn-wayland-git                | App Launcher              |     |
+| rustup                                | Language Compiler         |     |
+| scrot                                 | ScreenShot Utility        |     |
+| sddm-git                              | Display Manager           |     |
+| sed                                   | Stream Editor             |     |
+| shellcheck                            | Language Linter           |     |
+| shotcut                               | Video Editor              |     |
+| simple-scan                           | Scanner Utility           |     |
+| smartmontools                         |                           |     |
+| solidity                              | Language Compiler         |     |
+| spectacle                             | Screenshot Utility        |     |
+| stacer                                | System Monitor            |     |
+| steam                                 | Game Launcher             |     |
+| sudo                                  | Privilege Manager         |     |
+| surfn-arc-breeze-icons-git            |                           |     |
+| surfn-icons-git                       |                           |     |
+| surfn-mint-y-icons-git                |                           |     |
+| surfn-plasma-dark-icons-git           |                           |     |
+| surfn-plasma-dark-tela-icons-git      |                           |     |
+| surfn-plasma-light-icons-git          |                           |     |
+| swhkd-bin                             | Hotkeys                   |     |
+| switchboard-plug-printers             |                           |     |
+| syncthing                             | Cloud Storage             |     |
+| sysstat                               | System Monitor            |     |
+| system-config-printer                 | Printer - Extra           |     |
+| tealdeer                              | Document Viewer           |     |
+| terminus-font                         |                           |     |
+| texinfo                               |                           |     |
+| tidy                                  |                           |     |
+| tinygo                                | Language Compiler         |     |
+| tmux                                  | Terminal - Extra          |     |
+| traceroute                            | Network - Extra           |     |
+| trash-cli                             | Trash Bin                 |     |
+| tree                                  |                           |     |
+| ttf-cascadia-code-nerd                | Font                      |     |
+| ttf-dejavu-nerd                       | Font                      |     |
+| ttf-droid                             | Font                      |     |
+| ttf-fira-sans                         | Font                      |     |
+| ttf-firacode-nerd                     | Font                      |     |
+| ttf-hack-nerd                         | Font                      |     |
+| ttf-nerd-fonts-symbols                | Font                      |     |
+| ttf-nerd-fonts-symbols-mono           | Font                      |     |
+| ttf-opensans                          | Font                      |     |
+| ttf-roboto                            | Font                      |     |
+| ttf-roboto-mono-nerd                  | Font                      |     |
+| ttf-terminus-nerd                     | Font                      |     |
+| ttf-ubuntu-mono-nerd                  | Font                      |     |
+| ttf-ubuntu-nerd                       | Font                      |     |
+| vagrant                               | VM - Extra                |     |
+| variety                               | Wallpager Manager         |     |
+| vault                                 | Encryption                |     |
+| ventoy-bin                            | Multi-Boot USB            |     |
+| veracrypt                             | Encryption                |     |
+| vi                                    | Text Editor               |     |
+| vifm                                  | File Explorer             |     |
+| virt-manager                          | VM - Extra                |     |
+| virtualbox                            | VM                        |     |
+| virtualbox-guest-iso                  | VM - Extra                |     |
+| virtualbox-guest-utils                | VM - Extra                |     |
+| virtualbox-host-dkms                  | VM - Extra                |     |
+| vlc                                   | Video Player              |     |
+| volumeicon                            |                           |     |
+| vscodium-bin                          | IDE                       |     |
+| vscodium-bin-marketplace              | IDE - Extra               |     |
+| vulkan-radeon                         |                           |     |
+| waydroid                              | VM                        |     |
+| waydroid-image-gapps                  | VM - Extra                |     |
+| wget                                  | File Downloader           |     |
+| which                                 |                           |     |
+| wine                                  | Window Emulation          |     |
+| wireless_tools                        |                           |     |
+| wordnet-cli                           | Emacs Extra               |     |
+| xclip                                 |                           |     |
+| xdg-utils                             |                           |     |
+| xdotool                               |                           |     |
+| xf86-video-amdgpu                     |                           |     |
+| xf86-video-ati                        |                           |     |
+| xorg-server                           |                           |     |
+| xorg-xinit                            |                           |     |
+| xorg-xwininfo                         |                           |     |
+| xsane                                 |                           |     |
+| xsel                                  |                           |     |
+| yakuake                               |                           |     |
+| yay                                   | Aur Helper                |     |
+| zoxide                                |                           |     |
+| zram-generator                        |                           |     |
+| zsh                                   | Shell                     |     |
+|---------------------------------------+---------------------------+-----|
