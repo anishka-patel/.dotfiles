@@ -175,9 +175,6 @@ ex() {
 	fi
 }
 
-[ -f "$HOME/.config/sh/alias.sh" ] && source "$HOME/.config/sh/alias.sh"
-[ -f "$HOME/.config/sh/export.sh" ] && source "$HOME/.config/sh/export.sh"
-[ -f "$HOME/.config/sh/function.sh" ] && source "$HOME/.config/sh/function.sh"
 
 [ -f "/usr/share/fzf/completion.bash" ] && source "/usr/share/fzf/completion.bash"
 [ -f "/usr/share/fzf/key-bindings.bash" ] && source "/usr/share/fzf/key-bindings.bash"
@@ -221,3 +218,7 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk@21/bin:$PATH"
+
+[ -f "$HOME/.config/sh/alias.sh" ] && source "$HOME/.config/sh/alias.sh"
+[ -f "$HOME/.config/sh/export.sh" ] && source "$HOME/.config/sh/export.sh"
+[ -f "$HOME/.config/sh/function.sh" ] && source "$HOME/.config/sh/function.sh"

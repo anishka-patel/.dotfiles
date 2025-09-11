@@ -45,8 +45,10 @@ alias l='ls -lah'
 alias ll='ls -lh'
 alias la='ls -lAh'
 
-if command -v lsd >/dev/null; then
-	alias ls="lsd -h --color=auto --group-directories-first"
+if command -v eza >/dev/null; then
+    alias ls="eza --color=auto --group-directories-first --icons=always"
+elif command -v lsd >/dev/null; then
+	alias ls="lsd --color=auto --group-directories-first"
 fi
 
 if command -v lazygit >/dev/null; then
@@ -79,3 +81,6 @@ fi
 alias datef="date -u +%a,\ %Y-%b-%d"
 alias datetimef="date -u +%a,\ %Y-%b-%d%n%H:%M\ \(%Z\)"
 alias wget="wget -c -T 60"
+alias mv="mv -i"
+alias mkdir="mkdir -p"
+alias rm="trash"

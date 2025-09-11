@@ -48,6 +48,7 @@ sortMode=-1
 
 [Containments][1][Wallpaper][org.kde.image][General]
 Image=/usr/share/wallpapers/aurora-wallpaper-1/contents/images/15392x8616.jpg
+SlidePaths=/usr/share/wallpapers/
 
 [Containments][2]
 activityId=
@@ -113,7 +114,7 @@ DialogWidth=1536
 
 [Containments][2][Applets][5][Configuration][General]
 groupingStrategy=0
-launchers=applications:com.brave.Browser.desktop,applications:org.kde.discover.desktop,applications:systemsettings.desktop,preferred://filemanager,applications:kitty.desktop
+launchers=applications:com.brave.Browser.desktop,applications:org.kde.discover.desktop,applications:systemsettings.desktop,preferred://filemanager,applications:org.kde.konsole.desktop,applications:kitty.desktop
 showOnlyCurrentScreen=true
 
 [Containments][2][Applets][60]
@@ -232,7 +233,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][2][Applets][7][Applets][23][Configuration]
-PreloadWeight=12
+PreloadWeight=19
 
 [Containments][2][Applets][7][Applets][24]
 immutability=1

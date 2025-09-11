@@ -32,7 +32,9 @@ mads-hartmann.bash-ide-vscode
 mechatroner.rainbow-csv
 mgesbert.python-path
 moalamri.inline-fold
+ms-azuretools.vscode-containers
 ms-azuretools.vscode-docker
+ms-dotnettools.csdevkit
 ms-dotnettools.csharp
 ms-dotnettools.dotnet-interactive-vscode
 ms-dotnettools.vscode-dotnet-runtime
@@ -40,6 +42,7 @@ ms-python.debugpy
 ms-python.isort
 ms-python.python
 ms-python.vscode-pylance
+ms-python.vscode-python-envs
 ms-toolsai.jupyter
 ms-toolsai.jupyter-keymap
 ms-toolsai.jupyter-renderers
@@ -48,6 +51,10 @@ ms-toolsai.vscode-jupyter-slideshow
 ms-vscode-remote.remote-containers
 ms-vscode-remote.remote-ssh
 ms-vscode-remote.remote-ssh-edit
+ms-vscode.cmake-tools
+ms-vscode.cpptools
+ms-vscode.cpptools-extension-pack
+ms-vscode.cpptools-themes
 ms-vscode.mono-debug
 ms-vscode.remote-explorer
 ms-vscode.wordcount
@@ -67,12 +74,15 @@ timonwong.shellcheck
 tomoki1207.pdf
 tootone.org-mode
 travisthetechie.write-good-linter
+twxs.cmake
 usernamehw.errorlens
 valentjn.vscode-ltex
 visualstudioexptteam.intellicode-api-usage-examples
 visualstudioexptteam.vscodeintellicode
 vscode-icons-team.vscode-icons
+vscodevim.vim
 vspacecode.whichkey
 vue.volar
 yzhang.markdown-all-in-one
+zhuangtongfa.material-theme
 ziglang.vscode-zig
