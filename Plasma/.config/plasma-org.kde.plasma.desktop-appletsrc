@@ -69,21 +69,21 @@ popupHeight=450
 popupWidth=560
 
 [Containments][2][Applets][21][Configuration][Appearance]
+autoFontAndSize=false
 customDateFormat=ddd, d MMM
 dateDisplayFormat=BelowTime
 dateFormat=custom
-fontWeight=400
+fontFamily=FiraCode Nerd Font
+fontSize=8
+fontStyleName=Retina
+fontWeight=450
 showLocalTimezone=true
 showSeconds=Never
 use24hFormat=2
 
 [Containments][2][Applets][21][Configuration][ConfigDialog]
 DialogHeight=887
-DialogWidth=1536
-
-[Containments][2][Applets][27]
-immutability=1
-plugin=org.kde.plasma.marginsseparator
+DialogWidth=1531
 
 [Containments][2][Applets][29]
 immutability=1
@@ -96,13 +96,19 @@ DialogWidth=1536
 [Containments][2][Applets][29][Configuration][General]
 show_lockScreen=false
 
-[Containments][2][Applets][30]
-immutability=1
-plugin=org.kde.plasma.marginsseparator
-
 [Containments][2][Applets][4]
 immutability=1
 plugin=org.kde.plasma.pager
+
+[Containments][2][Applets][4][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
+[Containments][2][Applets][4][Configuration][General]
+currentDesktopSelected=ShowDesktop
+displayedText=Name
+showOnlyCurrentScreen=true
+wrapPage=true
 
 [Containments][2][Applets][5]
 immutability=1
@@ -110,12 +116,16 @@ plugin=org.kde.plasma.icontasks
 
 [Containments][2][Applets][5][Configuration][ConfigDialog]
 DialogHeight=892
-DialogWidth=1536
+DialogWidth=1531
 
 [Containments][2][Applets][5][Configuration][General]
 groupingStrategy=0
-launchers=applications:com.brave.Browser.desktop,applications:org.kde.discover.desktop,applications:systemsettings.desktop,preferred://filemanager,applications:org.kde.konsole.desktop,applications:kitty.desktop
+iconSpacing=0
+launchers=
+middleClickAction=None
 showOnlyCurrentScreen=true
+showToolTips=false
+sortingStrategy=0
 
 [Containments][2][Applets][60]
 immutability=1
@@ -138,6 +148,10 @@ favoritesPortedToKAstats=true
 icon=distributor-logo-white
 switchCategoryOnHover=true
 systemFavorites=suspend\\,hibernate\\,reboot\\,shutdown
+
+[Containments][2][Applets][67]
+immutability=1
+plugin=org.kde.plasma.panelspacer
 
 [Containments][2][Applets][7]
 activityId=
@@ -309,7 +323,7 @@ scaleIconsToFit=true
 showAllItems=true
 
 [Containments][2][General]
-AppletOrder=60;4;5;27;7;30;21;29
+AppletOrder=60;4;5;67;7;21;29
 
 [Containments][34]
 ItemGeometries-1536x960=
