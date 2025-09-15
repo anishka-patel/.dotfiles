@@ -2,6 +2,55 @@
 ;;; package --- Summary
 ;;; Commentary: TODO
 ;;; Code:
+;; Load Elpaca
+(defvar elpaca-installer-version 0.11)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil :depth 1 :inherit ignore
+                              :files (:defaults "elpaca-test.el" (:exclude
+                              "extensions"))
+                              :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (<= emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                  ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                  ,@(when-let* ((depth (plist-get order :depth)))
+                                                      (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                  ,(plist-get order :repo) ,repo))))
+                  ((zerop (call-process "git" nil buffer t "checkout"
+                                        (or (plist-get order :ref) "--"))))
+                  (emacs (concat invocation-directory invocation-name))
+                  ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                        "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                  ((require 'elpaca))
+                  ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
+;;Install use-package support
+(elpaca elpaca-use-package
+  ;; Enable use-package :ensure support for Elpaca.
+  (elpaca-use-package-mode))
+
+(setq use-package-always-ensure t)
+(setq package-install-upgrade-built-in t)
+
+;; Other Settings
 (setq inhibit-startup-message t)
 (setq use-file-dialog nil)   ;; No file dialog
 (setq use-dialog-box nil)    ;; No dialog box
@@ -62,24 +111,6 @@
 (setq vc-follow-symlinks t)
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-;; Initialize package sources
-(require 'package)
-
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")))
-
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(require 'use-package)
-(setq use-package-always-ensure t)
 
 (use-package diminish)
 
@@ -563,7 +594,6 @@
   (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
   (define-key evil-normal-state-map (kbd "H") 'evil-prev-buffer)
   (define-key evil-normal-state-map (kbd "L") 'evil-next-buffer)
-  (evil-global-set-key 'motion "gs" 'evil-avy-goto-char-2)
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
   (evil-set-initial-state 'messages-buffer-mode 'normal)
@@ -620,7 +650,8 @@
   :hook (org-mode . user/org-mode-setup)
   :config
   (setq org-hide-emphasis-markers t)
-  (setq org-src-preserve-indentation t))
+  (setq org-src-preserve-indentation t)
+  :ensure (:wait t))
 
 (use-package org-bullets
   :after org
@@ -639,10 +670,6 @@
 (use-package toc-org
   :commands toc-org-enable
   :init (add-hook 'org-mode-hook 'toc-org-enable))
-
-(use-package org-tree-slide
-  :custom
-  (org-image-actual-width nil))
 
 (defun user/presentation-setup ()
   (org-display-inline-images 1)
@@ -692,7 +719,8 @@
 
 (use-package term
   :config
-  (setq explicit-shell-file-name "/bin/bash"))
+  (setq explicit-shell-file-name "/bin/bash")
+  :ensure nil)
 
 (use-package multi-term
   :config
@@ -738,8 +766,6 @@
 
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
-;; (use-package dired-single)
-
 (use-package all-the-icons-dired)
 
 (use-package auto-package-update)
@@ -767,8 +793,6 @@
 (use-package indent-guide)
 (add-hook 'prog-mode-hook 'indent-guide-mode)
 (add-hook 'conf-mode-hook 'indent-guide-mode)
-
-(use-package avy)
 
 (use-package emojify
   :hook (after-init . global-emojify-mode))

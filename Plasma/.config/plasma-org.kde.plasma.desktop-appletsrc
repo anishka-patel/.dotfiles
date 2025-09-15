@@ -120,7 +120,6 @@ DialogWidth=1531
 
 [Containments][2][Applets][5][Configuration][General]
 groupingStrategy=0
-iconSpacing=0
 launchers=
 middleClickAction=None
 showOnlyCurrentScreen=true
@@ -247,7 +246,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][2][Applets][7][Applets][23][Configuration]
-PreloadWeight=19
+PreloadWeight=11
 
 [Containments][2][Applets][7][Applets][24]
 immutability=1
@@ -322,8 +321,40 @@ knownItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.pla
 scaleIconsToFit=true
 showAllItems=true
 
+[Containments][2][Applets][77]
+immutability=1
+plugin=org.kde.plasma.panelspacer
+
+[Containments][2][Applets][77][Configuration][General]
+expanding=false
+length=20
+
+[Containments][2][Applets][79]
+immutability=1
+plugin=org.kde.plasma.panelspacer
+
+[Containments][2][Applets][79][Configuration][General]
+expanding=false
+length=10
+
+[Containments][2][Applets][80]
+immutability=1
+plugin=org.kde.plasma.panelspacer
+
+[Containments][2][Applets][80][Configuration][General]
+expanding=false
+length=10
+
+[Containments][2][Applets][81]
+immutability=1
+plugin=org.kde.plasma.marginsseparator
+
+[Containments][2][Applets][82]
+immutability=1
+plugin=org.kde.plasma.marginsseparator
+
 [Containments][2][General]
-AppletOrder=60;4;5;67;7;21;29
+AppletOrder=60;77;81;4;82;5;67;7;80;21;79;29
 
 [Containments][34]
 ItemGeometries-1536x960=
@@ -438,14 +469,14 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][35][Applets][40][Applets][56][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][35][Applets][40][Applets][57]
 immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][35][Applets][40][Applets][57][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][35][Applets][40][Applets][58]
 immutability=1

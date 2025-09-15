@@ -305,17 +305,20 @@ _launch=Ctrl+Alt+`\tCtrl+Alt+Return
 _launch=Meta+O, Meta+W
 new-window=Meta+I
 
+[services][emacs.desktop]
+_launch=Meta+O, Meta+M
+
 [services][kitty.desktop]
 _launch=Meta+`\tMeta+Return\tMeta+O, Meta+T
 
 [services][net.local.kitty-2.desktop]
-_launch=Ctrl+Alt+E\tMeta+Y
+_launch=Meta+Y\tCtrl+Alt+E
 
 [services][net.local.kitty.desktop]
 _launch=Meta+N
 
 [services][net.local.konsole-2.desktop]
-_launch=Ctrl+Alt+F\tMeta+O, Meta+F
+_launch=Meta+O, Meta+F\tCtrl+Alt+F
 
 [services][net.local.konsole-3.desktop]
 _launch=Ctrl+Alt+B
@@ -328,6 +331,9 @@ _launch=Meta+Ctrl+C
 
 [services][org.gnome.Ptyxis.desktop]
 new-window=none
+
+[services][org.kde.dolphin.desktop]
+_launch=Meta+O, Meta+E
 
 [services][org.kde.konsole.desktop]
 _launch=Ctrl+Alt+`\tMeta+O, Meta+Shift+T\tCtrl+Alt+T
