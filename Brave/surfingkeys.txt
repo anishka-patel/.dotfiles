@@ -1,8 +1,0 @@
-// My additions
-api.unmap('H')
-api.unmap('L')
-api.map('F', 'gf')
-api.map('J', 'R')
-api.map('K', 'E')
-api.map('H', 'S')
-api.map('L', 'D')

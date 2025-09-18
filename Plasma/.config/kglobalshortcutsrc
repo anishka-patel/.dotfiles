@@ -329,6 +329,15 @@ _launch=Ctrl+Alt+A
 [services][net.local.plasmashell.desktop]
 _launch=Meta+Ctrl+C
 
+[services][net.local.systemctl-2.desktop]
+_launch=Meta+Ctrl+Alt+C
+
+[services][net.local.systemctl-3.desktop]
+_launch=Meta+Ctrl+Alt+X
+
+[services][net.local.systemctl.desktop]
+_launch=Meta+Alt+C
+
 [services][org.gnome.Ptyxis.desktop]
 new-window=none
 

@@ -48,6 +48,7 @@ if vim.g.vscode then
     keymap("n", "x", '"_x', opts)
     keymap("v", "p", '"_p', opts)
 
+    keymap("i", "<C-BS>", "<C-W>", opts)
     -- Calling whichkey functionality in VSCode
     keymap("n", "<leader>", "<cmd>call VSCodeNotify('whichkey.show')<CR>", opts)
     keymap("x", "<leader>", "<cmd>call VSCodeNotify('whichkey.show')<CR>", opts)
@@ -77,21 +78,19 @@ if vim.g.vscode then
             },
             {
                 "kylechui/nvim-surround",
+                event = "VeryLazy",
                 config = function()
                     require("nvim-surround").setup()
                 end
             },
             {
                 "windwp/nvim-autopairs",
-                config = function()
-                    require("nvim-autopairs").setup()
-                end
+                event = "InsertEnter",
+                config = true
             },
             {
                 "numToStr/Comment.nvim",
-                config = function()
-                    require("Comment").setup()
-                end
+                opts = {},
             },
             {
                 "echasnovski/mini.ai",
@@ -101,6 +100,7 @@ if vim.g.vscode then
             },
             {
                 "Wansmer/treesj",
+                keys = { '<leader>tj' },
                 dependencies = { "nvim-treesitter/nvim-treesitter" },
                 config = function()
                     require("treesj").setup({ use_default_keymaps = false })
@@ -153,6 +153,8 @@ else
     -- delete without copying to registers
     keymap("n", "x", '"_x', opts)
     keymap("v", "p", '"_p', opts)
+
+    keymap("i", "<C-BS>", "<C-W>", opts)
 
     vim.g.mapleader = " "
     vim.g.maplocalleader = " "
@@ -240,23 +242,19 @@ else
                     { "sindrets/diffview.nvim" },
                     { "nvim-telescope/telescope.nvim" },
                 },
-                config = function()
-                    local neogit = require("neogit")
-                    neogit.setup({})
-                end,
             },
-            { "habamax/vim-asciidoctor" },
+            { "habamax/vim-asciidoctor", ft = { 'adoc' } },
             { "Mofiqul/dracula.nvim" },
-
             -- Lualine
-            { "nvim-lualine/lualine.nvim" },
-            { "kyazdani42/nvim-web-devicons" },
-            -- Telescope
             {
-                "nvim-telescope/telescope-fzf-native.nvim",
-                run =
-                "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+                "nvim-lualine/lualine.nvim",
+                dependencies = { 'nvim-tree/nvim-web-devicons' },
             },
+            -- Telescope
+            { 
+                'nvim-telescope/telescope-fzf-native.nvim',
+                build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
+            ,
             {
                 "nvim-telescope/telescope.nvim",
                 tag = "0.1.8",
@@ -265,32 +263,32 @@ else
             -- Ease of life stuff
             {
                 "kylechui/nvim-surround",
+                event = "VeryLazy",
                 config = function()
                     require("nvim-surround").setup()
                 end
             },
             {
                 "windwp/nvim-autopairs",
-                config = function()
-                    require("nvim-autopairs").setup()
-                end
+                event = "InsertEnter",
+                config = true
             },
             { "windwp/nvim-ts-autotag" },
             {
                 "numToStr/Comment.nvim",
-                config = function()
-                    require("Comment").setup()
-                end
+                opts = {},
             },
             -- Display hexcodes as colors
             {
-                "norcalli/nvim-colorizer.lua",
-                config = function()
-                    require("colorizer").setup()
-                end
+                "norcalli/nvim-colorizer.lua"
             },
             -- Treesitter
-            { "nvim-treesitter/nvim-treesitter", run = "<cmd>TSUpdate" },
+            {
+                "nvim-treesitter/nvim-treesitter",
+                branch = 'master',
+                lazy = false,
+                build = ":TSUpdate"
+            },
             { "HiPhish/rainbow-delimiters.nvim" },
             {
                 "echasnovski/mini.ai",
@@ -325,44 +323,52 @@ else
                     { "rafamadriz/friendly-snippets" },
                 },
             },
-            { "L3MON4D3/LuaSnip",   run = "make install_jsregexp" },
+            { 
+                "L3MON4D3/LuaSnip",   
+                version = "v2.*",
+                build = "make install_jsregexp" 
+            },
             -- Zen mode
-            { "folke/zen-mode.nvim" },
-            -- Orgmode
+            { "folke/zen-mode.nvim", opts={} },
             {
                 "nvim-orgmode/orgmode",
+                event = 'VeryLazy',
                 ft = { "org" }
             },
-
             {
                 "dhruvasagar/vim-table-mode",
                 ft = { "md", "org" }
             },
-
             {
                 "folke/todo-comments.nvim",
-                config = function()
-                    require("todo-comments").setup()
-                end
+                dependencies = { "nvim-lua/plenary.nvim"},
+                opts = {},
             },
             -- Indent
-            { "lukas-reineke/indent-blankline.nvim" },
+            { 
+                "lukas-reineke/indent-blankline.nvim",
+                main = "ibl",
+                opts = {} 
+            },
             {
                 "nvim-focus/focus.nvim",
-                config = function()
-                    require("focus").setup({})
-                end
+                version = '*',
             },
             {
                 "aznhe21/actions-preview.nvim"
             },
             -- Which key
-            { "folke/which-key.nvim" },
+            { 
+                "folke/which-key.nvim",
+                event = "VeryLazy",
+                opts = {}
+            },
             { "barreiroleo/ltex-extra.nvim" },
             { "echasnovski/mini.icons" },
             {
                 "3rd/image.nvim",
-                build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
+                event = "VeryLazy",
+                build = false,
                 opts = {
                     processor = "magick_cli",
                 }
@@ -403,6 +409,7 @@ else
                     { "nvim-tree/nvim-web-devicons" },
                     { "nvim-treesitter/nvim-treesitter" },
                 },
+                ft = { 'c', 'cpp', 'lua', 'rust', 'go', 'py', 'js', 'ts', 'cs' },
                 config = function()
                     require("lspsaga").setup()
                 end
@@ -415,21 +422,6 @@ else
             { "MunifTanjim/nui.nvim" },
             { "rcarriga/nvim-notify" },
             {
-                "davidmh/cspell.nvim",
-                config = function()
-                    local has_cspell, cspell = pcall(require, "cspell")
-                    local has_null_ls, null_ls = pcall(require, "null-ls")
-                    if has_cspell and has_null_ls then
-                        null_ls.setup({
-                            sources = {
-                                cspell.diagnostics,
-                                cspell.code_actions,
-                            },
-                        })
-                    end
-                end
-            },
-            {
                 "jay-babu/mason-null-ls.nvim",
                 event = { "BufReadPre", "BufNewFile" },
                 dependencies = {
@@ -440,8 +432,24 @@ else
             },
             {
                 "nvimtools/none-ls.nvim",
-                dependencies = { "nvim-lua/plenary.nvim" },
-
+                event = "VeryLazy",
+                dependencies = {
+                    "nvim-lua/plenary.nvim",
+                    "davidmh/cspell.nvim",
+                },
+                opts = function(_, opts)
+                    local cspell = require("cspell")
+                    opts.sources = opts.sources or {}
+                    table.insert(
+                        opts.sources,
+                        cspell.diagnostics.with({
+                            diagnostics_postprocess = function(diagnostic)
+                                diagnostic.severity = vim.diagnostic.severity.HINT
+                            end,
+                        })
+                    )
+                    table.insert(opts.sources, cspell.code_actions)
+                end
             },
             { "nvim-telescope/telescope-ui-select.nvim" },
             {
@@ -461,17 +469,16 @@ else
                 end,
             },
             {
-                "MeanderingProgrammer/render-markdown.nvim",
-                after = { "nvim-treesitter" },
-                dependencies = { "echasnovski/mini.nvim", opt = true }, -- if you use the mini.nvim suite
-                -- dependencies = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
-                -- dependencies = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
-                config = function()
-                    require("render-markdown").setup({})
-                end,
+                'MeanderingProgrammer/render-markdown.nvim',
+                ft = {'md'},
+                dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+                ---@module 'render-markdown'
+                ---@type render.md.UserConfig
+                opts = {},
             },
             {
                 "sotte/presenting.nvim",
+                ft = {'md'},
                 config = function()
                     require("presenting").setup({
                         options = {
@@ -483,6 +490,7 @@ else
             { "stevearc/dressing.nvim" },
             {
                 "ziontee113/icon-picker.nvim",
+                event = "VeryLazy",
                 config = function()
                     require("icon-picker").setup({
                         disable_legacy_commands = true
@@ -491,6 +499,7 @@ else
             },
             {
                 "Wansmer/treesj",
+                keys = { '<leader>tj' },
                 dependencies = { "nvim-treesitter/nvim-treesitter" },
                 config = function()
                     require("treesj").setup({ use_default_keymaps = false })
@@ -498,12 +507,14 @@ else
             },
             {
                 "stevearc/oil.nvim",
+                event = "VeryLazy",
                 config = function()
                     require("oil").setup()
                 end
             },
             {
                 "karb94/neoscroll.nvim",
+                event = "VeryLazy",
                 config = function()
                     require("neoscroll").setup()
                 end
@@ -515,14 +526,6 @@ else
                     vim.fn['fzf#install']()
                 end
             },
-            {
-                "hedyhli/outline.nvim",
-                config = function()
-                    require("outline").setup {
-
-                    }
-                end,
-            }
         },
         install = { colorscheme = { "dracula" } },
         checker = { enabled = true, notify = false },
@@ -1391,6 +1394,18 @@ else
         tmux_show_only_in_active_window = false,                                            -- auto show/hide images in the correct Tmux window (needs visual-activity off)
         hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.avif" }, -- render image files as images when opened
     })
+
+
+    local has_cspell, cspell = pcall(require, "cspell")
+    local has_null_ls, null_ls = pcall(require, "null-ls")
+    if has_cspell and has_null_ls then
+        null_ls.setup({
+            sources = {
+                cspell.diagnostics,
+                cspell.code_actions,
+            },
+        })
+    end
 
     vim.api.nvim_create_autocmd('TextYankPost', {
         desc = 'Highlight when yanking (copying) text',

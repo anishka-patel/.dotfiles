@@ -298,4 +298,5 @@
   "window.customTitleBarVisibility": "never",
   "window.menuBarVisibility": "hidden",
   "window.titleBarStyle": "native",
+  "workbench.secondarySideBar.defaultVisibility": "hidden"
 }
