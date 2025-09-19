@@ -301,12 +301,12 @@ toggle do not disturb=none,,Toggle do not disturb
 [services][ArchBox-kitty.desktop]
 _launch=Ctrl+Alt+`\tCtrl+Alt+Return
 
+[services][code.desktop]
+new-empty-window=Meta+O, Meta+C
+
 [services][com.brave.Browser.desktop]
 _launch=Meta+O, Meta+W
 new-window=Meta+I
-
-[services][emacs.desktop]
-_launch=Meta+O, Meta+M
 
 [services][kitty.desktop]
 _launch=Meta+`\tMeta+Return\tMeta+O, Meta+T
