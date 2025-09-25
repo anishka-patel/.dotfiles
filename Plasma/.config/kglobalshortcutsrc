@@ -9,6 +9,21 @@ Switch to Last-Used Keyboard Layout=Meta+Alt+\\,,Meta+Alt+L,Switch to Last-Used 
 Switch to Next Keyboard Layout=Meta+Alt+.,Meta+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
 
+[com.brave.Browser]
+3BC0A8E3968B9A8B7CD5417653C9B813-closeTab=none,none,Close the current tab.
+3BC0A8E3968B9A8B7CD5417653C9B813-nextTab=none,none,Go to the next tab.
+3BC0A8E3968B9A8B7CD5417653C9B813-previousTab=none,none,Go to the previous tab.
+3BC0A8E3968B9A8B7CD5417653C9B813-proxyThis=none,none,Toggle current site in autoproxy_hosts.
+3BC0A8E3968B9A8B7CD5417653C9B813-restartext=none,none,Restart this extenstion.
+53D9DAD5891DEEBBE672B8AC35015E0B-launch-element-picker=none,none,Enter element picker mode
+53D9DAD5891DEEBBE672B8AC35015E0B-launch-element-zapper=none,none,Enter element zapper mode
+53D9DAD5891DEEBBE672B8AC35015E0B-launch-logger=none,none,Open the logger
+53D9DAD5891DEEBBE672B8AC35015E0B-open-dashboard=none,none,Open the dashboard
+53D9DAD5891DEEBBE672B8AC35015E0B-relax-blocking-mode=none,none,Relax blocking mode
+53D9DAD5891DEEBBE672B8AC35015E0B-toggle-cosmetic-filtering=none,none,Toggle cosmetic filtering
+53D9DAD5891DEEBBE672B8AC35015E0B-toggle-javascript=none,none,Toggle JavaScript
+_k_friendly_name=Brave
+
 [kaccess]
 Toggle Screen Reader On and Off=Meta+Alt+S,Meta+Alt+S,Toggle Screen Reader On and Off
 _k_friendly_name=Accessibility
@@ -314,9 +329,6 @@ _launch=Meta+`\tMeta+Return\tMeta+O, Meta+T
 [services][net.local.kitty-2.desktop]
 _launch=Meta+Y\tCtrl+Alt+E
 
-[services][net.local.kitty.desktop]
-_launch=Meta+N
-
 [services][net.local.konsole-2.desktop]
 _launch=Meta+O, Meta+F\tCtrl+Alt+F
 
@@ -337,6 +349,9 @@ _launch=Meta+Ctrl+Alt+X
 
 [services][net.local.systemctl.desktop]
 _launch=Meta+Alt+C
+
+[services][nvim.desktop]
+_launch=Meta+O, Meta+N
 
 [services][org.gnome.Ptyxis.desktop]
 new-window=none

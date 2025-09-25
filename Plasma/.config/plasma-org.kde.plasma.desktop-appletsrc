@@ -6,9 +6,9 @@ RightButton;NoModifier=org.kde.contextmenu
 
 [Containments][1]
 ItemGeometries-1280x960=
-ItemGeometries-1536x960=Applet-63:1024,32,512,80,0;
+ItemGeometries-1536x960=Applet-63:1024,32,512,320,0;
 ItemGeometries-1920x1080=
-ItemGeometriesHorizontal=Applet-63:1024,32,512,80,0;
+ItemGeometriesHorizontal=Applet-63:1024,32,512,320,0;
 activityId=09aa0fd7-5ef1-42c8-bd2c-c8e24f7ed9ee
 formfactor=0
 immutability=1
@@ -22,21 +22,20 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][1][Applets][63][Configuration]
-PreloadWeight=85
+PreloadWeight=90
 popupHeight=450
 popupWidth=560
 
 [Containments][1][Applets][63][Configuration][Appearance]
 customDateFormat=ddd, dd MMM
-dateDisplayFormat=BesideTime
+dateDisplayFormat=BelowTime
 dateFormat=custom
-showLocalTimezone=true
 showSeconds=Never
 use24hFormat=2
 
 [Containments][1][Applets][63][Configuration][ConfigDialog]
 DialogHeight=887
-DialogWidth=1536
+DialogWidth=1531
 
 [Containments][1][ConfigDialog]
 DialogHeight=887
@@ -179,7 +178,7 @@ immutability=1
 plugin=org.kde.plasma.clipboard
 
 [Containments][2][Applets][7][Applets][12][Configuration]
-PreloadWeight=60
+PreloadWeight=70
 
 [Containments][2][Applets][7][Applets][13]
 immutability=1
@@ -211,7 +210,7 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][2][Applets][7][Applets][17][Configuration]
-PreloadWeight=90
+PreloadWeight=95
 
 [Containments][2][Applets][7][Applets][18]
 immutability=1
@@ -260,7 +259,7 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][2][Applets][7][Applets][25][Configuration]
-PreloadWeight=2
+PreloadWeight=0
 
 [Containments][2][Applets][7][Applets][26]
 immutability=1
@@ -281,7 +280,7 @@ immutability=1
 plugin=org.kde.plasma.weather
 
 [Containments][2][Applets][7][Applets][61][Configuration]
-PreloadWeight=90
+PreloadWeight=95
 
 [Containments][2][Applets][7][Applets][61][Configuration][Appearance]
 showPressureInTooltip=true
