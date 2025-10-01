@@ -19,9 +19,13 @@ echo
 echo -n "Generating Rpm-ostree layers list..."
 rpm-ostree status >rpm-ostree-layers-list.txt 2>/dev/null
 status
-echo -n "Generating Rpm      packages list..."
-rpm -qa >rpm-packages-list.txt 2>/dev/null
+echo -n "Generating Manual   packages  list..."
+[ -d ~/Applications ] && 
+    find ~/Applications -maxdepth 1 -type f,l | awk -F '/' '{print $NF}'>manual-packages-list.txt 2>/dev/null
 status
+# echo -n "Generating Rpm      packages list..."
+# rpm -qa >rpm-packages-list.txt 2>/dev/null
+# status
 echo -n "Generation Pacman   packages list..."
 pacman -Qqe >pacman-packages-list.txt 2>/dev/null
 status
@@ -52,9 +56,9 @@ status
 echo -n "Generating Cargo    packages list..."
 cargo install --list | grep -v :$ >cargo-packages-list.txt 2>/dev/null
 status
-echo -n "Generating VSCodium packages list..."
-codium --list-extensions >codium-packages-list.txt 2>/dev/null
-status
+# echo -n "Generating VSCodium packages list..."
+# codium --list-extensions >codium-packages-list.txt 2>/dev/null
+# status
 echo -n "Generating VSCode packages list..."
 code --list-extensions >code-packages-list.txt 2>/dev/null
 status

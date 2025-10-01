@@ -18,6 +18,7 @@ io.lmms.LMMS
 io.missioncenter.MissionCenter
 io.podman_desktop.PodmanDesktop
 me.iepure.devtoolbox
+one.ablaze.floorp
 org.blender.Blender
 org.fedoraproject.MediaWriter
 org.fkoehler.KTailctl
@@ -26,6 +27,7 @@ org.gimp.GIMP
 org.gnome.DejaDup
 org.gnome.World.PikaBackup
 org.godotengine.Godot
+org.godotengine.GodotSharp
 org.gustavoperedo.FontDownloader
 org.inkscape.Inkscape
 org.kde.filelight
@@ -34,7 +36,7 @@ org.kde.haruna
 org.kde.kcalc
 org.kde.kclock
 org.kde.kdenlive
-org.kde.kdevelop
+org.kde.kompare
 org.kde.kontact
 org.kde.krita
 org.kde.kweather

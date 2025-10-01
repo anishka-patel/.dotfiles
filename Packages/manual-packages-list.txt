@@ -1,0 +1,5 @@
+boxbackup.sh
+defold
+redot
+godot
+pixi

@@ -1,6 +1,7 @@
 Package
 -------------------------
 annotated-types
+anyio
 argcomplete
 attrs
 bcc
@@ -22,15 +23,17 @@ decorator
 Deprecated
 distro
 dnspython
-email_validator
+email-validator
 evdev
-fedora-third-party
 fido2
 file-magic
 fros
 fw-fanctrl
 gbinder-python
 gssapi
+h11
+httpcore
+httpx
 idna
 ifaddr
 input-remapper
@@ -73,6 +76,7 @@ psutil
 ptyprocess
 pyasn1
 pyasn1_modules
+PyAudio
 pycairo
 pyclip
 pycparser
@@ -101,7 +105,6 @@ PyYAML
 pyynl
 pyzfs
 qrcode
-ramalama
 RapidFuzz
 referencing
 regex
@@ -118,8 +121,8 @@ setproctitle
 setroubleshoot
 setuptools
 shtab
-simpleaudio
 six
+sniffio
 sos
 SSSDConfig
 systemd-python

@@ -83,4 +83,5 @@ vscode-icons-team.vscode-icons
 vspacecode.whichkey
 vue.volar
 yzhang.markdown-all-in-one
+zhuangtongfa.material-theme
 ziglang.vscode-zig

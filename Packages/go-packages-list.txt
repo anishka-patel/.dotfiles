@@ -164,6 +164,7 @@ cmd/internal/codesign
 cmd/internal/cov
 cmd/internal/cov/covcmd
 cmd/internal/disasm
+cmd/internal/doc
 cmd/internal/dwarf
 cmd/internal/edit
 cmd/internal/gcprog
@@ -284,6 +285,7 @@ crypto/internal/fips140/ssh
 crypto/internal/fips140/subtle
 crypto/internal/fips140/tls12
 crypto/internal/fips140/tls13
+crypto/internal/fips140cache
 crypto/internal/fips140deps
 crypto/internal/fips140deps/byteorder
 crypto/internal/fips140deps/cpu
@@ -339,7 +341,6 @@ expvar
 flag
 fmt
 go/ast
-go/ast/internal/tests
 go/build
 go/build/constraint
 go/constant
@@ -380,6 +381,7 @@ internal/buildcfg
 internal/bytealg
 internal/byteorder
 internal/cfg
+internal/cgrouptest
 internal/chacha8rand
 internal/copyright
 internal/coverage
@@ -428,11 +430,16 @@ internal/profilerecord
 internal/race
 internal/reflectlite
 internal/runtime/atomic
+internal/runtime/cgroup
 internal/runtime/exithook
+internal/runtime/gc
 internal/runtime/maps
 internal/runtime/math
+internal/runtime/startlinetest
+internal/runtime/strconv
 internal/runtime/sys
 internal/runtime/syscall
+internal/runtime/wasitest
 internal/saferio
 internal/singleflight
 internal/stringslite
@@ -443,15 +450,15 @@ internal/syscall/unix
 internal/sysinfo
 internal/syslist
 internal/testenv
+internal/testhash
 internal/testlog
 internal/testpty
 internal/trace
-internal/trace/event
-internal/trace/event/go122
-internal/trace/internal/oldtrace
-internal/trace/internal/testgen/go122
+internal/trace/internal/testgen
+internal/trace/internal/tracev1
 internal/trace/raw
 internal/trace/testtrace
+internal/trace/tracev2
 internal/trace/traceviewer
 internal/trace/traceviewer/format
 internal/trace/version
@@ -470,11 +477,11 @@ log/slog
 log/slog/internal
 log/slog/internal/benchmarks
 log/slog/internal/buffer
-log/slog/internal/slogtest
 log/syslog
 maps
 math
 math/big
+math/big/internal/asmgen
 math/bits
 math/cmplx
 math/rand
@@ -492,6 +499,7 @@ net/http/httptrace
 net/http/httputil
 net/http/internal
 net/http/internal/ascii
+net/http/internal/httpcommon
 net/http/internal/testcert
 net/http/pprof
 net/internal/cgotest
@@ -520,8 +528,6 @@ runtime
 runtime/cgo
 runtime/coverage
 runtime/debug
-runtime/internal/startlinetest
-runtime/internal/wasitest
 runtime/metrics
 runtime/pprof
 runtime/race
@@ -541,6 +547,7 @@ testing/internal/testdeps
 testing/iotest
 testing/quick
 testing/slogtest
+testing/synctest
 text/scanner
 text/tabwriter
 text/template

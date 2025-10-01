@@ -1,17 +1,12 @@
 State: idle
-AutomaticUpdates: stage; rpm-ostreed-automatic.timer: inactive
+AutomaticUpdates: stage; rpm-ostreed-automatic.timer: no runs since boot
 Deployments:
 ● ostree-image-signed:docker://ghcr.io/ublue-os/aurora-dx:stable
-                   Digest: sha256:a0d62d81b447537652b716372307cf3c9c2ed16693743e3ab5479745cbb0e702
-                  Version: 42.20250713 (2025-07-13T06:08:37Z)
-          LayeredPackages: waydroid
+                   Digest: sha256:4389f4d42ea375ad20d3f56138529bb602e51fe97158faca44260290fdfaa682
+                  Version: 42.20250921.1 (2025-09-21T06:07:10Z)
+          LayeredPackages: kitty neovim waydroid
 
   ostree-image-signed:docker://ghcr.io/ublue-os/aurora-dx:stable
-                   Digest: sha256:a0d62d81b447537652b716372307cf3c9c2ed16693743e3ab5479745cbb0e702
-                  Version: 42.20250713 (2025-07-13T06:08:37Z)
-
-AvailableUpdate:
-      Timestamp: 2025-08-03T06:08:33Z
-         Commit: 13fd6a8dc1de2c88e6c0e32b5ed7e7a8e682c4d97e31f754e568a5488e6896fc
-  SecAdvisories: 2 unknown severity, 2 important
-           Diff: 321 upgraded, 1 downgraded, 2 removed, 6 added
+                   Digest: sha256:120599599bb5d5205681e4f2e3feeac901e1598e0a8faee2e3a7ab4a45b6b0ae
+                  Version: 42.20250914.1 (2025-09-14T06:10:06Z)
+          LayeredPackages: kitty neovim waydroid
