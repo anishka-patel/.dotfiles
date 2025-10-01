@@ -6,9 +6,9 @@ RightButton;NoModifier=org.kde.contextmenu
 
 [Containments][1]
 ItemGeometries-1280x960=
-ItemGeometries-1536x960=Applet-63:1024,32,512,320,0;
+ItemGeometries-1536x960=Applet-63:1008,32,528,320,0;
 ItemGeometries-1920x1080=
-ItemGeometriesHorizontal=Applet-63:1024,32,512,320,0;
+ItemGeometriesHorizontal=Applet-63:1008,32,528,320,0;
 activityId=09aa0fd7-5ef1-42c8-bd2c-c8e24f7ed9ee
 formfactor=0
 immutability=1
@@ -27,15 +27,20 @@ popupHeight=450
 popupWidth=560
 
 [Containments][1][Applets][63][Configuration][Appearance]
+autoFontAndSize=false
 customDateFormat=ddd, dd MMM
 dateDisplayFormat=BelowTime
 dateFormat=custom
+displayTimezoneFormat=UTCOffset
+fontFamily=Fira Mono
+fontStyleName=Regular
+fontWeight=400
 showSeconds=Never
 use24hFormat=2
 
 [Containments][1][Applets][63][Configuration][ConfigDialog]
 DialogHeight=887
-DialogWidth=1531
+DialogWidth=1526
 
 [Containments][1][ConfigDialog]
 DialogHeight=887
@@ -72,17 +77,17 @@ autoFontAndSize=false
 customDateFormat=ddd, d MMM
 dateDisplayFormat=BelowTime
 dateFormat=custom
-fontFamily=FiraCode Nerd Font
+fontFamily=Fira Mono
 fontSize=8
-fontStyleName=Retina
-fontWeight=450
+fontStyleName=Regular
+fontWeight=400
 showLocalTimezone=true
 showSeconds=Never
 use24hFormat=2
 
 [Containments][2][Applets][21][Configuration][ConfigDialog]
 DialogHeight=887
-DialogWidth=1531
+DialogWidth=1526
 
 [Containments][2][Applets][29]
 immutability=1
@@ -368,6 +373,7 @@ visible=false
 
 [Containments][2][Applets][84][Configuration][Behavior]
 filterByScreen=true
+showTooltip=false
 
 [Containments][2][Applets][84][Configuration][ConfigDialog]
 DialogHeight=540
