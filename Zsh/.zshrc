@@ -1,5 +1,5 @@
 # Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
+HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=50000
 
@@ -21,7 +21,6 @@ fi
 [ -f $historysubstringpath ] && source $historysubstringpath
 
 
-
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
@@ -35,18 +34,31 @@ compinit
 # End of lines added by compinstall
 zstyle ':completion:*' menu select
 
-
 if command -v starship >/dev/null; then
-eval "$(starship init zsh)"
+    eval "$(starship init zsh)"
 fi
 if command -v zoxide >/dev/null; then
-eval "$(zoxide init zsh)"
-fi
-if command -v fastfetch >/dev/null; then
-fastfetch
+    eval "$(zoxide init zsh)"
 fi
 
-[ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
+if command -v tv >/dev/null; then
+    eval "$(tv init zsh)"
+else 
+    [ -f  "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
+    [ -f  "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
+    [ -f  "/usr/share/fzf/shell/key-bindings.zsh" ] && source "/usr/share/fzf/shell/key-bindings.zsh"
+    if command -v fzf-share >/dev/null; then
+        source $(fzf-share)/completion.zsh
+        source $(fzf-share)/key-bindings.zsh
+    fi
+fi
+if command -v carapace >/dev/null; then
+    # ${UserConfigDir}/zsh/.zshrc
+    export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+    zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+    source <(carapace _carapace)
+    zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
+fi
 
 # bun completions
 [ -s "/home/ani/.bun/_bun" ] && source "/home/ani/.bun/_bun"
@@ -55,27 +67,19 @@ fi
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-[ -f  "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
-[ -f  "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
-[ -f  "/usr/share/fzf/shell/key-bindings.zsh" ] && source "/usr/share/fzf/shell/key-bindings.zsh"
-if command -v fzf-share >/dev/null; then
-source $(fzf-share)/completion.zsh
-source $(fzf-share)/key-bindings.zsh
-fi
-
 # opam configuration
 [[ ! -r /home/ani/.opam/opam-init/init.zsh ]] || source /home/ani/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 if command -v sesh >/dev/null; then
-zle     -N             sesh-sessions
-bindkey -M emacs '\es' sesh-sessions
-bindkey -M vicmd '\es' sesh-sessions
-bindkey -M viins '\es' sesh-sessions
+    zle     -N             sesh-sessions
+    bindkey -M emacs '\es' sesh-sessions
+    bindkey -M vicmd '\es' sesh-sessions
+    bindkey -M viins '\es' sesh-sessions
 
-zle     -N             sesh-connect
-bindkey -M emacs '\et' sesh-connect
-bindkey -M vicmd '\et' sesh-connect
-bindkey -M viins '\et' sesh-connect
+    zle     -N             sesh-connect
+    bindkey -M emacs '\et' sesh-connect
+    bindkey -M vicmd '\et' sesh-connect
+    bindkey -M viins '\et' sesh-connect
 fi
 # Change cursor shape for different vi modes
 function zle-keymap-select {
@@ -99,3 +103,10 @@ export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk@21/bin:$PATH"
 [ -f  "$HOME/.config/sh/alias.sh" ] && source "$HOME/.config/sh/alias.sh"
 [ -f  "$HOME/.config/sh/export.sh" ] && source "$HOME/.config/sh/export.sh"
 [ -f  "$HOME/.config/sh/function.sh" ] && source "$HOME/.config/sh/function.sh"
+[ -f "$HOME/.config/sh/dracula-tty.sh" ] && source "$HOME/.config/sh/dracula-tty.sh"
+
+[ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
+
+if command -v fastfetch >/dev/null; then
+    fastfetch
+fi

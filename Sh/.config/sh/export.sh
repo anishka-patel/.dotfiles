@@ -1,32 +1,49 @@
-# export TERM="alacritty"
-
-if command -v nvim &>/dev/null; then
-    export EDITOR="nvim"
-    export VISUAL="nvim"
-    export SUDO_EDITOR="vim"
-else
-    export EDITOR="vim"
-    export VISUAL="vim"
-    export SUDO_EDITOR="vim"
-fi
-
 # Increase history size
 export HISTSIZE=10000
 export HISTFILESIZE=10000
-
-export NIXPKGS_ALLOW_UNFREE=1
-export RUSTC_WRAPPER=sccache
-
-export GOPATH="$HOME/go/bin/"
-
-export PATH="$PATH:$HOME/.cargo/bin"
-export PATH="$PATH:$HOME/.GodotMono"
-export PATH="$PATH:$HOME/.GodotMono3"
 export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$HOME/go/bin"
-export PATH="$PATH:$HOME/Applications"
-export PATH="$PATH:$HOME/.emacs.d/bin"
+# export TERM="alacritty"
 
-export MANPATH="$MANPATH:/nix/var/nix/profiles/default/share/man"
-export MANPATH="$MANPATH:$HOME/.nix-profile/share/man"
-export MANPAGER="nvim +Man!"
+if [ -f /usr/bin/nvim ]; then
+    export EDITOR="/usr/bin/nvim"
+    export VISUAL="/usr/bin/nvim"
+elif [ -f /usr/bin/vim ]; then
+    export EDITOR="/usr/bin/vim"
+    export VISUAL="/usr/bin/vim"
+fi
+
+if [ -f /usr/bin/vim ]; then
+    export SYSTEMD_EDITOR="/usr/bin/vim"
+    export SUDO_EDITOR="/usr/bin/vim"
+fi
+
+
+if [ -d $HOME/.cargo ] ; then
+    export PATH="$PATH:$HOME/.cargo/bin"
+    export RUSTC_WRAPPER=sccache
+fi
+
+if command -v go >/dev/null; then
+    export GOPATH="$HOME/go/bin/"
+    export PATH="$PATH:$HOME/go/bin"
+fi
+
+
+if [ -d $HOME/Applications ] ; then
+    export PATH="$PATH:$HOME/Applications"
+fi
+
+if [ -d $HOME/.emacs.d/bin ] ; then
+    export PATH="$PATH:$HOME/.emacs.d/bin"
+elif [ -d $HOME/.config/emacs/bin ] ; then
+    export PATH="$PATH:$HOME/.config/emacs/bin"
+fi
+
+if command -v nix >/dev/null; then
+    export NIXPKGS_ALLOW_UNFREE=1
+    export MANPATH="$MANPATH:$HOME/.nix-profile/share/man"
+fi
+
+if command -v nvim >/dev/null; then
+    export MANPAGER="nvim +Man!"
+fi

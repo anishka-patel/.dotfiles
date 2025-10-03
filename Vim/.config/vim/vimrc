@@ -2,8 +2,11 @@ syntax enable
 
 filetype on
 filetype indent on
-
-colorscheme sorbet
+try
+    colorscheme dracula
+catch
+    colorscheme sorbet
+endtry
 
 set ruler
 set cmdheight=1

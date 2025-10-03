@@ -3,7 +3,10 @@ alias -- -='cd -'
 alias md='mkdir -p'
 alias rd=rmdir
 
-alias _="sudo "
+if [ -f /usr/bin/vim ]; then
+    alias sudo="sudo EDITOR=/usr/bin/vim"
+fi
+alias _="sudo"
 
 if command -v nvim >/dev/null; then
 	alias nv="NVIM_APPNAME=nv nvim"
@@ -78,6 +81,11 @@ fi
 if command -v fastfetch >/dev/null; then
 	alias ff=fastfetch
 fi
+
+if command -v tldr >/dev/null; then
+    alias tldr="tldr --no-auto-update"
+fi
+
 alias datef="date -u +%a,\ %Y-%b-%d"
 alias datetimef="date -u +%a,\ %Y-%b-%d%n%H:%M\ \(%Z\)"
 alias wget="wget -c -T 60"

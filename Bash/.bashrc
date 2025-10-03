@@ -176,14 +176,6 @@ ex() {
 }
 
 
-[ -f "/usr/share/fzf/completion.bash" ] && source "/usr/share/fzf/completion.bash"
-[ -f "/usr/share/fzf/key-bindings.bash" ] && source "/usr/share/fzf/key-bindings.bash"
-[ -f "/usr/share/fzf/shell/key-bindings.bash" ] && source "/usr/share/fzf/shell/key-bindings.bash"
-
-if command -v fzf-share >/dev/null; then
-source "$(fzf-share)/completions.bash"
-source "$(fzf-share)/key-bindings.bash"
-fi
 
 if command -v starship >/dev/null; then
 eval "$(starship init bash)"
@@ -193,8 +185,25 @@ if command -v zoxide >/dev/null; then
 eval "$(zoxide init bash)"
 fi
 
-if command -v fastfetch >/dev/null; then
-fastfetch
+
+if command -v tv >/dev/null; then
+    eval "$(tv init bash)"
+else 
+    [ -f "/usr/share/fzf/completion.bash" ] && 
+        source "/usr/share/fzf/completion.bash" 
+    [ -f "/usr/share/fzf/key-bindings.bash" ] &&
+        source "/usr/share/fzf/key-bindings.bash" 
+    [ -f "/usr/share/fzf/shell/key-bindings.bash" ] && 
+        source "/usr/share/fzf/shell/key-bindings.bash"
+    if command -v fzf-share >/dev/null; then 
+        source "$(fzf-share)/completions.bash"
+        source "$(fzf-share)/key-bindings.bash" 
+    fi
+fi
+
+if command -v carapace >/dev/null; then
+    export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+    source <(carapace _carapace)
 fi
 
 [ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
@@ -222,3 +231,8 @@ export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk@21/bin:$PATH"
 [ -f "$HOME/.config/sh/alias.sh" ] && source "$HOME/.config/sh/alias.sh"
 [ -f "$HOME/.config/sh/export.sh" ] && source "$HOME/.config/sh/export.sh"
 [ -f "$HOME/.config/sh/function.sh" ] && source "$HOME/.config/sh/function.sh"
+[ -f "$HOME/.config/sh/dracula-tty.sh" ] && source "$HOME/.config/sh/dracula-tty.sh"
+
+if command -v fastfetch >/dev/null; then
+fastfetch
+fi

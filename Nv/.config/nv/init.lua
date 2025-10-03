@@ -83,7 +83,11 @@ vim.g.netrw_banner = 0
 
 vim.cmd("filetype on")
 vim.cmd("filetype plugin on")
-vim.cmd("colorscheme sorbet")
+
+if not pcall(vim.cmd, "colorscheme dracula") then
+    vim.cmd("colorscheme sorbet")
+end
+
 
 vim.o.completeopt = "menuone,noselect,preview"
 
