@@ -103,7 +103,7 @@ export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk@21/bin:$PATH"
 [ -f  "$HOME/.config/sh/alias.sh" ] && source "$HOME/.config/sh/alias.sh"
 [ -f  "$HOME/.config/sh/export.sh" ] && source "$HOME/.config/sh/export.sh"
 [ -f  "$HOME/.config/sh/function.sh" ] && source "$HOME/.config/sh/function.sh"
-[ -f "$HOME/.config/sh/dracula-tty.sh" ] && source "$HOME/.config/sh/dracula-tty.sh"
+[ -f "$HOME/.config/sh/tty.sh" ] && source "$HOME/.config/sh/tty.sh"
 
 [ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
 
