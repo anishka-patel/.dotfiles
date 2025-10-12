@@ -36,6 +36,8 @@ sudobked() {
 	sudoedit "$@"
 }
 
+if command -v sesh >/dev/null; then
+
 sesh-sessions() {
 	{
 		exec </dev/tty
@@ -53,6 +55,8 @@ sesh-connect() {
 		sesh connect "$(sesh list | fzf)"
 	}
 }
+
+fi
 
 launch() {
 	"$@" >/dev/null 2>&1 &

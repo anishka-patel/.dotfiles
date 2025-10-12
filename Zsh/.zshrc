@@ -108,5 +108,13 @@ export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk@21/bin:$PATH"
 [ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
 
 if command -v fastfetch >/dev/null; then
-    fastfetch
+    term=$(ps -o 'cmd=' -p $(ps -o 'ppid=' -p $$) | awk -F/ '{print $NF}')
+    case $term in
+        kitty | konsole) 
+            /usr/bin/fastfetch 
+            ;;
+        *)
+            /usr/bin/fastfetch --config /home/ani/.config/fastfetch/noimg-config.jsonc
+            ;;
+    esac
 fi

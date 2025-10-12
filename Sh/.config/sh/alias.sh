@@ -3,9 +3,6 @@ alias -- -='cd -'
 alias md='mkdir -p'
 alias rd=rmdir
 
-if [ -f /usr/bin/vim ]; then
-    alias sudo="sudo EDITOR=/usr/bin/vim"
-fi
 alias _="sudo"
 
 if command -v nvim >/dev/null; then
@@ -70,25 +67,31 @@ if command -v moar >/dev/null; then
 	alias more=moar
 	alias less=moar
 fi
-if command -v distrobox >/dev/null; then
-	alias db=distrobox
-fi
 
 if command -v bat >/dev/null; then
 	alias cat="bat --theme Dracula"
 fi
 
 if command -v fastfetch >/dev/null; then
+    if [ -f /usr/bin/fastfetch ]; then
+        alias fastfetch="/usr/bin/fastfetch"
+    fi
 	alias ff=fastfetch
 fi
 
-if command -v tldr >/dev/null; then
-    alias tldr="tldr --no-auto-update"
+if command -v distrobox >/dev/null; then
+	alias db=distrobox
+    alias dbhexec="distrobox-host-exec"
 fi
 
+alias which="which -a"
 alias datef="date -u +%a,\ %Y-%b-%d"
 alias datetimef="date -u +%a,\ %Y-%b-%d%n%H:%M\ \(%Z\)"
 alias wget="wget -c -T 60"
 alias mv="mv -i"
 alias mkdir="mkdir -p"
-alias rm="trash"
+if command -v trash >/dev/null; then
+    alias rm="trash"
+else 
+    alias rm="rm -i"
+fi

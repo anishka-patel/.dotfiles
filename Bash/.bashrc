@@ -208,8 +208,11 @@ fi
 
 [ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
 
-bind -x '"\es":"sesh-sessions"'
-bind -x '"\et":"sesh-connect"'
+
+if command -v sesh >/dev/null; then
+    bind -x '"\es":"sesh-sessions"'
+    bind -x '"\et":"sesh-connect"'
+fi
 
 # Automatically added by the Guix install script.
 if [ -n "$GUIX_ENVIRONMENT" ]; then
@@ -234,5 +237,13 @@ export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk@21/bin:$PATH"
 [ -f "$HOME/.config/sh/tty.sh" ] && source "$HOME/.config/sh/tty.sh"
 
 if command -v fastfetch >/dev/null; then
-    fastfetch
+    term=$(ps -o 'cmd=' -p $(ps -o 'ppid=' -p $$) | awk -F/ '{print $NF}')
+    case $term in
+        kitty | konsole) 
+            /usr/bin/fastfetch 
+            ;;
+        *)
+            /usr/bin/fastfetch --config /home/ani/.config/fastfetch/noimg-config.jsonc
+            ;;
+    esac
 fi

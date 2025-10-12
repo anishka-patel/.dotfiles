@@ -18,5 +18,9 @@ if [ "$TERM" = "linux" ]; then
 	printf %b '\e]P7f8f8f2'    # redefine 'white'          as 'dracula-fg'
 	printf %b '\e]PFffffff'    # redefine 'bright-white'   as '#ffffff'
 	clear
-    setfont /usr/lib/kbd/consolefonts/ter-v24b.psf.gz
+    if [ -f /usr/lib/kdb/consolefonts/ter-v24b.psf.gz ]; then
+        setfont /usr/lib/kbd/consolefonts/ter-v24b.psf.gz
+    elif [ -f /home/ani/.local/share/kbd/consolefonts/ter-v24b.psf.gz ]; then
+        setfont /home/ani/.local/share/kbd/consolefonts/ter-v24b.psf.gz
+    fi
 fi
