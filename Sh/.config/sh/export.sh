@@ -20,6 +20,9 @@ fi
 
 if [ -d $HOME/.cargo ] ; then
     export PATH="$PATH:$HOME/.cargo/bin"
+fi
+
+if command -v sccache >/dev/null; then
     export RUSTC_WRAPPER=sccache
 fi
 

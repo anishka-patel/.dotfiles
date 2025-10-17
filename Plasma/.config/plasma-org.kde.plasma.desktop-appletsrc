@@ -6,9 +6,9 @@ RightButton;NoModifier=org.kde.contextmenu
 
 [Containments][1]
 ItemGeometries-1280x960=
-ItemGeometries-1536x960=Applet-63:1008,32,528,320,0;
+ItemGeometries-1536x960=
 ItemGeometries-1920x1080=
-ItemGeometriesHorizontal=Applet-63:1008,32,528,320,0;
+ItemGeometriesHorizontal=
 activityId=09aa0fd7-5ef1-42c8-bd2c-c8e24f7ed9ee
 formfactor=0
 immutability=1
@@ -16,31 +16,6 @@ lastScreen=0
 location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
-
-[Containments][1][Applets][63]
-immutability=1
-plugin=org.kde.plasma.digitalclock
-
-[Containments][1][Applets][63][Configuration]
-PreloadWeight=95
-popupHeight=450
-popupWidth=560
-
-[Containments][1][Applets][63][Configuration][Appearance]
-autoFontAndSize=false
-customDateFormat=ddd, dd MMM
-dateDisplayFormat=BelowTime
-dateFormat=custom
-displayTimezoneFormat=UTCOffset
-fontFamily=Fira Mono
-fontStyleName=Regular
-fontWeight=400
-showSeconds=Never
-use24hFormat=2
-
-[Containments][1][Applets][63][Configuration][ConfigDialog]
-DialogHeight=887
-DialogWidth=1526
 
 [Containments][1][ConfigDialog]
 DialogHeight=887
@@ -51,7 +26,7 @@ positions={"1280x960":[],"1536x864":[],"1536x960":["1","14"]}
 sortMode=-1
 
 [Containments][1][Wallpaper][org.kde.image][General]
-Image=/usr/share/wallpapers/aurora-wallpaper-1/contents/images/15392x8616.jpg
+Image=/usr/share/backgrounds/aurora/aurora-wallpaper-2/
 SlidePaths=/usr/share/wallpapers/
 
 [Containments][2]
@@ -63,39 +38,13 @@ location=4
 plugin=org.kde.panel
 wallpaperplugin=org.kde.image
 
-[Containments][2][Applets][21]
-immutability=1
-plugin=org.kde.plasma.digitalclock
-
-[Containments][2][Applets][21][Configuration]
-PreloadWeight=70
-popupHeight=450
-popupWidth=560
-
-[Containments][2][Applets][21][Configuration][Appearance]
-autoFontAndSize=false
-customDateFormat=ddd, d MMM
-dateDisplayFormat=BelowTime
-dateFormat=custom
-fontFamily=Fira Mono
-fontSize=8
-fontStyleName=Regular
-fontWeight=400
-showLocalTimezone=true
-showSeconds=Never
-use24hFormat=2
-
-[Containments][2][Applets][21][Configuration][ConfigDialog]
-DialogHeight=887
-DialogWidth=1526
-
 [Containments][2][Applets][29]
 immutability=1
 plugin=org.kde.plasma.lock_logout
 
 [Containments][2][Applets][29][Configuration][ConfigDialog]
 DialogHeight=887
-DialogWidth=1536
+DialogWidth=1526
 
 [Containments][2][Applets][29][Configuration][General]
 show_lockScreen=false
@@ -141,7 +90,7 @@ popupWidth=717
 
 [Containments][2][Applets][60][Configuration][ConfigDialog]
 DialogHeight=887
-DialogWidth=1531
+DialogWidth=1526
 
 [Containments][2][Applets][60][Configuration][General]
 appNameFormat=0
@@ -179,7 +128,7 @@ immutability=1
 plugin=org.kde.plasma.clipboard
 
 [Containments][2][Applets][7][Applets][12][Configuration]
-PreloadWeight=95
+PreloadWeight=100
 
 [Containments][2][Applets][7][Applets][13]
 immutability=1
@@ -330,6 +279,7 @@ PreloadWeight=100
 extraItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault,org.kde.plasma.volume,org.kde.plasma.weather,org.kde.plasma.trash,org.kde.plasma.diskquota
 knownItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault,org.kde.plasma.volume,org.kde.plasma.weather
 scaleIconsToFit=true
+showAllItems=true
 
 [Containments][2][Applets][77]
 immutability=1
@@ -339,22 +289,6 @@ plugin=org.kde.plasma.panelspacer
 expanding=false
 length=20
 
-[Containments][2][Applets][79]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][2][Applets][79][Configuration][General]
-expanding=false
-length=10
-
-[Containments][2][Applets][80]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][2][Applets][80][Configuration][General]
-expanding=false
-length=10
-
 [Containments][2][Applets][81]
 immutability=1
 plugin=org.kde.plasma.marginsseparator
@@ -362,22 +296,6 @@ plugin=org.kde.plasma.marginsseparator
 [Containments][2][Applets][82]
 immutability=1
 plugin=org.kde.plasma.marginsseparator
-
-[Containments][2][Applets][84]
-immutability=1
-plugin=org.kde.windowtitle
-
-[Containments][2][Applets][84][Configuration][Appearance]
-fillThickness=true
-visible=false
-
-[Containments][2][Applets][84][Configuration][Behavior]
-filterByScreen=true
-showTooltip=false
-
-[Containments][2][Applets][84][Configuration][ConfigDialog]
-DialogHeight=540
-DialogWidth=720
 
 [Containments][2][Applets][85]
 immutability=1
@@ -387,8 +305,27 @@ plugin=org.kde.plasma.panelspacer
 immutability=1
 plugin=org.kde.plasma.panelspacer
 
+[Containments][2][Applets][90]
+immutability=1
+plugin=org.kde.plasma.digitalclock
+
+[Containments][2][Applets][90][Configuration]
+popupHeight=400
+popupWidth=560
+
+[Containments][2][Applets][90][Configuration][Appearance]
+customDateFormat=ddd, MM/dd
+dateDisplayFormat=BelowTime
+dateFormat=custom
+showLocalTimezone=true
+use24hFormat=2
+
+[Containments][2][Applets][90][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
 [Containments][2][General]
-AppletOrder=60;77;81;4;82;5;85;84;86;7;80;21;79;29
+AppletOrder=60;77;81;4;82;5;85;90;86;7;29
 
 [Containments][34]
 ItemGeometries-1536x960=

@@ -324,7 +324,10 @@ _launch=Meta+O, Meta+W
 new-window=Meta+I
 
 [services][kitty.desktop]
-_launch=Meta+`\tMeta+Return\tMeta+O, Meta+T
+_launch=Meta+Return
+
+[services][net.local.kitten.desktop]
+_launch=Meta+`
 
 [services][net.local.kitty-2.desktop]
 _launch=Meta+Y\tCtrl+Alt+E
