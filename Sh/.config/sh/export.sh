@@ -50,3 +50,7 @@ fi
 if command -v nvim >/dev/null; then
     export MANPAGER="nvim +Man!"
 fi
+
+if command -v moor >/dev/null; then
+    export PAGER="moor"
+fi

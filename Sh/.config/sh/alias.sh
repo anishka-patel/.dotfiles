@@ -63,13 +63,14 @@ alias cp="cp -i"     # confirm before overwriting something
 alias df='df -h'     # human-readable sizes
 alias free='free -m' # show sizes in MB
 
-if command -v moar >/dev/null; then
-	alias more=moar
-	alias less=moar
+if command -v moor >/dev/null; then
+	alias more=moor
+	alias less=moor
 fi
 
 if command -v bat >/dev/null; then
-	alias cat="bat --theme Dracula"
+    alias bat="bat --theme Dracula --pager never"
+	alias cat="bat --theme Dracula --pager never"
 fi
 
 if command -v fastfetch >/dev/null; then
