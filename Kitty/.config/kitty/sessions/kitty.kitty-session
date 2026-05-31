@@ -1,6 +1,2 @@
 cd ~/.dotfiles/Kitty/.config/kitty
-launch --title "Conf" vi kitty.conf 
-
-new_tab Sessions
-cd ~/.dotfiles/Kitty/.config/kitty/sessions
-launch --title "Sessions" vi startup.kitty-session
+launch --title "Kitty Config" /home/linuxbrew/.linuxbrew/bin/nvim kitty.conf 

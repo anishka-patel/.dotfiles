@@ -1,7 +1,5 @@
+[flavor]
+dark = "dracula"
 [status]
-# separator_open  = ""
-# separator_close = ""
-separator_open  = ""
-separator_close = ""
-separator_style = { fg = "gray", bg = "gray" }
-
+sep_left = { open = "", close = "\ue0b0" }
+sep_right = { open = "\ue0b2", close = "" }

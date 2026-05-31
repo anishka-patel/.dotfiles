@@ -1,10 +1,2 @@
 cd ~
 launch --title "Home"
-
-new_tab Dotfiles
-cd ~/.dotfiles
-launch --title "Dotfiles"
-
-new_tab Sessions
-cd ~/.dotfiles/Kitty/.config/kitty/sessions
-launch --title "Sessions"

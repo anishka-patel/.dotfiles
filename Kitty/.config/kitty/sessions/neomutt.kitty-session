@@ -1,0 +1,2 @@
+cd ~
+launch --title "Lynx" /home/linuxbrew/.linuxbrew/bin/neomutt

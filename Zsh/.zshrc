@@ -43,15 +43,12 @@ fi
 
 if command -v tv >/dev/null; then
     eval "$(tv init zsh)"
-else 
-    [ -f  "/usr/share/fzf/completion.zsh" ] && source "/usr/share/fzf/completion.zsh"
-    [ -f  "/usr/share/fzf/key-bindings.zsh" ] && source "/usr/share/fzf/key-bindings.zsh"
-    [ -f  "/usr/share/fzf/shell/key-bindings.zsh" ] && source "/usr/share/fzf/shell/key-bindings.zsh"
-    if command -v fzf-share >/dev/null; then
-        source $(fzf-share)/completion.zsh
-        source $(fzf-share)/key-bindings.zsh
-    fi
 fi
+
+if command -v fzf >/dev/null; then
+    FZF_CTRL_R_COMMAND= FZF_CTRL_T_COMMAND= source <(fzf --zsh)
+fi
+
 if command -v carapace >/dev/null; then
     # ${UserConfigDir}/zsh/.zshrc
     export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
