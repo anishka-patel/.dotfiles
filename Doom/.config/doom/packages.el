@@ -13,11 +13,8 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;; (package! some-package)
 ;;
-(package! org-bullets)
-(package! org-auto-tangle)
+(package! jupyter)
 (package! org-modern)
-(package! toc-org)
-(package! org-tree-slide)
 (package! rainbow-delimiters)
 
 ;; To install a package directly from a remote git repo, you must specify a

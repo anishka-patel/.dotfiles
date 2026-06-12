@@ -43,11 +43,15 @@ fi
 
 if command -v tv >/dev/null; then
     eval "$(tv init zsh)"
+    if command -v fzf >/dev/null; then
+      FZF_CTRL_R_COMMAND= FZF_CTRL_T_COMMAND= source <(fzf --zsh)
+    fi
+else
+    if command -v fzf >/dev/null; then
+      source <(fzf --zsh)
+    fi
 fi
 
-if command -v fzf >/dev/null; then
-    FZF_CTRL_R_COMMAND= FZF_CTRL_T_COMMAND= source <(fzf --zsh)
-fi
 
 if command -v carapace >/dev/null; then
     # ${UserConfigDir}/zsh/.zshrc
@@ -114,4 +118,8 @@ if command -v fastfetch >/dev/null; then
             /usr/bin/fastfetch --config /home/ani/.config/fastfetch/noimg-config.jsonc
             ;;
     esac
+fi
+
+if [ -e $HOME/.profile ]; then
+  . $HOME/.profile
 fi

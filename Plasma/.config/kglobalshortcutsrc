@@ -345,6 +345,9 @@ new-window=Meta+I
 [services][io.freetubeapp.FreeTube.desktop]
 _launch=Meta+Y
 
+[services][io.github.kolunmi.Bazaar.desktop]
+_launch=Ctrl+Alt+P
+
 [services][kitty.desktop]
 _launch=Meta+Return
 
@@ -374,9 +377,6 @@ _launch=Meta+O, Meta+N
 
 [services][org.gnome.Ptyxis.desktop]
 new-window=none
-
-[services][org.kde.discover.desktop]
-_launch=Ctrl+Alt+P
 
 [services][org.kde.kcalc.desktop]
 _launch=Calculator\tCtrl+Alt+=

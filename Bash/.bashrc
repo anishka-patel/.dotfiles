@@ -24,6 +24,7 @@ if [ -d ~/.bashrc.d ]; then
     fi
   done
 fi
+
 unset rc
 
 bind 'set show-all-if-ambiguous on'
@@ -185,6 +186,13 @@ fi
 
 if command -v tv >/dev/null; then
   eval "$(tv init bash)"
+  if command -v fzf >/dev/null; then
+    FZF_CTRL_R_COMMAND= FZF_CTRL_T_COMMAND= eval "$(fzf --bash)"
+  fi
+else
+  if command -v fzf >/dev/null; then
+    eval "$(fzf --bash)"
+  fi
 fi
 
 if command -v fzf >/dev/null; then
@@ -235,4 +243,8 @@ if command -v fastfetch >/dev/null; then
     /usr/bin/fastfetch --config /home/ani/.config/fastfetch/noimg-config.jsonc
     ;;
   esac
+fi
+
+if [ -e $HOME/.profile ]; then
+  . $HOME/.profile
 fi

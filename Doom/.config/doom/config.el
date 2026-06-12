@@ -3,34 +3,38 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+;; Performance tweaks
+(setq gc-cons-threshold (* 256 1024 1024))
+(setq read-process-output-max (* 4 1024 1024))
+;; (setq native-comp-deferred-compilation t)
+(setq native-comp-jit-compilation t)
+(setq native-comp-async-jobs-number 8)
+
+(setq gcmh-idle-delay 5)
+(setq gcmh-high-cons-threshold (* 1024 1024 1024))
+
+(setq vc-handled-backends '(Git))
+
+(setq which-key-idle-delay 0.2)
+
+(setq user-full-name "Anishka Patel"
+      user-mail-address "anishka.vpatel@gmail.com")
+
 (setq-default tab-width 4)
-;;(setq scroll-margin 8)
+(setq scroll-margin 8)
 
 (setq-default line-spacing 0.1)
 (setq-default fill-column 80)
 (set-fringe-mode 20)        ; Give some breathing room
 
 (require 'whitespace)
-
 (add-hook 'prog-mode-hook #'whitespace-mode)
 (add-hook 'conf-mode-hook #'whitespace-mode)
 
 (setq vc-follow-symlinks t)
 
-
-(setq evil-vsplit-window-right t)
-(setq evil-split-window-below t)
-(define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-(define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-(define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-(define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
-(define-key evil-normal-state-map (kbd "H") 'evil-prev-buffer)
-(define-key evil-normal-state-map (kbd "L") 'evil-next-buffer)
-
-(evil-global-set-key 'motion "j" 'evil-next-visual-line)
-(evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-(evil-set-initial-state 'messages-buffer-mode 'normal)
-(evil-set-initial-state 'dashboard-mode 'normal)
+(setq delete-by-moving-to-trash t)
+(setq auto-save-default t)
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
@@ -50,7 +54,8 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "IosevkaTerm NFM" :size 20)
-      doom-variable-pitch-font (font-spec :family "Noto Sans" :size 20))
+      doom-variable-pitch-font (font-spec :family "Noto Sans" :size 20)
+      doom-big-font (font-spec :family "IosvekaTerm NFM" :size 32))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -65,6 +70,15 @@
 (setq doom-themes-enable-italic t)
 (setq fancy-splash-image "~/.config/doom/svg/doom/doomEmacsDracula.svg")
 
+(setq doom-modeline-icon t)
+(setq doom-modeline-major-mode-icon t)
+(setq doom-modeline-lsp-icon t)
+(setq doom-modeline-major-mode-color-icon t)
+
+(set-frame-parameter (selected-frame) 'alpha '(96 . 98))
+(add-to-list 'default-frame-alist '(alpha . (96 . 98)))
+
+(blink-cursor-mode)
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-width 4)
@@ -74,17 +88,8 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
-(use-package! org-bullets
-  :after org
-  :hook (org-mode . org-bullets-mode))
-(use-package! org-auto-tangle
-  :defer t
-  :hook (org-mode . org-auto-tangle-mode))
 (use-package! org-modern
   :hook (org-mode . org-modern-mode))
-(use-package! toc-org
-  :commands toc-org-enable
-  :init (add-hook 'org-mode-hook 'toc-org-enable))
 
 (defun user/presentation-setup ()
   (org-display-inline-images 1)
@@ -130,6 +135,20 @@
           ("REVIEW"     font-lock-keyword-face bold)
           ("NOTE"       success bold)
           ("DEPRECATED" font-lock-doc-face bold))))
+
+(after! org
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((js . t)
+     (shell . t)
+     (python . t)
+     (emacs-lisp . t)
+     (jupyter . t)))
+
+  (setq org-src-fontify-natively t)
+  (setq org-src-preserve-indentation t)
+  (setq org-src-tab-acts-natively t)
+  (setq org-src-window-setup 'current-window))
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `with-eval-after-load' block, otherwise Doom's defaults may override your
 ;; settings. E.g.
@@ -158,5 +177,19 @@
 ;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
 ;; etc).
 ;;
+(after! evil
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t)
+  (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+  (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+  (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+  (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+  (define-key evil-normal-state-map (kbd "H") 'evil-prev-buffer)
+  (define-key evil-normal-state-map (kbd "L") 'evil-next-buffer)
+
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal))
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.

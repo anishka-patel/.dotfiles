@@ -2,11 +2,8 @@
 --
 require("config.lazy")
 
-if vim.g.vscode then
-else
-  require("render-markdown").setup({
-    latex = {
-      enabled = false,
-    },
-  })
-end
+require("render-markdown").setup({
+  latex = {
+    enabled = false,
+  },
+})
