@@ -17,9 +17,7 @@ fi
 
 if command -v emacs >/dev/null; then
   alias es="emacs -nw"
-  alias ec="emacsclient -tqua ''"
-  alias ges="launch emacs"
-  alias gec="launch emacsclient -cqua ''"
+  alias ec="emacs -nw"
 fi
 
 if command -v neovide >/dev/null; then

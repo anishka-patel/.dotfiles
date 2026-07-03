@@ -39,7 +39,20 @@ return {
     event = "VeryLazy",
     ft = { "org" },
     config = function()
-      require("orgmode").setup()
+      require("orgmode").setup({
+        org_startup_folded = "showeverything",
+        org_startup_indented = false,
+        org_adapt_indentation = false,
+        org_hide_leading_stars = true,
+        org_edit_src_filetype_map = {
+          js = "javascript",
+          python = "python",
+          lua = "lua",
+          go = "go",
+          py = "python",
+          sh = "sh",
+        },
+      })
       require("blink.cmp").setup({
         sources = {
           per_filetype = {

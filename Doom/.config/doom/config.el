@@ -4,8 +4,11 @@
 ;; sync' after modifying this file!
 
 ;; Performance tweaks
-(setq gc-cons-threshold (* 256 1024 1024))
-(setq read-process-output-max (* 4 1024 1024))
+(setq gc-cons-threshold (* 512 1024 1024))
+(setq read-process-output-max (* 8 1024 1024))
+(setq gc-cons-percentage 0.5)
+(run-with-idle-timer 5 t #'garbage-collect)
+;; (setq garbage-collection-messages t)
 ;; (setq native-comp-deferred-compilation t)
 (setq native-comp-jit-compilation t)
 (setq native-comp-async-jobs-number 8)
@@ -21,11 +24,13 @@
       user-mail-address "anishka.vpatel@gmail.com")
 
 (setq-default tab-width 4)
-(setq scroll-margin 8)
+;;(setq scroll-margin 8)
 
 (setq-default line-spacing 0.1)
 (setq-default fill-column 80)
-(set-fringe-mode 20)        ; Give some breathing room
+(when (display-graphic-p)
+  (set-fringe-mode 20))
+                                        ; Give some breathing room
 
 (require 'whitespace)
 (add-hook 'prog-mode-hook #'whitespace-mode)
@@ -88,9 +93,6 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
-(use-package! org-modern
-  :hook (org-mode . org-modern-mode))
-
 (defun user/presentation-setup ()
   (org-display-inline-images 1)
   (display-line-numbers-mode 0)
@@ -135,8 +137,12 @@
           ("REVIEW"     font-lock-keyword-face bold)
           ("NOTE"       success bold)
           ("DEPRECATED" font-lock-doc-face bold))))
+(use-package! org
+  :hook (org-mode . (lambda () (org-indent-mode -1))))
 
+(org-indent-mode -1)
 (after! org
+  (org-indent-mode -1)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((js . t)
@@ -144,7 +150,21 @@
      (python . t)
      (emacs-lisp . t)
      (jupyter . t)))
+  (require 'ox-ipynb)
+  ;; Add JavaScript kernelspec
+  (add-to-list 'ox-ipynb-kernelspecs
+               '(js . (kernelspec . ((display-name . "JavaScript (Node.js)")
+                                     (language . "javascript")
+                                     (name . "javascript-node")))))
 
+  ;; Add JavaScript language info
+  (add-to-list 'ox-ipynb-language-infos
+               '(js . (language-info . ((codemirror-mode . "javascript")
+                                        (file-extension . ".js")
+                                        (mimetype . "text/javascript")
+                                        (name . "javascript")
+                                        (pygments-lexer . "javascript")
+                                        (version . "18.0.0"))))) ;; Adjust version as needed
   (setq org-src-fontify-natively t)
   (setq org-src-preserve-indentation t)
   (setq org-src-tab-acts-natively t)
@@ -177,7 +197,8 @@
 ;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
 ;; etc).
 ;;
-(after! evil
+(use-package! evil
+  :config
   (setq evil-vsplit-window-right t)
   (setq evil-split-window-below t)
   (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
@@ -186,10 +207,15 @@
   (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
   (define-key evil-normal-state-map (kbd "H") 'evil-prev-buffer)
   (define-key evil-normal-state-map (kbd "L") 'evil-next-buffer)
-
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))
+
+(map!
+ :n "C-h" #'evil-window-left
+ :n "C-j" #'evil-window-down
+ :n "C-k" #'evil-window-up
+ :n "C-l" #'evil-window-right)
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.

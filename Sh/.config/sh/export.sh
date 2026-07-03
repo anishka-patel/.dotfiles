@@ -58,3 +58,7 @@ fi
 if command -v flatpak >/dev/null; then
   export PATH=$PATH:/var/lib/flatpak/exports/bin
 fi
+
+if command -v dotnet >/dev/null; then
+  export DOTNET_ROOT="/home/linuxbrew/.linuxbrew/opt/dotnet/libexec"
+fi
