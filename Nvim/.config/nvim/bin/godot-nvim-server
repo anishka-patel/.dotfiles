@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# A script that can be called from Godot to open up a new file in Neovim
+# For the flatpak version of Godot
+/usr/bin/flatpak-spawn --host /usr/bin/nvim --server $1./godothost --remote-send "<esc>:e $2<cr>:call cursor($3, $4)<cr>"

@@ -140,6 +140,12 @@
 (use-package! org
   :hook (org-mode . (lambda () (org-indent-mode -1))))
 
+                                        ; (use-package kitty-graphics
+                                        ;   :ensure t
+                                        ;   :config
+                                        ;   ;; (setq kitty-gfx-enable-video t)   ; optional: inline mpv playback
+                                        ;   (kitty-graphics-setup))
+
 (org-indent-mode -1)
 (after! org
   (org-indent-mode -1)
@@ -219,3 +225,15 @@
  :n "C-l" #'evil-window-right)
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(with-eval-after-load 'eglot
+  (add-hook 'text-mode-hook #'eglot-ensure)
+  (add-hook 'org-mode-hook #'eglot-ensure)
+  (add-hook 'markdown-mode-hook #'eglot-ensure)
+  (add-hook 'markdown-ts-mode-hook #'eglot-ensure)
+  (add-to-list 'eglot-server-programs '((org-mode . ("harper-ls" "--stdio"))))
+  (add-to-list 'eglot-server-programs '((text-mode . ("harper-ls" "--stdio"))))
+  (add-to-list 'eglot-server-programs '((markdown-mode . ("harper-ls" "--stdio"))))
+  (add-to-list 'eglot-server-programs '((markdown-ts-mode :language-id "plaintext" . ("harper-ls" "--stdio"))))
+  (add-to-list 'eglot-server-programs '((english-prose-mode :language-id "plaintext" . ("harper-ls" "--stdio"))))
+  )

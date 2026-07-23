@@ -1,0 +1,2 @@
+cd ~/.config/doom/
+launch --title "Emacs Config" /home/linuxbrew/.linuxbrew/bin/emacs -nw .

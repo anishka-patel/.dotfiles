@@ -18,6 +18,8 @@
 (package! rainbow-delimiters)
 (package! ox-ipynb
   :recipe (:host github :repo "jkitchin/ox-ipynb"))
+(package! kitty-graphics
+  :recipe (:host github :repo "cashmeredev/kitty-graphics.el"))
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

@@ -252,7 +252,7 @@ DialogWidth=810
 
 [Containments][2][Applets][96][Configuration][General]
 bold=true
-command=echo "$(date +\\ %m-%d\\ \\(%a\\)\\ )"
+command=echo "$(date +\\ \\(%b\\)\\ %m-%d\\ )"
 fontFamily=Iosevka NFM
 fontSize=12
 interval=86400000
@@ -272,7 +272,7 @@ DialogWidth=810
 
 [Containments][2][Applets][97][Configuration][General]
 bold=true
-command=echo "$(date +\\ %H:%M\\ \\(%Z\\)\\ )"
+command=echo "$(date +\\ \\(%a\\)\\ %H:%M\\ )"
 fontFamily=Iosevka NFM
 fontSize=12
 interval=150000

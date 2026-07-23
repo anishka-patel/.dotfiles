@@ -80,7 +80,7 @@ if command -v distrobox >/dev/null; then
   alias hostexec="distrobox-host-exec"
 fi
 
-alias which="which -a"
+# alias which="which -a"
 alias datef="date -u +%a,\ %Y-%b-%d"
 alias datetimef="date -u +%a,\ %Y-%b-%d%n%H:%M\ \(%Z\)"
 alias wget="wget -c -T 60"

@@ -68,7 +68,7 @@ KrohnkiteBTreeLayout=none,none,Krohnkite: BTree Layout
 KrohnkiteColumnsLayout=none,none,Krohnkite: Columns Layout
 KrohnkiteDecrease=Meta+Alt+J,none,Krohnkite: Decrease
 KrohnkiteFloatAll=Meta+Ctrl+F,none,Krohnkite: Toggle Float All
-KrohnkiteFloatingLayout=Meta+W\\, Meta+F,none,Krohnkite: Floating Layout
+KrohnkiteFloatingLayout=Meta+Alt+F,none,Krohnkite: Floating Layout
 KrohnkiteFocusDown=Meta+J,none,Krohnkite: Focus Down
 KrohnkiteFocusLeft=Meta+H,none,Krohnkite: Focus Left
 KrohnkiteFocusNext=Meta+',none,Krohnkite: Focus Next
@@ -77,7 +77,7 @@ KrohnkiteFocusRight=Meta+L,none,Krohnkite: Focus Right
 KrohnkiteFocusUp=Meta+K,none,Krohnkite: Focus Up
 KrohnkiteGrowHeight=Meta+Ctrl+K,none,Krohnkite: Grow Height
 KrohnkiteIncrease=Meta+Alt+K,none,Krohnkite: Increase
-KrohnkiteMonocleLayout=Meta+W\\, Meta+M,none,Krohnkite: Monocle Layout
+KrohnkiteMonocleLayout=Meta+Alt+M,none,Krohnkite: Monocle Layout
 KrohnkiteNextLayout=Meta+\\\\,none,Krohnkite: Next Layout
 KrohnkitePreviousLayout=Meta+|,none,Krohnkite: Previous Layout
 KrohnkiteQuarterLayout=none,none,Krohnkite: Quarter Layout
@@ -94,7 +94,7 @@ KrohnkiteSpiralLayout=none,none,Krohnkite: Spiral Layout
 KrohnkiteSpreadLayout=none,none,Krohnkite: Spread Layout
 KrohnkiteStackedLayout=none,none,Krohnkite: Stacked Layout
 KrohnkiteStairLayout=none,none,Krohnkite: Stair Layout
-KrohnkiteTileLayout=Meta+W\\, Meta+T,none,Krohnkite: Tile Layout
+KrohnkiteTileLayout=Meta+Alt+T,none,Krohnkite: Tile Layout
 KrohnkiteToggleFloat=Meta+F,none,Krohnkite: Toggle Float
 KrohnkiteTreeColumnLayout=none,none,Krohnkite: Three Column Layout
 KrohnkitegrowWidth=Meta+Ctrl+L,none,Krohnkite: Grow Width
@@ -360,12 +360,6 @@ _launch=Meta+Return
 [services][net.local.kitten.desktop]
 _launch=Meta+`
 
-[services][net.local.kitty-2.desktop]
-_launch=Ctrl+Alt+Return
-
-[services][net.local.konsole-2.desktop]
-_launch=Ctrl+Alt+F
-
 [services][net.local.plasmashell.desktop]
 _launch=Meta+Ctrl+C
 
@@ -394,7 +388,7 @@ _launch=Ctrl+Alt+/
 _launch=Ctrl+Alt+,
 
 [services][org.kde.konsole.desktop]
-_launch=Ctrl+Alt+T\tCtrl+Alt+`
+_launch=Ctrl+Alt+T\tCtrl+Alt+`\tCtrl+Alt+Return
 
 [services][org.kde.krunner.desktop]
 _launch=Search\tAlt+F2\tMeta+Space

@@ -32,6 +32,10 @@ if command -v go >/dev/null; then
   export PATH="$PATH:$HOME/go/bin"
 fi
 
+if [ -d "$HOME/.config/nvim/bin/" ]; then
+  export PATH="$PATH:$HOME/.config/nvim/bin"
+fi
+
 if [ -d $HOME/Applications ]; then
   export PATH="$PATH:$HOME/Applications"
 fi
@@ -45,6 +49,7 @@ fi
 if command -v nix >/dev/null; then
   export NIXPKGS_ALLOW_UNFREE=1
   export MANPATH="$MANPATH:$HOME/.nix-profile/share/man"
+  export XDG_DATA_DIRS="$HOME/.nix-profile/share:${XDG_DATA_DIRS}"
 fi
 
 if command -v nvim >/dev/null; then
