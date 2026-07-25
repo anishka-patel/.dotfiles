@@ -24,7 +24,7 @@
       user-mail-address "anishka.vpatel@gmail.com")
 
 (setq-default tab-width 4)
-;;(setq scroll-margin 8)
+(setq scroll-margin 8)
 
 (setq-default line-spacing 0.1)
 (setq-default fill-column 80)
@@ -58,9 +58,9 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "IosevkaTerm NFM" :size 20)
+(setq doom-font (font-spec :family "IosevkaTerm Nerd Font Mono Regular" :size 20)
       doom-variable-pitch-font (font-spec :family "Noto Sans" :size 20)
-      doom-big-font (font-spec :family "IosvekaTerm NFM" :size 32))
+      doom-big-font (font-spec :family "IosvekaTerm Nerd Font Mono Regular" :size 32))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
