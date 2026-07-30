@@ -1,0 +1,42 @@
+MenuBar=Disabled
+
+[ContentDisplay]
+DirectorySizeMode=ContentSize
+RecursiveDirectorySizeLimit=2
+
+[Desktop Entry]
+DefaultProfile=Dolphin.profile
+
+[DetailsMode]
+ExpandableFolders=false
+PreviewSize=16
+
+[General]
+BrowseThroughArchives=true
+EditableUrl=true
+FilterBar=true
+OpenExternallyCalledFolderInNewTab=true
+RememberOpenedTabs=false
+ShowFullPath=true
+ShowFullPathInTitlebar=true
+ShowSpaceInfo=false
+ShowStatusBar=FullWidth
+Version=202
+ViewPropsTimestamp=2024,12,20,13,49,37.772
+
+[InformationPanel]
+dateFormat=ShortFormat
+showHovered=false
+
+[KFileDialog Settings]
+Places Icons Auto-resize=false
+Places Icons Static Size=22
+
+[MainWindow]
+MenuBar=Disabled
+
+[PreviewSettings]
+Plugins=audiothumbnail,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,fontthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mobithumbnail,opendocumentthumbnail,gsthumbnail,rawthumbnail,svgthumbnail,ffmpegthumbs,aseprite
+
+[Search]
+Location=Everywhere

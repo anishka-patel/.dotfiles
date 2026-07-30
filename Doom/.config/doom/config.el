@@ -24,6 +24,8 @@
       user-mail-address "anishka.vpatel@gmail.com")
 
 (setq-default tab-width 4)
+;;(setq-default left-margin-width 20)
+;;(set-window-margins 8 8)
 (setq scroll-margin 8)
 
 (setq-default line-spacing 0.1)
@@ -87,7 +89,7 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-width 4)
-(setq display-line-numbers-type `relative)
+(setq display-line-numbers-type `nil)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -207,6 +209,7 @@
   :config
   (setq evil-vsplit-window-right t)
   (setq evil-split-window-below t)
+  (setq evil-snipe-scope 'buffer)
   (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
   (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
   (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)

@@ -15,6 +15,7 @@
 ;;
 (package! jupyter)
 (package! org-modern)
+(package! command-log-mode)
 (package! rainbow-delimiters)
 (package! ox-ipynb
   :recipe (:host github :repo "jkitchin/ox-ipynb"))

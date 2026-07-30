@@ -10,7 +10,7 @@ endtry
 
 set ruler
 set cmdheight=1
-set number relativenumber
+"set number relativenumber
 set scrolloff=8
 set hidden
 set backspace=eol,start,indent
