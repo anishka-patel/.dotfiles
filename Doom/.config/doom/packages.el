@@ -17,6 +17,7 @@
 (package! org-modern)
 (package! command-log-mode)
 (package! rainbow-delimiters)
+(package! benchmark-init)
 (package! ox-ipynb
   :recipe (:host github :repo "jkitchin/ox-ipynb"))
 (package! kitty-graphics

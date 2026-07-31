@@ -88,7 +88,7 @@ Color Theme=Dracula
 Line Height Multiplier=1
 Show Indentation Lines=true
 Show Whole Bracket Expression=false
-Text Font=IosevkaTerm Nerd Font Mono,14,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
+Text Font=Iosevka Nerd Font Mono,14,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
 Text Font Features=
 Word Wrap Marker=true
 
@@ -170,7 +170,7 @@ SetEditor=false
 1536x960 screen: Height=905
 1536x960 screen: Width=758
 1920x1200 screen: Height=1127
-1920x1200 screen: Width=840
+1920x1200 screen: Width=1856
 
 [UiSettings]
 ColorScheme=BreezeDark

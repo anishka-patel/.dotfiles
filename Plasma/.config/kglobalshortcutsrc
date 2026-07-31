@@ -346,7 +346,7 @@ _launch=none
 new-window=Meta+I
 
 [services][emacs.desktop]
-_launch=none
+_launch=Meta+M
 
 [services][io.freetubeapp.FreeTube.desktop]
 _launch=Meta+Y
@@ -359,9 +359,6 @@ _launch=Meta+Return
 
 [services][net.local.kitten.desktop]
 _launch=Meta+`
-
-[services][net.local.kitty-3.desktop]
-_launch=Meta+M
 
 [services][net.local.plasmashell.desktop]
 _launch=Meta+Ctrl+C
@@ -398,10 +395,6 @@ _launch=Search\tAlt+F2\tMeta+Space
 
 [services][org.kde.plasma.emojier.desktop]
 _launch=Ctrl+Alt+.
-
-[services][org.kde.spectacle.desktop]
-CurrentMonitorScreenShot=none
-OpenWithoutScreenshot=none
 
 [services][org.kde.touchpadshortcuts.desktop]
 ToggleTouchpad=Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku

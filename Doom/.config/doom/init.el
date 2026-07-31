@@ -112,7 +112,7 @@
 
        :os
        (:if (featurep :system 'macos) macos)  ; improve compatibility with macOS
-       tty               ; improve the terminal Emacs experience
+       (tty +osc)              ; improve the terminal Emacs experience
 
        :lang
        ;;ada               ; In strong typing we (blindly) trust
@@ -159,7 +159,7 @@
        ;;ocaml             ; an objective camel
        ;;odin              ; C, minus its footguns
        (org
-        +jupyter
+        ;;+jupyter
         +pandoc
         ;;+pretty
         +present)               ; organize your plain life in plain text
