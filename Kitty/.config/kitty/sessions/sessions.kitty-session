@@ -1,2 +1,2 @@
 cd ~/.dotfiles/Kitty/.config/kitty/sessions
-launch --title "Kitty Sessions" /home/linuxbrew/.linuxbrew/bin/nvim .
+launch --title "Kitty Sessions" nvim .

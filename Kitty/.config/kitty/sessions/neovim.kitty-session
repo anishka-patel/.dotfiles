@@ -1,2 +1,2 @@
 cd ~/.config/nvim/
-launch --title "Neovim Config" /home/linuxbrew/.linuxbrew/bin/nvim .
+launch --title "Neovim Config" nvim .

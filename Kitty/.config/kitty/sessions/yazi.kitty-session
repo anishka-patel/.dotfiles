@@ -1,2 +1,2 @@
 cd ~
-launch --title "Yazi" /home/linuxbrew/.linuxbrew/bin/yazi
+launch --title "Yazi" yazi

@@ -1,2 +1,2 @@
 cd ~/.dotfiles/Kitty/.config/kitty
-launch --title "Kitty Config" /home/linuxbrew/.linuxbrew/bin/nvim kitty.conf 
+launch --title "Kitty Config" nvim kitty.conf 
