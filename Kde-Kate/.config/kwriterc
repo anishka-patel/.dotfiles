@@ -154,5 +154,8 @@ Word Completion Remove Tail=true
 
 [MainWindow]
 1536x960 screen: Window-Maximized=true
-1920x1200 screen: Height=1127
-1920x1200 screen: Width=1856
+1920x1200 screen: Height=1135
+1920x1200 screen: Width=958
+
+[UiSettings]
+ColorScheme=Dracula

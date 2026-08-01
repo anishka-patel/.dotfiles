@@ -169,11 +169,11 @@ SetEditor=false
 [MainWindow]
 1536x960 screen: Height=905
 1536x960 screen: Width=758
-1920x1200 screen: Height=1127
-1920x1200 screen: Width=1856
+1920x1200 screen: Height=1135
+1920x1200 screen: Width=958
 
 [UiSettings]
-ColorScheme=BreezeDark
+ColorScheme=Dracula
 
 [filetree]
 editShade=31,81,106
