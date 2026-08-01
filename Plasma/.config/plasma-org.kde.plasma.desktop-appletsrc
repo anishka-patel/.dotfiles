@@ -14,15 +14,22 @@ immutability=1
 lastScreen=0
 location=0
 plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
+wallpaperplugin=org.kde.slideshow
 
 [Containments][127][ConfigDialog]
-DialogHeight=630
-DialogWidth=810
+DialogHeight=880
+DialogWidth=1287
 
 [Containments][127][Wallpaper][org.kde.image][General]
 Image=file:///home/ani/.local/share/wallpapers/dJwxlL-Dracula-Wallpapers/dracula.png
 SlidePaths=/home/ani/.local/share/wallpapers/,/usr/share/wallpapers/
+
+[Containments][127][Wallpaper][org.kde.slideshow][General]
+DynamicMode=2
+Image=file:///home/ani/.local/share/wallpaper/second-collection/illustrations/trees-and-mountains/dracula-mnt-ff79c6.png
+SlideInterval=60
+SlidePaths=/home/ani/.local/share/wallpapers/,/usr/share/wallpapers/
+UncheckedSlides=/home/ani/.local/share/wallpapers/Nordic-mountain-wallpaper.jpg,/home/ani/.local/share/wallpapers/nordic-wallpaper.jpg,/home/ani/.local/share/wallpaper/first-collection/android-1.png,/home/ani/.local/share/wallpaper/first-collection/android-2.png,/home/ani/.local/share/wallpaper/first-collection/arch.png,/home/ani/.local/share/wallpaper/first-collection/arco.png,/home/ani/.local/share/wallpaper/first-collection/artix.png,/home/ani/.local/share/wallpaper/first-collection/awesome.png,/home/ani/.local/share/wallpaper/first-collection/debian.png,/home/ani/.local/share/wallpaper/first-collection/dracula_qtile.png,/home/ani/.local/share/wallpaper/first-collection/elementary.png,/home/ani/.local/share/wallpaper/first-collection/endeavour.png,/home/ani/.local/share/wallpaper/first-collection/gentoo.png,/home/ani/.local/share/wallpaper/first-collection/kali.png,/home/ani/.local/share/wallpaper/first-collection/macos.png,/home/ani/.local/share/wallpaper/first-collection/manjaro.png,/home/ani/.local/share/wallpaper/first-collection/mint.png,/home/ani/.local/share/wallpaper/first-collection/mx-linux.png,/home/ani/.local/share/wallpaper/first-collection/nixos.png,/home/ani/.local/share/wallpaper/first-collection/opensuse.png,/home/ani/.local/share/wallpaper/first-collection/pop.png,/home/ani/.local/share/wallpaper/first-collection/raspberrypi.png,/home/ani/.local/share/wallpaper/first-collection/reborn-os.png,/home/ani/.local/share/wallpaper/first-collection/regolith.png,/home/ani/.local/share/wallpaper/first-collection/slackware.png,/home/ani/.local/share/wallpaper/first-collection/solus.png,/home/ani/.local/share/wallpaper/first-collection/ubuntu-1.png,/home/ani/.local/share/wallpaper/first-collection/ubuntu-2.png,/home/ani/.local/share/wallpaper/first-collection/ubuntu-budgie.png,/home/ani/.local/share/wallpaper/first-collection/ubuntu-mate.png,/home/ani/.local/share/wallpaper/first-collection/vanilla-os.png,/home/ani/.local/share/wallpaper/first-collection/void.png,/home/ani/.local/share/wallpaper/first-collection/windows.png,/home/ani/.local/share/wallpaper/first-collection/xubuntu.png,/home/ani/.local/share/wallpaper/first-collection/zorin-os.png,/home/ani/.local/share/wallpaper/second-collection/leaves/dracula-leaves-44475a.png,/home/ani/.local/share/wallpaper/second-collection/leaves/dracula-leaves-6272a4.png,/home/ani/.local/share/wallpaper/second-collection/soft-waves/dracula-soft-waves-ff79c6.png,/home/ani/.local/share/wallpaper/second-collection/spooky-minimal/dracula-spooky-bd93f9.png,/home/ani/.local/share/wallpaper/second-collection/spooky-minimal/dracula-spooky-ff79c6.png,/home/ani/.local/share/wallpaper/second-collection/waves/dracula-waves-6272a4.png,/home/ani/.local/share/wallpaper/second-collection/waves/dracula-waves-bd93f9.png,/home/ani/.local/share/wallpaper/second-collection/waves/dracula-waves-ff79c6.png,/usr/share/wallpapers/Altai/,/usr/share/backgrounds/aurora/aurora-wallpaper-4/,/usr/share/backgrounds/aurora/aurora-wallpaper-6/,/usr/share/backgrounds/aurora/aurora-wallpaper-10/,/usr/share/backgrounds/aurora/aurora-wallpaper-11/,/usr/share/backgrounds/aurora/aurora-wallpaper-12/,/usr/share/backgrounds/aurora/aurora-wallpaper-2/,/usr/share/backgrounds/aurora/aurora-wallpaper-3/,/usr/share/backgrounds/aurora/aurora-wallpaper-5/,/usr/share/backgrounds/aurora/aurora-wallpaper-7/,/usr/share/backgrounds/aurora/aurora-wallpaper-8/,/usr/share/backgrounds/aurora/aurora-wallpaper-9/,/usr/share/wallpapers/Autumn/,/usr/share/wallpapers/BytheWater/,/usr/share/wallpapers/Canopee/,/usr/share/wallpapers/Cascade/,/usr/share/wallpapers/Cluster/,/usr/share/wallpapers/Coast/,/usr/share/wallpapers/ColdRipple/,/usr/share/wallpapers/ColorfulCups/,/usr/share/wallpapers/DarkestHour/,/usr/share/wallpapers/F44/,/usr/share/wallpapers/Elarun/,/usr/share/wallpapers/EveningGlow/,/usr/share/wallpapers/FallenLeaf/,/usr/share/wallpapers/Flow/,/usr/share/wallpapers/FlyingKonqui/,/usr/share/backgrounds/aurora/greg-rakozy-aurora/,/usr/share/wallpapers/Grey/,/usr/share/wallpapers/Honeywave/,/usr/share/wallpapers/IceCold/,/usr/share/backgrounds/aurora/jonatan-pie-aurora/,/usr/share/wallpapers/Kay/,/usr/share/wallpapers/Kite/,/usr/share/wallpapers/Kokkini/,/usr/share/backgrounds/aurora/looking_towards_the_future/,/usr/share/wallpapers/MilkyWay/,/usr/share/wallpapers/Mountain/,/usr/share/wallpapers/Next/,/usr/share/wallpapers/Nexus/,/usr/share/wallpapers/Nuvole/,/usr/share/wallpapers/OneStandsOut/,/usr/share/wallpapers/Opal/,/usr/share/wallpapers/Orionids/,/usr/share/wallpapers/PastelHills/,/usr/share/wallpapers/Patak/,/usr/share/wallpapers/Path/,/usr/share/wallpapers/SafeLanding/,/usr/share/wallpapers/ScarletTree/,/usr/share/wallpapers/Shell/,/usr/share/wallpapers/Sub-Arctic/,/usr/share/wallpapers/summer_1am/,/usr/share/wallpapers/Volna/,/usr/share/backgrounds/aurora/xe_clouds/,/usr/share/backgrounds/aurora/xe_foothills/,/usr/share/backgrounds/aurora/xe_space_needle/,/usr/share/backgrounds/aurora/xe_sunset/,/home/ani/.local/share/wallpaper/second-collection/waves/dracula-waves-44475a.png,/home/ani/.local/share/wallpaper/second-collection/illustrations/cat-and-bats/dracula-cat-ff79c6.png
 
 [Containments][128]
 activityId=
@@ -42,8 +49,8 @@ DialogHeight=630
 DialogWidth=810
 
 [Containments][128][Applets][130][Configuration][General]
+displayedText=Name
 showOnlyCurrentScreen=true
-showWindowIcons=true
 wrapPage=true
 
 [Containments][128][Applets][131]
@@ -55,7 +62,10 @@ DialogHeight=630
 DialogWidth=810
 
 [Containments][128][Applets][131][Configuration][General]
+groupingStrategy=0
 launchers=
+middleClickAction=None
+showOnlyCurrentScreen=true
 
 [Containments][128][Applets][133]
 activityId=
@@ -139,14 +149,17 @@ plugin=org.kde.plasma.brightness
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
+[Containments][128][Applets][133][Applets][160]
+immutability=1
+plugin=org.kde.plasma.trash
+
 [Containments][128][Applets][133][ConfigDialog]
 DialogHeight=630
 DialogWidth=810
 
 [Containments][128][Applets][133][General]
-extraItems=org.kde.kdeconnect,org.kde.plasma.vault,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.volume,org.kde.plasma.weather
+extraItems=org.kde.kdeconnect,org.kde.plasma.vault,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.volume,org.kde.plasma.weather,org.kde.plasma.trash
 knownItems=org.kde.kdeconnect,org.kde.plasma.vault,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.volume,org.kde.plasma.weather
-showAllItems=true
 
 [Containments][128][Applets][152]
 immutability=1
@@ -171,10 +184,11 @@ DialogHeight=630
 DialogWidth=810
 
 [Containments][128][Applets][153][Configuration][General]
-command=echo "$(date +\\ %b,\\ %m-%d\\ )"
-fontSize=14
+bold=true
+command=echo "$(date +\\ \\(%b\\)\\ %m-%d\\ )"
+fontSize=12
 interval=86400000
-textAlign=8
+textAlign=4
 
 [Containments][128][Applets][154]
 immutability=1
@@ -185,8 +199,9 @@ DialogHeight=630
 DialogWidth=810
 
 [Containments][128][Applets][154][Configuration][General]
-command=echo "$(date +\\ %a,\\ %H:%M\\ )"
-fontSize=14
+bold=true
+command=echo "$(date +\\ %H:%M\\ \\(%a\\)\\ )"
+fontSize=12
 interval=30000
 textAlign=4
 
@@ -224,7 +239,7 @@ icon=start-here
 systemFavorites=suspend\\,hibernate\\,reboot\\,shutdown
 
 [Containments][128][General]
-AppletOrder=159;153;130;155;131;156;158;133;157;154;152
+AppletOrder=159;130;155;153;131;154;156;158;133;157;152
 
 [ScreenMapping]
 itemsOnDisabledScreens=

@@ -19,4 +19,4 @@ SplitViewVisibility=AlwaysHideSplitHeader
 TabBarVisibility=AlwaysHideTabBar
 
 [UiSettings]
-ColorScheme=
+ColorScheme=Dracula
