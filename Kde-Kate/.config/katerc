@@ -23,7 +23,7 @@ Restore Window Configuration=true
 SDI Mode=false
 Save Meta Infos=true
 Show Full Path in Title=false
-Show Menu Bar=true
+Show Menu Bar=false
 Show Status Bar=true
 Show Symbol In Navigation Bar=true
 Show Tab Bar=true
@@ -169,8 +169,8 @@ SetEditor=false
 [MainWindow]
 1536x960 screen: Height=905
 1536x960 screen: Width=758
-1920x1200 screen: Height=1135
-1920x1200 screen: Width=958
+1920x1200 screen: Height=1136
+1920x1200 screen: Width=1860
 
 [UiSettings]
 ColorScheme=Dracula

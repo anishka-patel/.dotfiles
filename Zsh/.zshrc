@@ -7,18 +7,18 @@ bindkey -v
 setopt autocd autopushd pushdignoredups
 
 if command -v brew >/dev/null; then
-    autosuggestionspath="/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-    syntaxhighlightingpath="/home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-    historysubstringpath="/home/linuxbrew/.linuxbrew/share/zsh-history-substring-search.zsh"
+    auto_suggestions_path="/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    syntax_highlighting_path="/home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    history_substring_path="/home/linuxbrew/.linuxbrew/share/zsh-history-substring-search.zsh"
     eval "$(brew shellenv)"
 else
-    autosuggestionspath="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-    syntaxhighlightingpath="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-    historysubstringpath="/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
+    auto_suggestions_path="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    syntax_highlighting_path="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    history_substring_path="/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
 fi
-[ -f $autosuggestionspath ] && source $autosuggestionspath
-[ -f $syntaxhighlightingpath ] && source $syntaxhighlightingpath
-[ -f $historysubstringpath ] && source $historysubstringpath
+[ -f $auto_suggestions_path ] && source $auto_suggestions_path
+[ -f $syntax_highlighting_path ] && source $syntax_highlighting_path
+[ -f $history_substring_path ] && source $history_substring_path
 
 
 autoload -U edit-command-line
