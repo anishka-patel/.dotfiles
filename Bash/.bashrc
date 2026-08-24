@@ -42,6 +42,10 @@ bked() {
     nvim "$@"
 }
 
+edit() {
+    $EDITOR "$@"
+}
+
 sudobked() {
     for i in $@; do
         sudo cp "$i" "$i.$(datefmt).bak"
@@ -103,6 +107,7 @@ alias gnv="launch neovide"
 
 alias more="moar"
 alias less="moar"
+alias bat="bat --theme Dracula"
 alias cat="bat"
 alias cp="cp -i"
 alias df="df -h"
@@ -133,3 +138,4 @@ bind -x '"\es":"sesh-sessions"'
 bind -x '"\et":"sesh-connect"'
 export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.config/emacs/bin"

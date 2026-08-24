@@ -1,1612 +1,839 @@
 -- -*- mode: lua-mode -*-
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-        vim.cmd([[packadd packer.nvim]])
-        return true
-    end
-    return false
-end
-local packer_bootstrap = ensure_packer()
 
-local has_packer, packer = pcall(require, "packer")
-if not has_packer then
-    print("Packer not found!")
-end
+local opts = { noremap = true, silent = true }
+local keymap = vim.api.nvim_set_keymap
 
-packer.init({
-    display = {
-        open_fn = function()
-            return require("packer.util").float({ border = "rounded" })
-        end,
+keymap("", "<Space>", "<Nop>", opts)
+
+-- keep cursorline in middle of screen during scrolling
+keymap("n", "<C-u>", "<C-u>zz", opts)
+keymap("n", "<C-d>", "<C-d>zz", opts)
+keymap("n", "<C-f>", "<C-f>zz", opts)
+keymap("n", "<C-b>", "<C-b>zz", opts)
+
+-- keep cursorline in the middle of the screen during search navigation
+keymap("n", "n", "nzzzv", opts)
+keymap("n", "N", "Nzzzv", opts)
+
+-- keep cursorline in the middle of the screen during join operations
+keymap("n", "J", "mzJ`z", opts)
+
+-- moving text in visual mode
+keymap("v", "J", "<cmd>m '>+1<cr>gv=gv", opts)
+keymap("v", "K", "<cmd>m '<-2<cr>gv=gv", opts)
+
+-- moving between buffers
+keymap("n", "H", "<cmd>bp<cr>", opts)
+keymap("n", "L", "<cmd>bn<cr>", opts)
+
+-- moving between splits
+keymap("n", "<C-h>", "<C-w>h", opts)
+keymap("n", "<C-j>", "<C-w>j", opts)
+keymap("n", "<C-k>", "<C-w>k", opts)
+keymap("n", "<C-l>", "<C-w>l", opts)
+
+-- delete without copying to registers
+keymap("n", "x", '"_x', opts)
+keymap("v", "p", '"_p', opts)
+
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+-- Netrw config
+vim.g.netrw_keepdir = 0
+vim.g.netrw_winsize = 16
+vim.g.netrw_banner = 0
+vim.g.netrw_browse_split = 0
+
+-- Netrw disable b/ using nvim-tree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+vim.g.table_mode_disable_mappings = 1
+vim.g.table_mode_disable_tableize_mappings = 1
+
+-- Neovide
+vim.g.neovide_scale_factor = 1.0
+vim.g.neovide_transparency = 1.0
+vim.g.neovide_remember_window_size = true
+vim.g.neovide_refresh_rate = 60
+
+-- Tabline
+vim.o.completeopt = "menuone,noselect,preview"
+
+-- Setup GUI Fonts
+vim.opt.guifont = "FiraCode Nerd Font:h12"
+
+-- Options
+vim.opt.scrolloff = 8
+vim.opt.backup = false
+vim.opt.clipboard:append({ "unnamedplus" })
+vim.opt.cmdheight = 2
+vim.opt.hlsearch = true
+vim.opt.mouse = "a"
+vim.opt.pumheight = 10
+vim.opt.showmode = false
+vim.opt.showtabline = 2
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.smartindent = true
+vim.opt.breakindent = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.swapfile = false
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
+vim.opt.undofile = true
+vim.opt.writebackup = false
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.shiftround = true
+vim.opt.tabstop = 4
+vim.opt.relativenumber = false
+vim.opt.number = false
+vim.opt.numberwidth = 2
+vim.opt.signcolumn = "yes"
+vim.opt.wrap = true
+vim.opt.colorcolumn = { "80" }
+vim.opt.cursorline = true
+vim.opt.cursorcolumn = true
+vim.opt.termguicolors = true
+vim.opt.list = true
+vim.opt.listchars = { eol = "↵", tab = ">-", space = "·", nbsp = "␣", trail = "~", multispace = "|···" }
+vim.opt.foldcolumn = "auto"
+vim.opt.cmdheight = 1
+
+
+local use = vim.pack.add
+
+use({ "https://github.com/NeogitOrg/neogit" })
+use({ "https://github.com/nvim-lua/plenary.nvim" })
+use({ "https://github.com/sindrets/diffview.nvim" })
+use({ "https://github.com/nvim-telescope/telescope.nvim" })
+require("neogit").setup({})
+use({ "https://github.com/folke/noice.nvim" })
+-- Themes
+use({ "https://github.com/Mofiqul/dracula.nvim" })
+vim.cmd("colorscheme dracula")
+use({ "https://github.com/folke/tokyonight.nvim"})
+-- Lualine
+use({ "https://github.com/nvim-lualine/lualine.nvim"})
+require("lualine").setup({
+    options = {
+        theme = sel_theme,
+        component_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
+    },
+    sections = {
+        lualine_x = {
+            -- {
+            -- 	require("noice").api.status.message.get_hl,
+            -- 	cond = require("noice").api.status.message.has,
+            -- },
+            {
+                require("noice").api.status.command.get,
+                cond = require("noice").api.status.command.has,
+                color = { fg = "#ff9e64" },
+            },
+            {
+                require("noice").api.status.mode.get,
+                cond = require("noice").api.status.mode.has,
+                color = { fg = "#ff9e64" },
+            },
+            {
+                require("noice").api.status.search.get,
+                cond = require("noice").api.status.search.has,
+                color = { fg = "#ff9e64" },
+            },
+        },
     },
 })
+-- use("https://github.com/kyazdani42/nvim-web-devicons")
+-- Telescope
+use({ "https://github.com/nvim-telescope/telescope-fzf-native.nvim"})
+vim.fn.system("cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build")
+use({ "https://github.com/nvim-telescope/telescope.nvim" })
+use({ "https://github.com/nvim-lua/plenary.nvim" })
+-- Ease of life stuff
+use({ "https://github.com/kylechui/nvim-surround"})
+require("nvim-surround").setup()
+use({ "https://github.com/windwp/nvim-autopairs"})
+require("nvim-autopairs").setup()
+-- use("https://github.com/windwp/nvim-ts-autotag")
+use({ "https://github.com/numToStr/Comment.nvim"})
+require("Comment").setup()
+-- Display hexcodes as colors
+use({ "https://github.com/norcalli/nvim-colorizer.lua"})
+require("colorizer").setup()
+-- Treesitter
+use({ "https://github.com/nvim-treesitter/nvim-treesitter" })
 
-if vim.g.vscode then
-    -- if true then  -- Uncomment to chekcout vscode config in neovim
-    -- VSCode extension
-    local opts = { noremap = true, silent = true }
-    local keymap = vim.api.nvim_set_keymap
+-- vim.cmd('TSUpdate')
 
-    keymap("", "<Space>", "<Nop>", opts)
+use({"https://github.com/HiPhish/rainbow-delimiters.nvim"})
+use({'https://github.com/echasnovski/mini.ai'})
+require("mini.ai").setup()
+-- Undo Tree
+use({ "https://github.com/mbbill/undotree" })
+-- Terminal
+use({ "https://github.com/akinsho/toggleterm.nvim" })
+require("toggleterm").setup({
+    size = 24,
+    open_mapping = [[<c-`>]],
+    direction = "float",
+    float_opts = {
+        border = "curved",
+    },
+})
+-- Zen mode
+use({ "https://github.com/folke/zen-mode.nvim" })
+-- Orgmode
+use({ "https://github.com/nvim-orgmode/orgmode"})
+require("orgmode").setup()
+use({ "https://github.com/dhruvasagar/vim-table-mode" })
+-- Todo Comment
+use({ "https://github.com/folke/todo-comments.nvim" })
+require("todo-comments").setup()
+-- Indent
+use({ "https://github.com/lukas-reineke/indent-blankline.nvim"})
+require("ibl").setup()
+-- SwHKD highlights
+use({ "https://github.com/nvim-focus/focus.nvim" })
+require("focus").setup()
+use({ "https://github.com/aznhe21/actions-preview.nvim" })
+vim.keymap.set({ "v", "n" }, "ga", require("actions-preview").code_actions)
+-- Which key
+use({ "https://github.com/folke/which-key.nvim"})
+vim.o.timeout = true
+vim.o.timeoutlen = 300
+local wk = require("which-key")
+wk.setup()
+wk.add({
 
-    vim.g.mapleader = " "
-    vim.g.maplocalleader = " "
+    { "<leader>.",       "<cmd>Telescope find_files<cr>", desc = "Find File",     remap = false },
+    { "<leader>,",       "<cmd>Oil<cr>",                  desc = "Oil",           remap = false },
+    { "<leader>/",       "<cmd>Telescope live_grep<cr>",  desc = "Live Grep",     remap = false },
+    { "<leader>;",       "<cmd>Telescope<cr>",            desc = "Telescope",     remap = false },
+    { "<leader>'",       "<cmd>Neogit<cr>",               desc = "Neogit",        remap = false },
+    { "<leader>`",       "<cmd>ToggleTerm<cr>",           desc = "Toggle Term",   remap = false },
+    { "<leader><space>", "<cmd>Neotree toggle<cr>",       desc = "Neotree",       remap = false },
 
-    -- Keeping the view centered
-    keymap("n", "<C-u>", "<C-u>zz", opts)
-    keymap("n", "<C-d>", "<C-d>zz", opts)
-    keymap("n", "<C-f>", "<C-f>zz", opts)
-    keymap("n", "<C-b>", "<C-b>zz", opts)
+    { "<leader>e",       group = "Edit",                  remap = false },
+    { "<leader>f",       group = "File",                  remap = false },
+    { "<leader>n",       group = "Neotree",               remap = false },
+    { "<leader>g",       group = "Git",                   remap = false },
+    { "<leader>i",       group = "Insert",                remap = false },
+    { "<leader>l",       group = "Lsp",                   remap = false },
+    { "<leader>w",       group = "Window",                remap = false },
+    { "<leader>sl",      group = "LSP",                   remap = false },
 
-    -- Keeping the search term centered
-    keymap("n", "n", "nzz", opts)
-    keymap("n", "N", "Nzz", opts)
+})
+wk.add({
+    { "<leader>en", "<cmd>edit ~/.config/nvim/init.lua<cr>",      desc = "Edit Neovim",   remap = false },
+    { "<leader>eh", "<cmd>edit ~/.config/hypr/hyprland.conf<cr>", desc = "Edit Hyprland", remap = false },
+    { "<leader>ew", "<cmd>edit ~/.config/hypr/waybar/<cr>",       desc = "Edit Waybar",   remap = false },
+    { "<leader>ek", "<cmd>edit ~/.config/kitty/<cr>",             desc = "Edit Kitty",    remap = false },
+    { "<leader>ee", "<cmd>edit ~/.emacs.d/init.el<cr>",           desc = "Edit Emacs",    remap = false },
+    { "<leader>eb", "<cmd>edit ~/.bashrc<cr>",                    desc = "Edit Bash",     remap = false },
+    { "<leader>et", "<cmd>edit ~/.tmux.conf<cr>",                 desc = "Edit Tmux",     remap = false },
+})
+wk.add({
+    { "<leader>t",  group = "Toggle",          remap = false },
+    { "<leader>te", "<cmd>Neotree toggle<cr>", desc = "Neo Tree",   remap = false },
+    { "<leader>tt", "<cmd>ToggleTerm<cr>",     desc = "Terminal",   remap = false },
+    { "<leader>tp", "<cmd>Presenting<cr>",     desc = "Presenting", remap = false },
 
-    -- Switch between buffers
-    keymap("n", "H", "<cmd>bp<cr>", opts)
-    keymap("n", "L", "<cmd>bn<cr>", opts)
+}, opts)
 
-    -- Move text in visual mode
-    keymap("v", "J", "<cmd>m '>+1<cr>gv=gv", opts)
-    keymap("v", "K", "<cmd>m '<-2<cr>gv=gv", opts)
+wk.add({
+    { "<leader>E",  group = "Error",  remap = false },
+    { "<leader>En", "<cmd>cnext<cr>", desc = "Next", remap = false },
+    { "<leader>Ep", "<cmd>cprev<cr>", desc = "Prev", remap = false },
+}, opts)
 
-    -- Dont copy to registers on cut or paste
-    keymap("n", "x", '"_x', opts)
-    keymap("v", "p", '"_p', opts)
+wk.add({
+    { "<leader>b",  group = "Buffer",           remap = false },
+    { "<leader>bd", "<cmd>bd<cr>",              desc = "Buffer Delete",   remap = false },
+    { "<leader>bn", "<cmd>bn<cr>",              desc = "Buffer Next",     remap = false },
+    { "<leader>bp", "<cmd>bp<cr>",              desc = "Buffer Previous", remap = false },
+    { "<leader>bb", "<cmd>Neotree buffers<cr>", desc = "Buffer List",     remap = false },
+}, opts)
 
-    -- Calling whichkey functionality in VSCode
-    keymap("n", "<leader>", "<cmd>call VSCodeNotify('whichkey.show')<CR>", opts)
-    keymap("x", "<leader>", "<cmd>call VSCodeNotify('whichkey.show')<CR>", opts)
+wk.add({
+    { "<leader>o", group = "Org",    remap = false },
+    { "<leader>s", group = "Search", remap = false },
+}, opts)
 
-    vim.opt.clipboard:append({ "unnamedplus" })
-    vim.opt.ignorecase = true
-    vim.opt.smartcase = true
-    vim.opt.scrolloff = 8
-    vim.opt.termguicolors = true
-    vim.opt.virtualedit =  "block"
+wk.add({
+    { "<leader>d", group = "Debug", remap = false },
+})
 
-    packer.startup(function(use)
-        use({
-            "kylechui/nvim-surround",
-            config = function()
-                require("nvim-surround").setup()
-            end
-        })
-        use({
-            "windwp/nvim-autopairs",
-            config = function()
-                require("nvim-autopairs").setup()
-            end
-        })
-        use({
-            "ggandor/leap.nvim",
-            config = function()
-                require("leap").add_default_mappings()
-            end
-        })
-        use({
-            "numToStr/Comment.nvim",
-            config = function()
-                require("Comment").setup()
-            end
-        })
-        if packer_bootstrap then
-            require("packer").sync()
-        end
-    end)
+wk.add(
+    {
+        { "<leader>w",    group = "Window",    remap = false },
 
-    vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-        callback = function(_)
-            vim.cmd([[TSDisable highlight]])
-        end,
+        { "<leader>wr",   group = "Resize",    remap = false },
+        { "<leader>wrr",  "<cmd>wincmd =<cr>", desc = "Reset",    remap = false },
+        { "<leader>wrh",  group = "Height",    remap = false },
+        { "<leader>wrhi", "<cmd>wincmd +<cr>", desc = "Inc",      remap = false },
+        { "<leader>wrhd", "<cmd>wincmd -<cr>", desc = "Dec",      remap = false },
+        { "<leader>wrhm", "<cmd>wincmd _<cr>", desc = "Max",      remap = false },
+        { "<leader>wrw",  group = "Width",     remap = false },
+        { "<leader>wrwi", "<cmd>wincmd ><cr>", desc = "Inc",      remap = false },
+        { "<leader>wrwd", "<cmd>wincmd <<cr>", desc = "Dec",      remap = false },
+        { "<leader>wrwm", "<cmd>wincmd |<cr>", desc = "Max",      remap = false },
+
+        { "<leader>wf",   group = "Focus",     remap = false },
+        { "<leader>wfh",  "<cmd>wincmd h<cr>", desc = "Lf",       remap = false },
+        { "<leader>wfj",  "<cmd>wincmd j<cr>", desc = "Dn",       remap = false },
+        { "<leader>wfk",  "<cmd>wincmd k<cr>", desc = "Up",       remap = false },
+        { "<leader>wfl",  "<cmd>wincmd l<cr>", desc = "Ri",       remap = false },
+        { "<leader>wfn",  "<cmd>wincmd w<cr>", desc = "Next",     remap = false },
+        { "<leader>wfp",  "<cmd>wincmd W<cr>", desc = "Prev",     remap = false },
+
+        { "<leader>wm",   group = "Move",      remap = false },
+        { "<leader>wmh",  "<cmd>wincmd H<cr>", desc = "Lf",       remap = false },
+        { "<leader>wmj",  "<cmd>wincmd J<cr>", desc = "Dn",       remap = false },
+        { "<leader>wmk",  "<cmd>wincmd K<cr>", desc = "Up",       remap = false },
+        { "<leader>wml",  "<cmd>wincmd L<cr>", desc = "Ri",       remap = false },
+        { "<leader>wmt",  "<cmd>wincmd T<cr>", desc = "Tab",      remap = false },
+        { "<leader>wmx",  "<cmd>wincmd x<cr>", desc = "Exch",     remap = false },
+        { "<leader>wmd",  "<cmd>wincmd r<cr>", desc = "Dn",       remap = false },
+        { "<leader>wmu",  "<cmd>wincmd R<cr>", desc = "Up",       remap = false },
+
+        { "<leader>wo",   "<cmd>wincmd o<cr>", desc = "Only",     remap = false },
+        { "<leader>wc",   "<cmd>wincmd c<cr>", desc = "Close",    remap = false },
+        { "<leader>wq",   "<cmd>wincmd q<cr>", desc = "Quit",     remap = false },
+        { "<leader>wx",   "<cmd>wincmd x<cr>", desc = "Exchange", remap = false },
+
+        { "<leader>ws",   group = "Split",     remap = false },
+        { "<leader>wsj",  "<cmd>split<cr>",    desc = "Down",     remap = false },
+        { "<leader>wsl",  "<cmd>vsplit<cr>",   desc = "Right",    remap = false },
+
+    }
+)
+use({ "https://github.com/barreiroleo/ltex-extra.nvim" })
+use({"https://github.com/echasnovski/mini.icons"})
+use({ "https://github.com/nvim-neo-tree/neo-tree.nvim" })
+use( {"https://github.com/nvim-lua/plenary.nvim"})
+use({"https://github.com/nvim-tree/nvim-web-devicons"}) -- not strictly required, but recommended
+use({"https://github.com/MunifTanjim/nui.nvim"}) -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+use ({ "https://github.com/s1n7ax/nvim-window-picker" })
+require("window-picker").setup({
+    filter_rules = {
+        include_current_win = false,
+        autoselect_one = true,
+        -- filter using buffer options
+        bo = {
+            -- if the file type is one of following, the window will be ignored
+            filetype = { "neo-tree", "neo-tree-popup", "notify" },
+            -- if the buffer type is one of following, the window will be ignored
+            buftype = { "terminal", "quickfix" },
+        },
+    },
+})
+-- If you want icons for diagnostic errors, you'll need to define them somewhere:
+vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
+
+require("neo-tree").setup({
+    close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+    popup_border_style = "rounded",
+    enable_git_status = true,
+    enable_diagnostics = true,
+    open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
+    sort_case_insensitive = false,                                     -- used when sorting files and directories in the tree
+    sort_function = nil,                                               -- use a custom function for sorting files and directories in the tree
+    -- sort_function = function (a,b)
+    --       if a.type == b.type then
+    --           return a.path > b.path
+    --       else
+    --           return a.type > b.type
+    --       end
+    --   end , -- this sorts files and directories descendantly
+    source_selector = {
+        winbar = false,
+        statusline = false,
+    },
+    default_component_configs = {
+        container = {
+            enable_character_fade = true,
+        },
+        indent = {
+            indent_size = 2,
+            padding = 1, -- extra padding on left hand side
+            -- indent guides
+            with_markers = true,
+            indent_marker = "│",
+            last_indent_marker = "└",
+            highlight = "NeoTreeIndentMarker",
+            -- expander config, needed for nesting files
+            with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
+            expander_collapsed = "",
+            expander_expanded = "",
+            expander_highlight = "NeoTreeExpander",
+        },
+        icon = {
+            folder_closed = "",
+            folder_open = "",
+            folder_empty = "󰜌",
+            -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
+            -- then these will never be used.
+            default = "*",
+            highlight = "NeoTreeFileIcon",
+        },
+        modified = {
+            symbol = "[+]",
+            highlight = "NeoTreeModified",
+        },
+        name = {
+            trailing_slash = false,
+            use_git_status_colors = true,
+            highlight = "NeoTreeFileName",
+        },
+        git_status = {
+            symbols = {
+                -- Change type
+                added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
+                modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
+                deleted = "✖", -- this can only be used in the git_status source
+                renamed = "󰁕", -- this can only be used in the git_status source
+                -- Status type
+                untracked = "",
+                ignored = "",
+                unstaged = "󰄱",
+                staged = "",
+                conflict = "",
+            },
+        },
+        -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
+        file_size = {
+            enabled = true,
+            required_width = 64, -- min width of window required to show this column
+        },
+        type = {
+            enabled = true,
+            required_width = 122, -- min width of window required to show this column
+        },
+        last_modified = {
+            enabled = true,
+            required_width = 88, -- min width of window required to show this column
+        },
+        created = {
+            enabled = true,
+            required_width = 110, -- min width of window required to show this column
+        },
+        symlink_target = {
+            enabled = false,
+        },
+    },
+    -- A list of functions, each representing a global custom command
+    -- that will be available in all sources (if not overridden in `opts[source_name].commands`)
+    -- see `:h neo-tree-custom-commands-global`
+    commands = {},
+    window = {
+        position = "left",
+        width = 40,
+        mapping_options = {
+            noremap = true,
+            nowait = true,
+        },
+        mappings = {
+            ["<space>"] = {
+                "toggle_node",
+                nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
+            },
+            ["<2-LeftMouse>"] = "open",
+            ["<cr>"] = "open",
+            ["<esc>"] = "cancel", -- close preview or floating neo-tree window
+            ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
+            -- Read `# Preview Mode` for more information
+            ["l"] = "focus_preview",
+            ["S"] = "open_split",
+            ["s"] = "open_vsplit",
+            -- ["S"] = "split_with_window_picker",
+            -- ["s"] = "vsplit_with_window_picker",
+            ["t"] = "open_tabnew",
+            -- ["<cr>"] = "open_drop",
+            -- ["t"] = "open_tab_drop",
+            ["w"] = "open_with_window_picker",
+            --["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
+            ["C"] = "close_node",
+            -- ['C'] = 'close_all_subnodes',
+            ["z"] = "close_all_nodes",
+            --["Z"] = "expand_all_nodes",
+            ["a"] = {
+                "add",
+                -- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
+                -- some commands may take optional config options, see `:h neo-tree-mappings` for details
+                config = {
+                    show_path = "none", -- "none", "relative", "absolute"
+                },
+            },
+            ["A"] = "add_directory", -- also accepts the optional config.show_path option like "add". this also supports BASH style brace expansion.
+            ["d"] = "delete",
+            ["r"] = "rename",
+            ["y"] = "copy_to_clipboard",
+            ["x"] = "cut_to_clipboard",
+            ["p"] = "paste_from_clipboard",
+            ["c"] = "copy", -- takes text input for destination, also accepts the optional config.show_path option like "add":
+            -- ["c"] = {
+            --  "copy",
+            --  config = {
+            --    show_path = "none" -- "none", "relative", "absolute"
+            --  }
+            --}
+            ["m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
+            ["q"] = "close_window",
+            ["R"] = "refresh",
+            ["?"] = "show_help",
+            ["<"] = "prev_source",
+            [">"] = "next_source",
+            ["i"] = "show_file_details",
+        },
+    },
+    nesting_rules = {},
+    filesystem = {
+        filtered_items = {
+            visible = false, -- when true, they will just be displayed differently than normal items
+            hide_dotfiles = false,
+            hide_gitignored = false,
+            hide_hidden = false, -- only works on Windows for hidden files/directories
+            hide_by_name = {
+                --"node_modules"
+            },
+            hide_by_pattern = { -- uses glob style patterns
+                --"*.meta",
+                --"*/src/*/tsconfig.json",
+            },
+            always_show = { -- remains visible even if other settings would normally hide it
+                --".gitignored",
+            },
+            always_show_by_pattern = { -- uses glob style patterns
+                --".env*",
+            },
+            never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
+                --".DS_Store",
+                --"thumbs.db"
+            },
+            never_show_by_pattern = { -- uses glob style patterns
+                --".null-ls_*",
+            },
+        },
+        follow_current_file = {
+            enabled = false,                    -- This will find and focus the file in the active buffer every time
+            --               -- the current file is changed while the tree is open.
+            leave_dirs_open = false,            -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+        },
+        group_empty_dirs = false,               -- when true, empty folders will be grouped together
+        hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
+        -- in whatever position is specified in window.position
+        -- "open_current",  -- netrw disabled, opening a directory opens within the
+        -- window like netrw would, regardless of window.position
+        -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
+        use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
+        -- instead of relying on nvim autocmd events.
+        window = {
+            mappings = {
+                ["<bs>"] = "navigate_up",
+                ["."] = "set_root",
+                ["H"] = "toggle_hidden",
+                ["/"] = "fuzzy_finder",
+                ["D"] = "fuzzy_finder_directory",
+                ["#"] = "fuzzy_sorter", -- fuzzy sorting using the fzy algorithm
+                -- ["D"] = "fuzzy_sorter_directory",
+                ["f"] = "filter_on_submit",
+                ["<c-x>"] = "clear_filter",
+                ["[g"] = "prev_git_modified",
+                ["]g"] = "next_git_modified",
+                ["o"] = {
+                    "show_help",
+                    nowait = false,
+                    config = { title = "Order by", prefix_key = "o" },
+                },
+                ["oc"] = { "order_by_created", nowait = false },
+                ["od"] = { "order_by_diagnostics", nowait = false },
+                ["og"] = { "order_by_git_status", nowait = false },
+                ["om"] = { "order_by_modified", nowait = false },
+                ["on"] = { "order_by_name", nowait = false },
+                ["os"] = { "order_by_size", nowait = false },
+                ["ot"] = { "order_by_type", nowait = false },
+                -- ['<key>'] = function(state) ... end,
+            },
+            fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
+                ["<down>"] = "move_cursor_down",
+                ["<C-n>"] = "move_cursor_down",
+                ["<up>"] = "move_cursor_up",
+                ["<C-p>"] = "move_cursor_up",
+                -- ['<key>'] = function(state, scroll_padding) ... end,
+            },
+        },
+
+        commands = {}, -- Add a custom command or override a global one using the same function name
+    },
+    buffers = {
+        follow_current_file = {
+            enabled = true,          -- This will find and focus the file in the active buffer every time
+            --              -- the current file is changed while the tree is open.
+            leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+        },
+        group_empty_dirs = true,     -- when true, empty folders will be grouped together
+        show_unloaded = true,
+        window = {
+            mappings = {
+                ["bd"] = "buffer_delete",
+                ["<bs>"] = "navigate_up",
+                ["."] = "set_root",
+                ["o"] = {
+                    "show_help",
+                    nowait = false,
+                    config = { title = "Order by", prefix_key = "o" },
+                },
+                ["oc"] = { "order_by_created", nowait = false },
+                ["od"] = { "order_by_diagnostics", nowait = false },
+                ["om"] = { "order_by_modified", nowait = false },
+                ["on"] = { "order_by_name", nowait = false },
+                ["os"] = { "order_by_size", nowait = false },
+                ["ot"] = { "order_by_type", nowait = false },
+            },
+        },
+    },
+    git_status = {
+        window = {
+            position = "float",
+            mappings = {
+                ["A"] = "git_add_all",
+                ["gu"] = "git_unstage_file",
+                ["ga"] = "git_add_file",
+                ["gr"] = "git_revert_file",
+                ["gc"] = "git_commit",
+                ["gp"] = "git_push",
+                ["gg"] = "git_commit_and_push",
+                ["o"] = {
+                    "show_help",
+                    nowait = false,
+                    config = { title = "Order by", prefix_key = "o" },
+                },
+                ["oc"] = { "order_by_created", nowait = false },
+                ["od"] = { "order_by_diagnostics", nowait = false },
+                ["om"] = { "order_by_modified", nowait = false },
+                ["on"] = { "order_by_name", nowait = false },
+                ["os"] = { "order_by_size", nowait = false },
+                ["ot"] = { "order_by_type", nowait = false },
+            },
+        },
+    },
+})
+use({ "https://github.com/lewis6991/gitsigns.nvim" })
+require("gitsigns").setup()
+require("noice").setup({
+    lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+        },
+        progress = {
+            throttle = 1000 / 1,
+        },
+    },
+    presets = {
+        bottom_search = true,         -- use a classic bottom cmdline for search
+        command_palette = false,      -- position the cmdline and popupmenu together
+        long_message_to_split = true, -- long messages will be sent to a split
+        inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = false,       -- add a border to hover docs and signature help
+    },
+})
+use({"https://github.com/MunifTanjim/nui.nvim"})
+use({"https://github.com/rcarriga/nvim-notify"})
+use({"https://github.com/davidmh/cspell.nvim"})
+use({ "https://github.com/nvim-lua/plenary.nvim" })
+use({ "https://github.com/nvim-telescope/telescope-ui-select.nvim" })
+use({ "https://github.com/nvim-neotest/nvim-nio" })
+use({ "https://github.com/williamboman/mason.nvim" })
+use({ "https://github.com/goolord/alpha-nvim" })
+use({ "https://github.com/nvim-tree/nvim-web-devicons" })
+require("alpha").setup(require("alpha.themes.startify").config)
+use({ "https://github.com/MeanderingProgrammer/render-markdown.nvim" })
+use({ "https://github.com/echasnovski/mini.nvim" }) -- if you use the mini.nvim suite
+    -- requires = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
+    -- requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
+require("render-markdown").setup({})
+use({ "https://github.com/sotte/presenting.nvim" })
+require("presenting").setup({
+    options = {
+        width = 82,
+    }
+})
+use({ "https://github.com/stevearc/dressing.nvim" })
+use({ "https://github.com/ziontee113/icon-picker.nvim" })
+require("icon-picker").setup({
+    disable_legacy_commands = true
+})
+use({ 'https://github.com/Wansmer/treesj'})
+use({ 'https://github.com/nvim-treesitter/nvim-treesitter' }) -- if you install parsers with `nvim-treesitter`
+require('treesj').setup({ use_default_keymaps = false })
+use({ "https://github.com/stevearc/oil.nvim" })
+require("oil").setup()
+use({ 'https://github.com/karb94/neoscroll.nvim' })
+require("neoscroll").setup()
+use({ 'https://github.com/kevinhwang91/nvim-bqf' })
+-- Example mapping to toggle outline
+vim.keymap.set("n", "<leader>tO", "<cmd>Outline<CR>",
+    { desc = "Toggle Outline" })
+
+
+keymap("n", "<esc>", "<cmd>nohlsearch<cr>", {})
+keymap("n", "<leader>tj", "<cmd>TSJToggle<cr>", opts)
+keymap("n", "<leader>ii", "<cmd>IconPickerNormal<cr>", opts)
+keymap("n", "<leader>En", "<cmd>cnext<cr>", opts)
+keymap("n", "<leader>Ep", "<cmd>cprev<cr>", opts)
+
+keymap("n", "<leader>bn", "<cmd>bn<cr>", opts)
+keymap("n", "<leader>bp", "<cmd>bp<cr>", opts)
+keymap("n", "<leader>bd", "<cmd>bd<cr>", opts)
+
+keymap("n", "<leader>tt", "<cmd>ToggleTerm<cr>", opts)
+keymap("t", "<esc><esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+keymap("n", "<leader>gg", "<cmd>Neogit<cr>", opts)
+keymap("n", "<leader>gl", "<cmd>Neogit log<cr>", opts)
+keymap("n", "<leader>tc", "<cmd>ColorizerToggle<cr>", opts)
+keymap("n", "<leader>tu", "<cmd>UndotreeToggle<cr>", opts)
+keymap("n", "<leader>tz", "<cmd>ZenMode<cr>", opts)
+keymap("n", "<leader>oT", "<cmd>TableModeToggle<cr>", opts)
+keymap("n", "\\", "<cmd>Neotree reveal<cr>", opts)
+keymap("n", "<leader>ne", "<cmd>Neotree toggle<cr>", opts)
+keymap("n", "<leader>ng", "<cmd>Neotree git_status<cr>", opts)
+keymap("n", "<leader>nb", "<cmd>Neotree buffers<cr>", opts)
+keymap("n", "<leader>ns", "<cmd>Neotree document_symbols<cr>", opts)
+keymap("n", "<leader>ta", "<cmd>Alpha<cr>", opts)
+keymap("n", "<leader>to", "<cmd>Oil<cr>", opts)
+keymap("n", "<leader>tl", "<cmd>lua require('ltex_extra').reload()<cr>", opts)
+local has_treesitter_configs, treesitter_configs = pcall(require, "nvim-treesitter.configs")
+
+local treesitter_list = {
+    "http",
+    "javascript",
+    "typescript",
+    "c",
+    "lua",
+    "rust",
+    "go",
+    "org",
+    "markdown",
+    "c_sharp",
+    "org",
+    "bash",
+    "css",
+    "html",
+    "python",
+    "solidity",
+    "vue",
+    "yaml",
+    "org",
+    "markdown",
+    "markdown_inline",
+}
+
+if has_treesitter_configs then
+    treesitter_configs.setup({
+        -- A list of parser names, or "all"
+        indent = { enable = true },
+        autotag = { enable = true },
+        ensure_installed = treesitter_list,
+
+        -- Install parsers synchronously (only applied to `ensure_installed`)
+        sync_install = false,
+
+        -- Automatically install missing parsers when entering buffer
+        -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+        auto_install = true,
+
+        highlight = {
+            -- `false` will disable the whole extension
+            enable = true,
+            -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+            -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+            -- Using this option may slow down your editor, and you may see some duplicate highlights.
+            -- Instead of true it can also be a list of languages
+            additional_vim_regex_highlighting = { "org" },
+        },
     })
-else
-    -- ordinary Neovim
-
-    local opts = { noremap = true, silent = true }
-    local keymap = vim.api.nvim_set_keymap
-
-    keymap("", "<Space>", "<Nop>", opts)
-
-    -- keep cursorline in middle of screen during scrolling
-    keymap("n", "<C-u>", "<C-u>zz", opts)
-    keymap("n", "<C-d>", "<C-d>zz", opts)
-    keymap("n", "<C-f>", "<C-f>zz", opts)
-    keymap("n", "<C-b>", "<C-b>zz", opts)
-
-    -- keep cursorline in the middle of the screen during search navigation
-    keymap("n", "n", "nzzzv", opts)
-    keymap("n", "N", "Nzzzv", opts)
-
-    -- keep cursorline in the middle of the screen during join operations
-    keymap("n", "J", "mzJ`z", opts)
-
-    -- moving text in visual mode
-    keymap("v", "J", "<cmd>m '>+1<cr>gv=gv", opts)
-    keymap("v", "K", "<cmd>m '<-2<cr>gv=gv", opts)
-
-    -- moving between buffers
-    keymap("n", "H", "<cmd>bp<cr>", opts)
-    keymap("n", "L", "<cmd>bn<cr>", opts)
-
-    -- moving between splits
-    keymap("n", "<C-h>", "<C-w>h", opts)
-    keymap("n", "<C-j>", "<C-w>j", opts)
-    keymap("n", "<C-k>", "<C-w>k", opts)
-    keymap("n", "<C-l>", "<C-w>l", opts)
-
-    -- delete without copying to registers
-    keymap("n", "x", '"_x', opts)
-    keymap("v", "p", '"_p', opts)
-
-    vim.g.mapleader = " "
-    vim.g.maplocalleader = " "
-
-    -- Netrw config
-    vim.g.netrw_keepdir = 0
-    vim.g.netrw_winsize = 16
-    vim.g.netrw_banner = 0
-    vim.g.netrw_browse_split = 0
-
-    -- Netrw disable b/ using nvim-tree
-    vim.g.loaded_netrw = 1
-    vim.g.loaded_netrwPlugin = 1
-
-    vim.g.table_mode_disable_mappings = 1
-    vim.g.table_mode_disable_tableize_mappings = 1
-
-    -- Neovide
-    vim.g.neovide_scale_factor = 1.0
-    vim.g.neovide_transparency = 1.0
-    vim.g.neovide_remember_window_size = true
-    vim.g.neovide_refresh_rate = 60
-
-    -- Tabline
-    vim.o.completeopt = "menuone,noselect,preview"
-
-    -- Setup GUI Fonts
-    vim.opt.guifont = "FiraCode Nerd Font:h12"
-
-    -- Options
-    vim.opt.scrolloff = 8
-    vim.opt.backup = false
-    vim.opt.clipboard:append({ "unnamedplus" })
-    vim.opt.cmdheight = 2
-    vim.opt.hlsearch = true
-    vim.opt.mouse = "a"
-    vim.opt.pumheight = 10
-    vim.opt.showmode = false
-    vim.opt.showtabline = 2
-    vim.opt.ignorecase = true
-    vim.opt.smartcase = true
-    vim.opt.smartindent = true
-    vim.opt.breakindent = true
-    vim.opt.splitbelow = true
-    vim.opt.splitright = true
-    vim.opt.swapfile = false
-    vim.opt.updatetime = 250
-    vim.opt.timeoutlen = 300
-    vim.opt.undofile = true
-    vim.opt.writebackup = false
-    vim.opt.expandtab = true
-    vim.opt.shiftwidth = 4
-    vim.opt.shiftround = true
-    vim.opt.tabstop = 4
-    vim.opt.relativenumber = true
-    vim.opt.number = true
-    vim.opt.numberwidth = 5
-    vim.opt.signcolumn = "yes"
-    vim.opt.wrap = true
-    vim.opt.colorcolumn = { "80" }
-    vim.opt.cursorline = true
-    vim.opt.cursorcolumn = true
-    vim.opt.termguicolors = true
-    vim.opt.list = true
-    vim.opt.listchars = { eol = "↵", tab = ">-", space = "·", nbsp = "␣", trail = "~", multispace = "|···" }
-    vim.opt.foldcolumn = "auto"
-    vim.opt.cmdheight = 1
-
-    local sel_theme = "tokyonight"
-    local has_theme, _ = pcall(vim.cmd, "colorscheme " .. sel_theme)
-    -- Setup Colorscheme
-    if not has_theme then
-        print("Colorscheme " .. sel_theme .. " not found!")
-    end
-
-    packer.startup(function(use)
-        use({
-            "NeogitOrg/neogit",
-            requires = {
-                { "nvim-lua/plenary.nvim" },
-                { "sindrets/diffview.nvim" },
-                { "nvim-telescope/telescope.nvim" },
-            },
-            config = function()
-                require("neogit").setup({})
-            end,
-        })
-        use({
-            "wbthomason/packer.nvim",
-        })
-        -- Themes
-        use("Mofiqul/dracula.nvim")
-        use("folke/tokyonight.nvim")
-        -- Lualine
-        use({
-            "nvim-lualine/lualine.nvim",
-            config = function()
-                require("lualine").setup({
-                    options = {
-                        theme = sel_theme,
-                        component_separators = { left = "", right = "" },
-                        section_separators = { left = "", right = "" },
-                    },
-                    sections = {
-                        lualine_x = {
-                            -- {
-                            -- 	require("noice").api.status.message.get_hl,
-                            -- 	cond = require("noice").api.status.message.has,
-                            -- },
-                            {
-                                require("noice").api.status.command.get,
-                                cond = require("noice").api.status.command.has,
-                                color = { fg = "#ff9e64" },
-                            },
-                            {
-                                require("noice").api.status.mode.get,
-                                cond = require("noice").api.status.mode.has,
-                                color = { fg = "#ff9e64" },
-                            },
-                            {
-                                require("noice").api.status.search.get,
-                                cond = require("noice").api.status.search.has,
-                                color = { fg = "#ff9e64" },
-                            },
-                        },
-                    },
-                })
-            end
-        })
-        use("kyazdani42/nvim-web-devicons")
-        -- Telescope
-        use({
-            "nvim-telescope/telescope-fzf-native.nvim",
-            run =
-            "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-        })
-        use({
-            "nvim-telescope/telescope.nvim",
-            tag = "0.1.x",
-            requires = { { "nvim-lua/plenary.nvim" } },
-        })
-        -- Ease of life stuff
-        use({
-            "kylechui/nvim-surround",
-            config = function()
-                require("nvim-surround").setup()
-            end
-        })
-        use({
-            "windwp/nvim-autopairs",
-            config = function()
-                require("nvim-autopairs").setup()
-            end
-        })
-        use("windwp/nvim-ts-autotag")
-        use({
-            "numToStr/Comment.nvim",
-            config = function()
-                require("Comment").setup()
-            end
-        })
-        -- Leap
-        use({
-            "ggandor/leap.nvim",
-            config = function()
-                require("leap").add_default_mappings()
-            end
-        })
-        -- Display hexcodes as colors
-        use({
-            "norcalli/nvim-colorizer.lua",
-            config = function()
-                require("colorizer").setup()
-            end
-        })
-        -- Treesitter
-        use({ "nvim-treesitter/nvim-treesitter", run = "<cmd>TSUpdate" })
-        use("HiPhish/rainbow-delimiters.nvim")
-        use({
-            'echasnovski/mini.ai',
-            config = function()
-                require("mini.ai").setup()
-            end
-        })
-        -- Undo Tree
-        use({
-            "mbbill/undotree",
-        })
-        -- Terminal
-        use({
-            "akinsho/toggleterm.nvim",
-            config = function()
-                require("toggleterm").setup({
-                    size = 24,
-                    open_mapping = [[<c-`>]],
-                    direction = "float",
-                    float_opts = {
-                        border = "curved",
-                    },
-                })
-            end
-        })
-        -- LSP
-        use({
-            "VonHeikemen/lsp-zero.nvim",
-            branch = "v1.x",
-            requires = {
-                -- LSP Support
-                { "neovim/nvim-lspconfig" },
-                { "williamboman/mason.nvim" },
-                { "WILLIAMBOMAN/MASON-LSPCONFIG.NVIM" },
-
-                -- Autocompletion
-                { "hrsh7th/nvim-cmp" },
-                { "hrsh7th/cmp-buffer" },
-                { "hrsh7th/cmp-path" },
-                { "saadparwaiz1/cmp_luasnip" },
-                { "hrsh7th/cmp-nvim-lsp" },
-                { "hrsh7th/cmp-nvim-lua" },
-
-                -- Snippets
-                { "L3MON4D3/LuaSnip" },
-                { "rafamadriz/friendly-snippets" },
-            },
-        })
-        use({ "L3MON4D3/LuaSnip", run = "make install_jsregexp" })
-        -- Zen mode
-        use({
-            "folke/zen-mode.nvim",
-        })
-        -- Orgmode
-        use({
-            "nvim-orgmode/orgmode",
-            config = function()
-                require("orgmode").setup()
-            end
-        })
-        use({
-            "dhruvasagar/vim-table-mode",
-        })
-        -- Todo Comment
-        use({
-            "folke/todo-comments.nvim",
-            config = function()
-                require("todo-comments").setup()
-            end
-        })
-        -- Indent
-        use({
-            "lukas-reineke/indent-blankline.nvim",
-            config = function()
-                require("ibl").setup()
-            end
-        })
-        -- SwHKD highlights
-        use({
-            "nvim-focus/focus.nvim",
-            config = function()
-                require("focus").setup()
-            end
-        })
-        use({
-            "aznhe21/actions-preview.nvim",
-            config = function()
-                vim.keymap.set({ "v", "n" }, "ga", require("actions-preview").code_actions)
-            end,
-        })
-        -- Which key
-        use({
-            "folke/which-key.nvim",
-            config = function()
-                vim.o.timeout = true
-                vim.o.timeoutlen = 300
-                local wk = require("which-key")
-                wk.setup()
-                wk.add({
-
-                    { "<leader>.",       "<cmd>Telescope find_files<cr>", desc = "Find File",     remap = false },
-                    { "<leader>,",       "<cmd>Oil<cr>",                  desc = "Oil",           remap = false },
-                    { "<leader>/",       "<cmd>Telescope live_grep<cr>",  desc = "Live Grep",     remap = false },
-                    { "<leader>;",       "<cmd>Telescope<cr>",            desc = "Telescope",     remap = false },
-                    { "<leader>'",       "<cmd>Neogit<cr>",               desc = "Neogit",        remap = false },
-                    { "<leader>\\",      "<cmd>PackerSync<cr>",           desc = "Packer Sync",   remap = false },
-                    { "<leader>[",       "<cmd>PackerClean<cr>",          desc = "Packer Clean",  remap = false },
-                    { "<leader>]",       "<cmd>PackerUpdate<cr>",         desc = "Packer Update", remap = false },
-                    { "<leader>`",       "<cmd>ToggleTerm<cr>",           desc = "Toggle Term",   remap = false },
-                    { "<leader><space>", "<cmd>Neotree toggle<cr>",       desc = "Neotree",       remap = false },
-
-                    { "<leader>e",       group = "Edit",                  remap = false },
-                    { "<leader>f",       group = "File",                  remap = false },
-                    { "<leader>n",       group = "Neotree",               remap = false },
-                    { "<leader>p",       group = "Packer",                remap = false },
-                    { "<leader>g",       group = "Git",                   remap = false },
-                    { "<leader>i",       group = "Insert",                remap = false },
-                    { "<leader>l",       group = "Lsp",                   remap = false },
-                    { "<leader>w",       group = "Window",                remap = false },
-                    { "<leader>sl",      group = "LSP",                   remap = false },
-
-                })
-                wk.add({
-                    { "<leader>en", "<cmd>edit ~/.config/nvim/init.lua<cr>",      desc = "Edit Neovim",   remap = false },
-                    { "<leader>eh", "<cmd>edit ~/.config/hypr/hyprland.conf<cr>", desc = "Edit Hyprland", remap = false },
-                    { "<leader>ew", "<cmd>edit ~/.config/hypr/waybar/<cr>",       desc = "Edit Waybar",   remap = false },
-                    { "<leader>ek", "<cmd>edit ~/.config/kitty/<cr>",             desc = "Edit Kitty",    remap = false },
-                    { "<leader>ee", "<cmd>edit ~/.emacs.d/init.el<cr>",           desc = "Edit Emacs",    remap = false },
-                    { "<leader>eb", "<cmd>edit ~/.bashrc<cr>",                    desc = "Edit Bash",     remap = false },
-                    { "<leader>et", "<cmd>edit ~/.tmux.conf<cr>",                 desc = "Edit Tmux",     remap = false },
-                })
-                wk.add({
-                    { "<leader>t",  group = "Toggle",          remap = false },
-                    { "<leader>te", "<cmd>Neotree toggle<cr>", desc = "Neo Tree",   remap = false },
-                    { "<leader>tt", "<cmd>ToggleTerm<cr>",     desc = "Terminal",   remap = false },
-                    { "<leader>tp", "<cmd>Presenting<cr>",     desc = "Presenting", remap = false },
-
-                }, opts)
-
-                wk.add({
-                    { "<leader>E",  group = "Error",  remap = false },
-                    { "<leader>En", "<cmd>cnext<cr>", desc = "Next", remap = false },
-                    { "<leader>Ep", "<cmd>cprev<cr>", desc = "Prev", remap = false },
-                }, opts)
-
-                wk.add({
-                    { "<leader>b",  group = "Buffer",           remap = false },
-                    { "<leader>bd", "<cmd>bd<cr>",              desc = "Buffer Delete",   remap = false },
-                    { "<leader>bn", "<cmd>bn<cr>",              desc = "Buffer Next",     remap = false },
-                    { "<leader>bp", "<cmd>bp<cr>",              desc = "Buffer Previous", remap = false },
-                    { "<leader>bb", "<cmd>Neotree buffers<cr>", desc = "Buffer List",     remap = false },
-                }, opts)
-
-                wk.add({
-                    { "<leader>o", group = "Org",    remap = false },
-                    { "<leader>s", group = "Search", remap = false },
-                }, opts)
-
-                wk.add({
-                    { "<leader>d", group = "Debug", remap = false },
-                })
-
-                wk.add(
-                    {
-                        { "<leader>w",    group = "Window",    remap = false },
-
-                        { "<leader>wr",   group = "Resize",    remap = false },
-                        { "<leader>wrr",  "<cmd>wincmd =<cr>", desc = "Reset",    remap = false },
-                        { "<leader>wrh",  group = "Height",    remap = false },
-                        { "<leader>wrhi", "<cmd>wincmd +<cr>", desc = "Inc",      remap = false },
-                        { "<leader>wrhd", "<cmd>wincmd -<cr>", desc = "Dec",      remap = false },
-                        { "<leader>wrhm", "<cmd>wincmd _<cr>", desc = "Max",      remap = false },
-                        { "<leader>wrw",  group = "Width",     remap = false },
-                        { "<leader>wrwi", "<cmd>wincmd ><cr>", desc = "Inc",      remap = false },
-                        { "<leader>wrwd", "<cmd>wincmd <<cr>", desc = "Dec",      remap = false },
-                        { "<leader>wrwm", "<cmd>wincmd |<cr>", desc = "Max",      remap = false },
-
-                        { "<leader>wf",   group = "Focus",     remap = false },
-                        { "<leader>wfh",  "<cmd>wincmd h<cr>", desc = "Lf",       remap = false },
-                        { "<leader>wfj",  "<cmd>wincmd j<cr>", desc = "Dn",       remap = false },
-                        { "<leader>wfk",  "<cmd>wincmd k<cr>", desc = "Up",       remap = false },
-                        { "<leader>wfl",  "<cmd>wincmd l<cr>", desc = "Ri",       remap = false },
-                        { "<leader>wfn",  "<cmd>wincmd w<cr>", desc = "Next",     remap = false },
-                        { "<leader>wfp",  "<cmd>wincmd W<cr>", desc = "Prev",     remap = false },
-
-                        { "<leader>wm",   group = "Move",      remap = false },
-                        { "<leader>wmh",  "<cmd>wincmd H<cr>", desc = "Lf",       remap = false },
-                        { "<leader>wmj",  "<cmd>wincmd J<cr>", desc = "Dn",       remap = false },
-                        { "<leader>wmk",  "<cmd>wincmd K<cr>", desc = "Up",       remap = false },
-                        { "<leader>wml",  "<cmd>wincmd L<cr>", desc = "Ri",       remap = false },
-                        { "<leader>wmt",  "<cmd>wincmd T<cr>", desc = "Tab",      remap = false },
-                        { "<leader>wmx",  "<cmd>wincmd x<cr>", desc = "Exch",     remap = false },
-                        { "<leader>wmd",  "<cmd>wincmd r<cr>", desc = "Dn",       remap = false },
-                        { "<leader>wmu",  "<cmd>wincmd R<cr>", desc = "Up",       remap = false },
-
-                        { "<leader>wo",   "<cmd>wincmd o<cr>", desc = "Only",     remap = false },
-                        { "<leader>wc",   "<cmd>wincmd c<cr>", desc = "Close",    remap = false },
-                        { "<leader>wq",   "<cmd>wincmd q<cr>", desc = "Quit",     remap = false },
-                        { "<leader>wx",   "<cmd>wincmd x<cr>", desc = "Exchange", remap = false },
-
-                        { "<leader>ws",   group = "Split",     remap = false },
-                        { "<leader>wsj",  "<cmd>split<cr>",    desc = "Down",     remap = false },
-                        { "<leader>wsl",  "<cmd>vsplit<cr>",   desc = "Right",    remap = false },
-
-                    }
-                )
-            end
-        })
-        use({
-            "barreiroleo/ltex-extra.nvim",
-            config = function()
-
-            end
-        })
-        use("echasnovski/mini.icons")
-        use({
-            "nvim-neo-tree/neo-tree.nvim",
-            branch = "v3.x",
-            requires = {
-                "nvim-lua/plenary.nvim",
-                "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-                "MunifTanjim/nui.nvim",
-                -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-                {
-                    "s1n7ax/nvim-window-picker",
-                    version = "2.*",
-                    config = function()
-                        require("window-picker").setup({
-                            filter_rules = {
-                                include_current_win = false,
-                                autoselect_one = true,
-                                -- filter using buffer options
-                                bo = {
-                                    -- if the file type is one of following, the window will be ignored
-                                    filetype = { "neo-tree", "neo-tree-popup", "notify" },
-                                    -- if the buffer type is one of following, the window will be ignored
-                                    buftype = { "terminal", "quickfix" },
-                                },
-                            },
-                        })
-                    end,
-                },
-            },
-            config = function()
-                -- If you want icons for diagnostic errors, you'll need to define them somewhere:
-                vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
-                vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
-                vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-                vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
-
-                require("neo-tree").setup({
-                    close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
-                    popup_border_style = "rounded",
-                    enable_git_status = true,
-                    enable_diagnostics = true,
-                    open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
-                    sort_case_insensitive = false,                                     -- used when sorting files and directories in the tree
-                    sort_function = nil,                                               -- use a custom function for sorting files and directories in the tree
-                    -- sort_function = function (a,b)
-                    --       if a.type == b.type then
-                    --           return a.path > b.path
-                    --       else
-                    --           return a.type > b.type
-                    --       end
-                    --   end , -- this sorts files and directories descendantly
-                    source_selector = {
-                        winbar = false,
-                        statusline = false,
-                    },
-                    default_component_configs = {
-                        container = {
-                            enable_character_fade = true,
-                        },
-                        indent = {
-                            indent_size = 2,
-                            padding = 1, -- extra padding on left hand side
-                            -- indent guides
-                            with_markers = true,
-                            indent_marker = "│",
-                            last_indent_marker = "└",
-                            highlight = "NeoTreeIndentMarker",
-                            -- expander config, needed for nesting files
-                            with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-                            expander_collapsed = "",
-                            expander_expanded = "",
-                            expander_highlight = "NeoTreeExpander",
-                        },
-                        icon = {
-                            folder_closed = "",
-                            folder_open = "",
-                            folder_empty = "󰜌",
-                            -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
-                            -- then these will never be used.
-                            default = "*",
-                            highlight = "NeoTreeFileIcon",
-                        },
-                        modified = {
-                            symbol = "[+]",
-                            highlight = "NeoTreeModified",
-                        },
-                        name = {
-                            trailing_slash = false,
-                            use_git_status_colors = true,
-                            highlight = "NeoTreeFileName",
-                        },
-                        git_status = {
-                            symbols = {
-                                -- Change type
-                                added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-                                modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
-                                deleted = "✖", -- this can only be used in the git_status source
-                                renamed = "󰁕", -- this can only be used in the git_status source
-                                -- Status type
-                                untracked = "",
-                                ignored = "",
-                                unstaged = "󰄱",
-                                staged = "",
-                                conflict = "",
-                            },
-                        },
-                        -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
-                        file_size = {
-                            enabled = true,
-                            required_width = 64, -- min width of window required to show this column
-                        },
-                        type = {
-                            enabled = true,
-                            required_width = 122, -- min width of window required to show this column
-                        },
-                        last_modified = {
-                            enabled = true,
-                            required_width = 88, -- min width of window required to show this column
-                        },
-                        created = {
-                            enabled = true,
-                            required_width = 110, -- min width of window required to show this column
-                        },
-                        symlink_target = {
-                            enabled = false,
-                        },
-                    },
-                    -- A list of functions, each representing a global custom command
-                    -- that will be available in all sources (if not overridden in `opts[source_name].commands`)
-                    -- see `:h neo-tree-custom-commands-global`
-                    commands = {},
-                    window = {
-                        position = "left",
-                        width = 40,
-                        mapping_options = {
-                            noremap = true,
-                            nowait = true,
-                        },
-                        mappings = {
-                            ["<space>"] = {
-                                "toggle_node",
-                                nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
-                            },
-                            ["<2-LeftMouse>"] = "open",
-                            ["<cr>"] = "open",
-                            ["<esc>"] = "cancel", -- close preview or floating neo-tree window
-                            ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
-                            -- Read `# Preview Mode` for more information
-                            ["l"] = "focus_preview",
-                            ["S"] = "open_split",
-                            ["s"] = "open_vsplit",
-                            -- ["S"] = "split_with_window_picker",
-                            -- ["s"] = "vsplit_with_window_picker",
-                            ["t"] = "open_tabnew",
-                            -- ["<cr>"] = "open_drop",
-                            -- ["t"] = "open_tab_drop",
-                            ["w"] = "open_with_window_picker",
-                            --["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
-                            ["C"] = "close_node",
-                            -- ['C'] = 'close_all_subnodes',
-                            ["z"] = "close_all_nodes",
-                            --["Z"] = "expand_all_nodes",
-                            ["a"] = {
-                                "add",
-                                -- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
-                                -- some commands may take optional config options, see `:h neo-tree-mappings` for details
-                                config = {
-                                    show_path = "none", -- "none", "relative", "absolute"
-                                },
-                            },
-                            ["A"] = "add_directory", -- also accepts the optional config.show_path option like "add". this also supports BASH style brace expansion.
-                            ["d"] = "delete",
-                            ["r"] = "rename",
-                            ["y"] = "copy_to_clipboard",
-                            ["x"] = "cut_to_clipboard",
-                            ["p"] = "paste_from_clipboard",
-                            ["c"] = "copy", -- takes text input for destination, also accepts the optional config.show_path option like "add":
-                            -- ["c"] = {
-                            --  "copy",
-                            --  config = {
-                            --    show_path = "none" -- "none", "relative", "absolute"
-                            --  }
-                            --}
-                            ["m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
-                            ["q"] = "close_window",
-                            ["R"] = "refresh",
-                            ["?"] = "show_help",
-                            ["<"] = "prev_source",
-                            [">"] = "next_source",
-                            ["i"] = "show_file_details",
-                        },
-                    },
-                    nesting_rules = {},
-                    filesystem = {
-                        filtered_items = {
-                            visible = false, -- when true, they will just be displayed differently than normal items
-                            hide_dotfiles = false,
-                            hide_gitignored = false,
-                            hide_hidden = false, -- only works on Windows for hidden files/directories
-                            hide_by_name = {
-                                --"node_modules"
-                            },
-                            hide_by_pattern = { -- uses glob style patterns
-                                --"*.meta",
-                                --"*/src/*/tsconfig.json",
-                            },
-                            always_show = { -- remains visible even if other settings would normally hide it
-                                --".gitignored",
-                            },
-                            always_show_by_pattern = { -- uses glob style patterns
-                                --".env*",
-                            },
-                            never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
-                                --".DS_Store",
-                                --"thumbs.db"
-                            },
-                            never_show_by_pattern = { -- uses glob style patterns
-                                --".null-ls_*",
-                            },
-                        },
-                        follow_current_file = {
-                            enabled = false,                    -- This will find and focus the file in the active buffer every time
-                            --               -- the current file is changed while the tree is open.
-                            leave_dirs_open = false,            -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
-                        },
-                        group_empty_dirs = false,               -- when true, empty folders will be grouped together
-                        hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
-                        -- in whatever position is specified in window.position
-                        -- "open_current",  -- netrw disabled, opening a directory opens within the
-                        -- window like netrw would, regardless of window.position
-                        -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-                        use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
-                        -- instead of relying on nvim autocmd events.
-                        window = {
-                            mappings = {
-                                ["<bs>"] = "navigate_up",
-                                ["."] = "set_root",
-                                ["H"] = "toggle_hidden",
-                                ["/"] = "fuzzy_finder",
-                                ["D"] = "fuzzy_finder_directory",
-                                ["#"] = "fuzzy_sorter", -- fuzzy sorting using the fzy algorithm
-                                -- ["D"] = "fuzzy_sorter_directory",
-                                ["f"] = "filter_on_submit",
-                                ["<c-x>"] = "clear_filter",
-                                ["[g"] = "prev_git_modified",
-                                ["]g"] = "next_git_modified",
-                                ["o"] = {
-                                    "show_help",
-                                    nowait = false,
-                                    config = { title = "Order by", prefix_key = "o" },
-                                },
-                                ["oc"] = { "order_by_created", nowait = false },
-                                ["od"] = { "order_by_diagnostics", nowait = false },
-                                ["og"] = { "order_by_git_status", nowait = false },
-                                ["om"] = { "order_by_modified", nowait = false },
-                                ["on"] = { "order_by_name", nowait = false },
-                                ["os"] = { "order_by_size", nowait = false },
-                                ["ot"] = { "order_by_type", nowait = false },
-                                -- ['<key>'] = function(state) ... end,
-                            },
-                            fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
-                                ["<down>"] = "move_cursor_down",
-                                ["<C-n>"] = "move_cursor_down",
-                                ["<up>"] = "move_cursor_up",
-                                ["<C-p>"] = "move_cursor_up",
-                                -- ['<key>'] = function(state, scroll_padding) ... end,
-                            },
-                        },
-
-                        commands = {}, -- Add a custom command or override a global one using the same function name
-                    },
-                    buffers = {
-                        follow_current_file = {
-                            enabled = true,          -- This will find and focus the file in the active buffer every time
-                            --              -- the current file is changed while the tree is open.
-                            leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
-                        },
-                        group_empty_dirs = true,     -- when true, empty folders will be grouped together
-                        show_unloaded = true,
-                        window = {
-                            mappings = {
-                                ["bd"] = "buffer_delete",
-                                ["<bs>"] = "navigate_up",
-                                ["."] = "set_root",
-                                ["o"] = {
-                                    "show_help",
-                                    nowait = false,
-                                    config = { title = "Order by", prefix_key = "o" },
-                                },
-                                ["oc"] = { "order_by_created", nowait = false },
-                                ["od"] = { "order_by_diagnostics", nowait = false },
-                                ["om"] = { "order_by_modified", nowait = false },
-                                ["on"] = { "order_by_name", nowait = false },
-                                ["os"] = { "order_by_size", nowait = false },
-                                ["ot"] = { "order_by_type", nowait = false },
-                            },
-                        },
-                    },
-                    git_status = {
-                        window = {
-                            position = "float",
-                            mappings = {
-                                ["A"] = "git_add_all",
-                                ["gu"] = "git_unstage_file",
-                                ["ga"] = "git_add_file",
-                                ["gr"] = "git_revert_file",
-                                ["gc"] = "git_commit",
-                                ["gp"] = "git_push",
-                                ["gg"] = "git_commit_and_push",
-                                ["o"] = {
-                                    "show_help",
-                                    nowait = false,
-                                    config = { title = "Order by", prefix_key = "o" },
-                                },
-                                ["oc"] = { "order_by_created", nowait = false },
-                                ["od"] = { "order_by_diagnostics", nowait = false },
-                                ["om"] = { "order_by_modified", nowait = false },
-                                ["on"] = { "order_by_name", nowait = false },
-                                ["os"] = { "order_by_size", nowait = false },
-                                ["ot"] = { "order_by_type", nowait = false },
-                            },
-                        },
-                    },
-                })
-            end,
-        })
-        use({
-            "glepnir/lspsaga.nvim",
-            branch = "main",
-            requires = {
-                { "nvim-tree/nvim-web-devicons" },
-                { "nvim-treesitter/nvim-treesitter" },
-            },
-            config = function()
-                require("lspsaga").setup()
-            end
-        })
-        use("onsails/lspkind.nvim")
-        use({
-            "lewis6991/gitsigns.nvim",
-            config = function()
-                require("gitsigns").setup()
-            end
-        })
-        -- lazy.nvim
-        use({
-            "folke/noice.nvim",
-            config = function()
-                require("noice").setup({
-                    lsp = {
-                        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-                        override = {
-                            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-                            ["vim.lsp.util.stylize_markdown"] = true,
-                            ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-                        },
-                        progress = {
-                            throttle = 1000 / 1,
-                        },
-                    },
-                    presets = {
-                        bottom_search = true,         -- use a classic bottom cmdline for search
-                        command_palette = false,      -- position the cmdline and popupmenu together
-                        long_message_to_split = true, -- long messages will be sent to a split
-                        inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-                        lsp_doc_border = false,       -- add a border to hover docs and signature help
-                    },
-                })
-            end
-        })
-        use("MunifTanjim/nui.nvim")
-        use("rcarriga/nvim-notify")
-        use("davidmh/cspell.nvim")
-        use({
-            "nvimtools/none-ls.nvim",
-            requires = { "nvim-lua/plenary.nvim" },
-        })
-        use({ "nvim-telescope/telescope-ui-select.nvim" })
-        use({
-            "mfussenegger/nvim-dap",
-            requires = {
-                { "rcarriga/nvim-dap-ui" },
-                { "nvim-neotest/nvim-nio" },
-                { "williamboman/mason.nvim" },
-                { "jay-babu/mason-nvim-dap.nvim" },
-            },
-        })
-        use({
-            "goolord/alpha-nvim",
-            requires = { "nvim-tree/nvim-web-devicons" },
-            config = function()
-                require("alpha").setup(require("alpha.themes.startify").config)
-            end,
-        })
-        use({
-            "MeanderingProgrammer/render-markdown.nvim",
-            after = { "nvim-treesitter" },
-            requires = { "echasnovski/mini.nvim", opt = true }, -- if you use the mini.nvim suite
-            -- requires = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
-            -- requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
-            config = function()
-                require("render-markdown").setup({})
-            end,
-        })
-        use({
-            "sotte/presenting.nvim",
-            config = function()
-                require("presenting").setup({
-                    options = {
-                        width = 82,
-                    }
-                })
-            end,
-        })
-        use("stevearc/dressing.nvim")
-        use({
-            "ziontee113/icon-picker.nvim",
-            config = function()
-                require("icon-picker").setup({
-                    disable_legacy_commands = true
-                })
-            end,
-        })
-        use({
-            'Wansmer/treesj',
-            requires = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
-            config = function()
-                require('treesj').setup({ use_default_keymaps = false })
-            end,
-        })
-        use({
-            "stevearc/oil.nvim",
-            config = function()
-                require("oil").setup()
-            end,
-        })
-        use({
-            'karb94/neoscroll.nvim',
-            config = function()
-                require("neoscroll").setup()
-            end
-        })
-        use({ 'kevinhwang91/nvim-bqf', ft = 'qf' })
-
-        -- optional
-        use({
-            'junegunn/fzf',
-            run = function()
-                vim.fn['fzf#install']()
-            end
-        })
-        use({
-            "hedyhli/outline.nvim",
-            config = function()
-                -- Example mapping to toggle outline
-                vim.keymap.set("n", "<leader>tO", "<cmd>Outline<CR>",
-                    { desc = "Toggle Outline" })
-
-                require("outline").setup {
-                    -- Your setup opts here (leave empty to use defaults)
-                }
-            end,
-        })
-        -- Put this at the end after all plugins
-        if packer_bootstrap then
-            require("packer").sync()
-        end
-    end)
-
-
-
-    keymap("n", "<esc>", "<cmd>nohlsearch<cr>", {})
-    keymap("n", "<leader>tj", "<cmd>TSJToggle<cr>", opts)
-    keymap("n", "<leader>ii", "<cmd>IconPickerNormal<cr>", opts)
-    keymap("n", "<leader>En", "<cmd>cnext<cr>", opts)
-    keymap("n", "<leader>Ep", "<cmd>cprev<cr>", opts)
-
-    keymap("n", "<leader>bn", "<cmd>bn<cr>", opts)
-    keymap("n", "<leader>bp", "<cmd>bp<cr>", opts)
-    keymap("n", "<leader>bd", "<cmd>bd<cr>", opts)
-
-    keymap("n", "<leader>tt", "<cmd>ToggleTerm<cr>", opts)
-    keymap("t", "<esc><esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-
-    keymap("n", "<leader>gg", "<cmd>Neogit<cr>", opts)
-    keymap("n", "<leader>gl", "<cmd>Neogit log<cr>", opts)
-    keymap("n", "<leader>ps", "<cmd>PackerStatus<cr>", opts)
-    keymap("n", "<leader>pS", "<cmd>PackerSync<cr>", opts)
-    keymap("n", "<leader>pc", "<cmd>PackerClean<cr>", opts)
-    keymap("n", "<leader>pu", "<cmd>PackerUpdate<cr>", opts)
-    keymap("n", "<leader>tc", "<cmd>ColorizerToggle<cr>", opts)
-    keymap("n", "<leader>tu", "<cmd>UndotreeToggle<cr>", opts)
-    keymap("n", "<leader>tz", "<cmd>ZenMode<cr>", opts)
-    keymap("n", "<leader>oT", "<cmd>TableModeToggle<cr>", opts)
-    keymap("n", "\\", "<cmd>Neotree reveal<cr>", opts)
-    keymap("n", "<leader>ne", "<cmd>Neotree toggle<cr>", opts)
-    keymap("n", "<leader>ng", "<cmd>Neotree git_status<cr>", opts)
-    keymap("n", "<leader>nb", "<cmd>Neotree buffers<cr>", opts)
-    keymap("n", "<leader>ns", "<cmd>Neotree document_symbols<cr>", opts)
-    keymap("n", "<leader>ta", "<cmd>Alpha<cr>", opts)
-    keymap("n", "<leader>to", "<cmd>Oil<cr>", opts)
-    keymap("n", "<leader>tl", "<cmd>lua require('ltex_extra').reload()<cr>", opts)
-    local has_treesitter_configs, treesitter_configs = pcall(require, "nvim-treesitter.configs")
-
-    local treesitter_list = {
-        "http",
-        "javascript",
-        "typescript",
-        "c",
-        "lua",
-        "rust",
-        "go",
-        "org",
-        "markdown",
-        "c_sharp",
-        "org",
-        "bash",
-        "css",
-        "html",
-        "python",
-        "solidity",
-        "vue",
-        "yaml",
-        "org",
-        "markdown",
-        "markdown_inline",
-    }
-
-    if has_treesitter_configs then
-        treesitter_configs.setup({
-            -- A list of parser names, or "all"
-            indent = { enable = true },
-            autotag = { enable = true },
-            ensure_installed = treesitter_list,
-
-            -- Install parsers synchronously (only applied to `ensure_installed`)
-            sync_install = false,
-
-            -- Automatically install missing parsers when entering buffer
-            -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-            auto_install = true,
-
-            highlight = {
-                -- `false` will disable the whole extension
-                enable = true,
-                -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-                -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-                -- Using this option may slow down your editor, and you may see some duplicate highlights.
-                -- Instead of true it can also be a list of languages
-                additional_vim_regex_highlighting = { "org" },
-            },
-        })
-    end
-
-    local has_lspconfig, lspconfig = pcall(require, "lspconfig")
-
-    if has_lspconfig then
-        lspconfig.glslls.setup({})
-        lspconfig.nil_ls.setup({})
-        lspconfig.grammarly.setup({})
-        lspconfig.ltex.setup({})
-    end
-
-    local has_lspzero, lspzero = pcall(require, "lsp-zero")
-    local has_cmp, cmp = pcall(require, "cmp")
-    local has_lspkind, lspkind = pcall(require, "lspkind")
-
-    if has_cmp and has_lspkind then
-        cmp.setup({
-            formatting = {
-                -- here is where the change happens
-                fields = { "abbr", "kind", "menu" },
-                format = lspkind.cmp_format({
-                    mode = "symbol",
-                    maxwidth = 50,
-                    ellipsis_char = "...",
-                }),
-            },
-        })
-    end
-
-    if has_cmp and has_lspzero then
-        local cmp_select = { behavior = cmp.SelectBehavior.Select }
-        local cmp_mappings = lspzero.defaults.cmp_mappings({
-            ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-            ["<S-Tab>"] = cmp.mapping.select_prev_item(cmp_select),
-            ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-            ["<Tab>"] = cmp.mapping.select_next_item(cmp_select),
-            ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-            ["<Ret>"] = cmp.mapping.confirm({ select = true }),
-            ["<C-e>"] = cmp.mapping.abort(),
-            ["<Esc>"] = cmp.mapping.abort(),
-            ["<C-f>"] = cmp.mapping.scroll_docs(4),
-            ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-            ["<C-Space>"] = cmp.mapping.complete(),
-        })
-
-        lspzero.setup_nvim_cmp({
-            mapping = cmp_mappings,
-        })
-    end
-
-    if has_cmp then
-        cmp.setup({
-            window = {
-                completion = cmp.config.window.bordered(),
-                documentation = cmp.config.window.bordered(),
-            },
-        })
-    end
-
-    local lsp_list = {
-        "bashls",
-        -- "clangd",
-        "cmake",
-        "cssls",
-        -- "csharp_ls",
-        -- "denols",
-        "diagnosticls",
-        "dockerls",
-        "docker_compose_language_service",
-        "emmet_ls",
-        "eslint",
-        "gopls",
-        "grammarly",
-        "html",
-        "jsonls",
-        -- "ltex",
-        -- "lua_ls",
-        "marksman",
-        "omnisharp",
-        "pylsp",
-        "pyright",
-        "rome",
-        -- "rust_analyzer",
-        "solidity",
-        -- "sqlls",
-        "stylelint_lsp",
-        "vimls",
-        "volar",
-        "yamlls",
-        -- "zls",
-    }
-
-    if has_lspzero then
-        lspzero.preset("recommended")
-
-        lspzero.ensure_installed(lsp_list)
-
-        -- Fix Undefined global 'vim'
-        lspzero.configure("lua-language-server", {
-            settings = {
-                Lua = {
-                    diagnostics = {
-                        globals = { "vim" },
-                    },
-                    workspace = {
-                        library = {
-                            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                            [vim.fn.stdpath("config") .. "/lua"] = true,
-                        },
-                    },
-                },
-            },
-        })
-
-        lspzero.set_preferences({
-            suggest_lsp_servers = false,
-        })
-
-        lspzero.on_attach(function(client, bufnr)
-            local lspzero_opts = { buffer = bufnr, remap = false }
-
-            vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, {
-                desc = "Signature",
-                buffer = bufnr,
-                remap = false,
-            })
-            vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Declaration", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Definition", buffer = bufnr, remap = false })
-            vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Hover", buffer = bufnr, remap = false })
-            vim.keymap.set(
-                "n",
-                "gl",
-                vim.diagnostic.open_float,
-                { desc = "Diagnostics", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>EK",
-                vim.diagnostic.open_float,
-                { desc = "Show Diagnostics", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "References", buffer = bufnr, remap = false })
-            vim.keymap.set(
-                "n",
-                "gi",
-                vim.lsp.buf.implementation,
-                { desc = "Implementation", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set(
-                "n",
-                "[d",
-                vim.diagnostic.goto_next,
-                { desc = "Next Diagnostics", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set(
-                "n",
-                "]d",
-                vim.diagnostic.goto_prev,
-                { desc = "Prev Diagnostics", buffer = bufnr, remap = false }
-            )
-
-            vim.keymap.set(
-                "n",
-                "<leader>Ej",
-                vim.diagnostic.goto_next,
-                { desc = "Next Diagnostics", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>Ek",
-                vim.diagnostic.goto_prev,
-                { desc = "Prev Diagnostics", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>Ed",
-                vim.diagnostic.disable,
-                { desc = "Disable Diagnostics", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>Ee",
-                vim.diagnostic.enable,
-                { desc = "Enable Diagnostics", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set(
-                "n",
-                "]d",
-                vim.diagnostic.goto_prev,
-                { desc = "Prev Diagnostics", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set("n", "<leader>ls", vim.lsp.buf.workspace_symbol, {
-                desc = "Symbols",
-                buffer = bufnr,
-                remap = false,
-            })
-
-            vim.keymap.set("n", "<leader>lc", vim.lsp.buf.completion, {
-                desc = "Completion",
-                buffer = bufnr,
-                remap = false,
-            })
-
-            vim.keymap.set(
-                "n",
-                "<leader>lE",
-                vim.diagnostic.open_float,
-                { desc = "Diagnostics", buffer = bufnr, remap = false }
-            )
-
-            vim.keymap.set(
-                "n",
-                "<leader>lh",
-                vim.lsp.buf.signature_help,
-                { desc = "Signature", buffer = bufnr, remap = false }
-            )
-
-            vim.keymap.set("n", "<leader>lj", vim.diagnostic.goto_next, {
-                desc = "Next Diagnostics",
-                buffer = bufnr,
-                remap = false,
-            })
-            vim.keymap.set("n", "<leader>lk", vim.diagnostic.goto_prev, {
-                desc = "Prev Diagnostics",
-                buffer = bufnr,
-                remap = false,
-            })
-
-            vim.keymap.set("n", "<leader>lK", vim.lsp.buf.hover, {
-                desc = "Hover",
-                buffer = bufnr,
-                remap = false,
-            })
-            vim.keymap.set(
-                "n",
-                "<leader>lk",
-                vim.diagnostic.goto_prev,
-                { desc = "Prev Diagnostics", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>la",
-                vim.lsp.buf.code_action,
-                { desc = "Code Action", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>lr",
-                vim.lsp.buf.references,
-                { desc = "References", buffer = bufnr, remap = false }
-            )
-
-            vim.keymap.set(
-                "n",
-                "<leader>li",
-                vim.lsp.buf.implementation,
-                { desc = "Implementation", buffer = bufnr, remap = false }
-            )
-
-            vim.keymap.set(
-                "n",
-                "<leader>ld",
-                vim.lsp.buf.definition,
-                { desc = "Definition", buffer = bufnr, remap = false }
-            )
-
-            vim.keymap.set(
-                "n",
-                "<leader>lD",
-                vim.lsp.buf.declaration,
-                { desc = "Declaration", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set("n", "<leader>lR", vim.lsp.buf.rename, { desc = "Rename", buffer = bufnr, remap = false })
-            vim.keymap.set(
-                "i",
-                "<leader>lh",
-                vim.lsp.buf.signature_help,
-                { desc = "Signature", buffer = bufnr, remap = false }
-            )
-            vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, { desc = "Format", buffer = bufnr, remap = false })
-
-
-            if has_wk then
-                wk.add({
-                    { "<leader>l", buffer = 1, group = "Lsp", remap = false },
-                })
-            end
-        end)
-
-        lspzero.setup()
-
-        vim.diagnostic.config({
-            virtual_text = true,
-        })
-    end
-
-    local has_telescope, telescope = pcall(require, "telescope")
-
-    if has_telescope then
-        -- To get ui-select loaded and working with telescope, you need to call
-        -- load_extension, somewhere after setup function:
-        telescope.load_extension("ui-select")
-        telescope.setup({
-            defaults = {
-                layout_strategy = "horizontal"
-            },
-            extensions = {
-                ["ui-select"] = {
-                    require("telescope.themes").get_dropdown({
-                        -- even more opts
-                    }),
-
-                    -- pseudo code / specification for writing custom displays, like the one
-                    -- for "codeactions"
-                    -- specific_opts = {
-                    --   [kind] = {
-                    --     make_indexed = function(items) -> indexed_items, width,
-                    --     make_displayer = function(widths) -> displayer
-                    --     make_display = function(displayer) -> function(e)
-                    --     make_ordinal = function(e) -> string
-                    --   },
-                    --   -- for example to disable the custom builtin "codeactions" display
-                    --      do the following
-                    --   codeactions = false,
-                    -- }
-                },
-            },
-            pickers = {
-                find_files = {
-                    hidden = true,
-                },
-            },
-        })
-    end
-
-    local has_telescope_builtin, telescope_builtin = pcall(require, "telescope.builtin")
-    if has_telescope_builtin then
-        vim.keymap.set("n", "<leader>sf", telescope_builtin.find_files, { desc = "Find Files" })
-        vim.keymap.set("n", "<leader>st", telescope_builtin.live_grep, { desc = "Find Text" })
-        vim.keymap.set("n", "<leader>sg", telescope_builtin.live_grep, { desc = "Find Text" })
-        vim.keymap.set("n", "<leader>sb", telescope_builtin.buffers, { desc = "Find Buffer" })
-        vim.keymap.set("n", "<leader>bb", telescope_builtin.buffers, { desc = "Find Buffer" })
-        vim.keymap.set("n", "<leader>sh", telescope_builtin.help_tags, { desc = "Find Help" })
-        vim.keymap.set("n", "<leader>sb", telescope_builtin.buffers, { desc = "Find Buffer" })
-        vim.keymap.set("n", "<leader>sm", telescope_builtin.marks, { desc = "Find Marks" })
-        vim.keymap.set("n", "<leader>sr", telescope_builtin.registers, { desc = "Find Registers" })
-        vim.keymap.set("n", "<leader>sc", telescope_builtin.commands, { desc = "Find Commands" })
-        vim.keymap.set("n", "<leader>sq", telescope_builtin.quickfix, { desc = "Find Quickfix" })
-        vim.keymap.set("n", "<leader>sl", telescope_builtin.loclist, { desc = "Find Loclist" })
-        vim.keymap.set("n", "<leader>so", telescope_builtin.oldfiles, { desc = "Find Oldfiles" })
-        vim.keymap.set("n", "<leader>sM", telescope_builtin.man_pages, { desc = "Find Man pages" })
-        vim.keymap.set("n", "<leader>sC", telescope_builtin.colorscheme, { desc = "Find colorscheme " })
-        vim.keymap.set("n", "<leader>sk", telescope_builtin.keymaps, { desc = "Find keymaps" })
-        vim.keymap.set("n", "<leader>sj", telescope_builtin.jumplist, { desc = "Find jumplist" })
-        vim.keymap.set("n", "<leader>sd", telescope_builtin.diagnostics, { desc = "Find diagnostics" })
-        vim.keymap.set("n", "<leader>El", telescope_builtin.diagnostics, { desc = "Find diagnostics" })
-        vim.keymap.set("n", "<leader>le", telescope_builtin.diagnostics, { desc = "Diagnostics" })
-        vim.keymap.set("n", "<leader>slr", telescope_builtin.lsp_references, { desc = "Lsp References" })
-        vim.keymap.set("n", "<leader>sld", telescope_builtin.lsp_definitions, { desc = "Lsp Defenitions" })
-        vim.keymap.set("n", "<leader>sli", telescope_builtin.lsp_implementations, { desc = "Lsp Implementations" })
-        vim.keymap.set("n", "<leader>sls", telescope_builtin.lsp_document_symbols, { desc = "Lsp Symbols" })
-        vim.keymap.set("n", "<leader>slt", telescope_builtin.lsp_type_definitions, { desc = "Lsp Typedefs" })
-        vim.keymap.set("n", "<leader>slS", telescope_builtin.lsp_workspace_symbols, { desc = "Lsp Workspace Symbols" })
-        vim.keymap.set("n", "<leader>ss", "<cmd>Telescope<cr>", { desc = "Find all" })
-    end
-
-
-    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
-    local has_null_ls, null_ls = pcall(require, "null-ls")
-    if has_null_ls then
-        null_ls.setup({
-            -- you can reuse a shared lspconfig on_attach callback here
-            sources = {
-                -- Formatters
-                null_ls.builtins.formatting.isort,
-                null_ls.builtins.formatting.black,
-                null_ls.builtins.formatting.cbfmt,
-                null_ls.builtins.formatting.csharpier,
-                null_ls.builtins.formatting.forge_fmt,
-                null_ls.builtins.formatting.gofmt,
-                null_ls.builtins.formatting.goimports,
-                null_ls.builtins.formatting.markdownlint,
-                null_ls.builtins.formatting.mdformat,
-                null_ls.builtins.formatting.nixfmt,
-                null_ls.builtins.formatting.prettier,
-                null_ls.builtins.formatting.rustywind,
-                null_ls.builtins.formatting.shellharden,
-                null_ls.builtins.formatting.shfmt,
-                null_ls.builtins.formatting.stylelint,
-                null_ls.builtins.formatting.yamlfmt,
-                null_ls.builtins.diagnostics.glslc.with({
-                    extra_args = { "--target-env=opengl" }, -- use opengl instead of vulkan1.0
-                }),
-                -- diagnostics
-                null_ls.builtins.diagnostics.gitlint,
-                null_ls.builtins.diagnostics.markdownlint,
-                null_ls.builtins.diagnostics.pylint,
-                null_ls.builtins.diagnostics.solhint,
-                null_ls.builtins.diagnostics.staticcheck,
-                null_ls.builtins.diagnostics.statix,
-                null_ls.builtins.diagnostics.stylelint,
-                null_ls.builtins.diagnostics.write_good,
-                null_ls.builtins.diagnostics.yamllint,
-                null_ls.builtins.diagnostics.commitlint,
-                -- Completions
-                null_ls.builtins.completion.spell,
-                null_ls.builtins.completion.tags,
-                -- Hover
-                null_ls.builtins.hover.dictionary,
-                -- Code Actions
-                null_ls.builtins.code_actions.refactoring,
-                null_ls.builtins.code_actions.impl,
-            },
-            on_attach = function(client, bufnr)
-                if client.supports_method("textDocument/formatting") then
-                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                    vim.api.nvim_create_autocmd("BufWritePre", {
-                        group = augroup,
-                        buffer = bufnr,
-                        callback = function()
-                            -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-                            -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
-                            vim.lsp.buf.format({ async = false })
-                        end,
-                    })
-                end
-            end,
-        })
-    end
-
-    local has_cspell, cspell = pcall(require, "cspell")
-    if has_cspell and has_null_ls then
-        null_ls.setup({
-            sources = {
-                cspell.diagnostics,
-                cspell.code_actions,
-            },
-        })
-    end
-
-    local has_dap, dap = pcall(require, "dap")
-    local has_dapui, dapui = pcall(require, "dapui")
-    local has_dapwidgets, dapwidgets = pcall(require, "dap.ui.widgets")
-    if has_dap then
-        vim.keymap.set("n", "<leader>dd", dap.continue, { desc = "Debug: Start/Continue", remap = false })
-        vim.keymap.set("n", "<F5>", dap.continue, { desc = "Debug: Start/Continue", remap = false })
-        vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Debug: Step Into", remap = false })
-        vim.keymap.set("n", "<F10>", dap.step_into, { desc = "Debug: Step Into", remap = false })
-        vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "Debug: Step Over", remap = false })
-        vim.keymap.set("n", "<F11>", dap.step_over, { desc = "Debug: Step Over", remap = false })
-        vim.keymap.set("n", "<leader>dO", dap.step_out, { desc = "Debug: Step Out", remap = false })
-        vim.keymap.set("n", "<F12>", dap.step_out, { desc = "Debug: Step Out", remap = false })
-        vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint", remap = false })
-        vim.keymap.set("n", "<F6>", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint", remap = false })
-        vim.keymap.set("n", "<leader>dB", function()
-            dap.set_breakpoint(vim.fn.input, "Breakpoint condition: ")
-        end, { desc = "Debug: Set Breakpoint", remap = false })
-        vim.keymap.set("n", "<leader>dr", dap.repl.open, { desc = "Debug: Toggle Repl" })
-        vim.keymap.set("n", "<leader>dl", dap.run_last, { desc = "Debug: Run last" })
-        dap.listeners.after.event_initialized["dapui_config"] = dapui.open
-        dap.listeners.before.event_terminated["dapui_config"] = dapui.close
-        dap.listeners.before.event_exited["dapui_config"] = dapui.close
-    end
-    if has_dap and has_dapui then
-        vim.keymap.set("n", "<leader>dt", dapui.toggle, { desc = "Debug: Toggle Session" })
-        vim.keymap.set("n", "<F7>", dapui.toggle, { desc = "Debug: Toggle Session" })
-        dapui.setup({
-            -- Set icons to characters that are more likely to work in every terminal.
-            --    Feel free to remove or use ones that you like more! :)
-            --    Don't feel like these are good choices.
-            icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
-            controls = {
-                icons = {
-                    pause = "⏸",
-                    play = "▶",
-                    step_into = "⏎",
-                    step_over = "⏭",
-                    step_out = "⏮",
-                    step_back = "b",
-                    run_last = "▶▶",
-                    terminate = "⏹",
-                    disconnect = "⏏",
-                },
-            },
-        })
-    end
-    if has_dapwidgets then
-        vim.keymap.set({ "n", "v" }, "<leader>dh", dapwidgets.hover, { desc = "Debug: Hover" })
-        vim.keymap.set({ "n", "v" }, "<leader>dp", dapwidgets.preview, { desc = "Debug: Preview" })
-        vim.keymap.set({ "n", "v" }, "<leader>df", function()
-            dapuiwidget.centered_float(dapuiwidgets.frames)
-        end, { desc = "Debug: Float" })
-        vim.keymap.set({ "n", "v" }, "<leader>ds", function()
-            dapuiwidget.centered_float(dapwidgets.scopes)
-        end, { desc = "Debug: Scope" })
-    end
-    local has_mason_nvim_dap, mason_nvim_dap = pcall(require, "manson-nvim-dap")
-    if has_mason_nvim_dap then
-        mason_nvim_dap.setup({
-            automatic_installation = true,
-            handlers = {},
-            ensure_installed = {},
-        })
-    end
-    local has_ltex_extra, ltex_extra = pcall(require, "ltex-extra")
-    if has_ltex_extra then
-        ltex_extra.setup({
-            -- table <string> : languages for witch dictionaries will be loaded, e.g. { "es-AR", "en-US" }
-            -- https://valentjn.github.io/ltex/supported-languages.html#natural-languages
-            load_langs = { "en-US" }, -- en-US as default
-            -- boolean : whether to load dictionaries on startup
-            init_check = false,
-            -- string : relative or absolute path to store dictionaries
-            -- e.g. subfolder in the project root or the current working directory: ".ltex"
-            -- e.g. shared files for all projects:  vim.fn.expand("~") .. "/.local/share/ltex"
-            path = "", -- project root or current working directory
-            -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
-            log_level = "none",
-            -- table : configurations of the ltex language server.
-            -- Only if you are calling the server from ltex_extra
-            server_opts = nil,
-        })
-    end
 end
+
+
+local has_telescope, telescope = pcall(require, "telescope")
+
+if has_telescope then
+    -- To get ui-select loaded and working with telescope, you need to call
+    -- load_extension, somewhere after setup function:
+    telescope.load_extension("ui-select")
+    telescope.setup({
+        defaults = {
+            layout_strategy = "horizontal"
+        },
+        extensions = {
+            ["ui-select"] = {
+                require("telescope.themes").get_dropdown({
+                    -- even more opts
+                }),
+
+                -- pseudo code / specification for writing custom displays, like the one
+                -- for "codeactions"
+                -- specific_opts = {
+                --   [kind] = {
+                --     make_indexed = function(items) -> indexed_items, width,
+                --     make_displayer = function(widths) -> displayer
+                --     make_display = function(displayer) -> function(e)
+                --     make_ordinal = function(e) -> string
+                --   },
+                --   -- for example to disable the custom builtin "codeactions" display
+                --      do the following
+                --   codeactions = false,
+                -- }
+            },
+        },
+        pickers = {
+            find_files = {
+                hidden = true,
+            },
+        },
+    })
+end
+
+local has_telescope_builtin, telescope_builtin = pcall(require, "telescope.builtin")
+if has_telescope_builtin then
+    vim.keymap.set("n", "<leader>sf", telescope_builtin.find_files, { desc = "Find Files" })
+    vim.keymap.set("n", "<leader>st", telescope_builtin.live_grep, { desc = "Find Text" })
+    vim.keymap.set("n", "<leader>sg", telescope_builtin.live_grep, { desc = "Find Text" })
+    vim.keymap.set("n", "<leader>sb", telescope_builtin.buffers, { desc = "Find Buffer" })
+    vim.keymap.set("n", "<leader>bb", telescope_builtin.buffers, { desc = "Find Buffer" })
+    vim.keymap.set("n", "<leader>sh", telescope_builtin.help_tags, { desc = "Find Help" })
+    vim.keymap.set("n", "<leader>sb", telescope_builtin.buffers, { desc = "Find Buffer" })
+    vim.keymap.set("n", "<leader>sm", telescope_builtin.marks, { desc = "Find Marks" })
+    vim.keymap.set("n", "<leader>sr", telescope_builtin.registers, { desc = "Find Registers" })
+    vim.keymap.set("n", "<leader>sc", telescope_builtin.commands, { desc = "Find Commands" })
+    vim.keymap.set("n", "<leader>sq", telescope_builtin.quickfix, { desc = "Find Quickfix" })
+    vim.keymap.set("n", "<leader>sl", telescope_builtin.loclist, { desc = "Find Loclist" })
+    vim.keymap.set("n", "<leader>so", telescope_builtin.oldfiles, { desc = "Find Oldfiles" })
+    vim.keymap.set("n", "<leader>sM", telescope_builtin.man_pages, { desc = "Find Man pages" })
+    vim.keymap.set("n", "<leader>sC", telescope_builtin.colorscheme, { desc = "Find colorscheme " })
+    vim.keymap.set("n", "<leader>sk", telescope_builtin.keymaps, { desc = "Find keymaps" })
+    vim.keymap.set("n", "<leader>sj", telescope_builtin.jumplist, { desc = "Find jumplist" })
+    vim.keymap.set("n", "<leader>sd", telescope_builtin.diagnostics, { desc = "Find diagnostics" })
+    vim.keymap.set("n", "<leader>El", telescope_builtin.diagnostics, { desc = "Find diagnostics" })
+    vim.keymap.set("n", "<leader>le", telescope_builtin.diagnostics, { desc = "Diagnostics" })
+    vim.keymap.set("n", "<leader>slr", telescope_builtin.lsp_references, { desc = "Lsp References" })
+    vim.keymap.set("n", "<leader>sld", telescope_builtin.lsp_definitions, { desc = "Lsp Defenitions" })
+    vim.keymap.set("n", "<leader>sli", telescope_builtin.lsp_implementations, { desc = "Lsp Implementations" })
+    vim.keymap.set("n", "<leader>sls", telescope_builtin.lsp_document_symbols, { desc = "Lsp Symbols" })
+    vim.keymap.set("n", "<leader>slt", telescope_builtin.lsp_type_definitions, { desc = "Lsp Typedefs" })
+    vim.keymap.set("n", "<leader>slS", telescope_builtin.lsp_workspace_symbols, { desc = "Lsp Workspace Symbols" })
+    vim.keymap.set("n", "<leader>ss", "<cmd>Telescope<cr>", { desc = "Find all" })
+end
+
